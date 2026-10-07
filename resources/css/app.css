@@ -1,13 +1,54 @@
 @import "tailwindcss";
 
-@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
-@source "../../storage/framework/views/*.php";
-@source "../**/*.blade.php";
-@source "../**/*.js";
-
 @theme {
-    --font-sans:
-        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-        "Noto Color Emoji";
+    --font-sans: "Lato", ui-sans-serif, system-ui, sans-serif;
+
+    --color-primary: #113883;
+    --color-title: #333333;
+    --color-bodytext: #667085;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    color: #667085;
+    background: #ffffff;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+    background: #113883;
+    color: #ffffff;
+}
+
+/* ============================================================
+   KEUNGGULAN KAMI
+============================================================ */
+
+.advantage-image {
+    will-change: opacity, transform;
+}
+
+.advantage-item {
+    will-change: opacity;
+}
+
+.advantage-title {
+    color: #c9d2e3;
+    transition: color 0.35s ease;
+}
+
+.advantage-description {
+    overflow: hidden;
 }
