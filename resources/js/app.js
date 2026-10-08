@@ -1,15 +1,89 @@
-//
 import Alpine from "alpinejs";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+gsap.registerPlugin(ScrollTrigger);
+
+// ============================================================
+// SECTION: ABOUT US SLIDER
+// ============================================================
+
+function aboutUsSlider() {
+    return {
+        activeSlide: 0,
+        activeGallery: 0,
+        slides: [
+            {
+                title: "Tentang Kami",
+            },
+            {
+                title: "Visi & Misi",
+            },
+        ],
+        gallery: [
+            {
+                src: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1400&q=85",
+                alt: "Dokumentasi tim Arjuna Travora Nusantara",
+            },
+            {
+                src: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1000&q=85",
+                alt: "Kolaborasi dan kegiatan tim",
+            },
+            {
+                src: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=85",
+                alt: "Lingkungan kerja perusahaan",
+            },
+            {
+                src: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1000&q=85",
+                alt: "Kegiatan bersama tim",
+            },
+        ],
+        init() {
+            this.activeSlide = 0;
+            this.activeGallery = 0;
+        },
+        next() {
+            if (this.activeSlide < this.slides.length - 1) {
+                this.activeSlide++;
+                this.activeGallery =
+                    (this.activeGallery + 1) % this.gallery.length;
+            }
+        },
+        previous() {
+            if (this.activeSlide > 0) {
+                this.activeSlide--;
+                this.activeGallery =
+                    (this.activeGallery - 1 + this.gallery.length) %
+                    this.gallery.length;
+            }
+        },
+        selectGallery(index) {
+            this.activeGallery = index;
+        },
+    };
+}
+
+// ============================================================
+// GLOBAL VARIABLES
+// ============================================================
+
 window.Alpine = Alpine;
 window.AOS = AOS;
+window.gsap = gsap;
+window.ScrollTrigger = ScrollTrigger;
+window.aboutUsSlider = aboutUsSlider;
+
+// ============================================================
+// INITIALIZE ALPINE
+// ============================================================
 
 Alpine.start();
+
+// ============================================================
+// INITIALIZE AOS
+// ============================================================
 
 document.addEventListener("DOMContentLoaded", () => {
     AOS.init({
@@ -21,16 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// ANIMASI SCROLL TRIGGER UNTUK SECTION ADVANTAGES STORY
-
-gsap.registerPlugin(ScrollTrigger);
-
-window.Alpine = Alpine;
-window.gsap = gsap;
-window.ScrollTrigger = ScrollTrigger;
-
-Alpine.start();
-
 // ============================================================
 // SECTION: KEUNGGULAN KAMI
 // ============================================================
@@ -38,12 +102,16 @@ Alpine.start();
 document.addEventListener("DOMContentLoaded", () => {
     const story = document.querySelector("#advantages-story");
 
-    if (!story) return;
+    if (!story) {
+        return;
+    }
 
     const items = gsap.utils.toArray(".advantage-item");
     const images = gsap.utils.toArray(".advantage-image");
 
-    if (!items.length || !images.length) return;
+    if (!items.length || !images.length) {
+        return;
+    }
 
     let activeIndex = -1;
 
@@ -52,17 +120,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // ========================================================
 
     function activateItem(index) {
-        if (index === activeIndex) return;
+        if (index === activeIndex) {
+            return;
+        }
 
         activeIndex = index;
 
         items.forEach((item, i) => {
             const title = item.querySelector(".advantage-title");
-
             const description = item.querySelector(".advantage-description");
-
             const line = item.querySelector(".advantage-line");
-
             const isActive = i === index;
 
             // ==================================================
@@ -71,8 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             gsap.to(item, {
                 opacity: isActive ? 1 : 0.35,
-                duration: 0.35,
-                ease: "power2.out",
+                duration: 0.15,
+                ease: "power1.out",
                 overwrite: true,
             });
 
@@ -83,13 +150,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (title) {
                 gsap.to(title, {
                     color: isActive ? "#113883" : "#C9D2E3",
-
                     opacity: isActive ? 1 : 0.9,
-
-                    duration: 0.35,
-
-                    ease: "power2.out",
-
+                    duration: 0.15,
+                    ease: "power1.out",
                     overwrite: true,
                 });
             }
@@ -99,31 +162,13 @@ document.addEventListener("DOMContentLoaded", () => {
             // ==================================================
 
             if (description) {
-                if (isActive) {
-                    gsap.to(description, {
-                        height: "auto",
-
-                        opacity: 1,
-
-                        duration: 0.4,
-
-                        ease: "power2.out",
-
-                        overwrite: true,
-                    });
-                } else {
-                    gsap.to(description, {
-                        height: 0,
-
-                        opacity: 0,
-
-                        duration: 0.3,
-
-                        ease: "power2.out",
-
-                        overwrite: true,
-                    });
-                }
+                gsap.to(description, {
+                    height: isActive ? "auto" : 0,
+                    opacity: isActive ? 1 : 0,
+                    duration: 0.2,
+                    ease: "power1.out",
+                    overwrite: true,
+                });
             }
 
             // ==================================================
@@ -133,11 +178,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (line) {
                 gsap.to(line, {
                     height: isActive ? "100%" : 0,
-
-                    duration: 0.4,
-
-                    ease: "power2.out",
-
+                    duration: 0.2,
+                    ease: "power1.out",
                     overwrite: true,
                 });
             }
@@ -150,13 +192,9 @@ document.addEventListener("DOMContentLoaded", () => {
         images.forEach((image, i) => {
             gsap.to(image, {
                 opacity: i === index ? 1 : 0,
-
                 scale: i === index ? 1 : 1.04,
-
                 duration: 0.65,
-
                 ease: "power2.out",
-
                 overwrite: true,
             });
         });
@@ -168,45 +206,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     items.forEach((item, i) => {
         const title = item.querySelector(".advantage-title");
-
         const description = item.querySelector(".advantage-description");
-
         const line = item.querySelector(".advantage-line");
 
-        // Item
         gsap.set(item, {
             opacity: i === 0 ? 1 : 0.35,
         });
 
-        // Title
         if (title) {
             gsap.set(title, {
                 color: i === 0 ? "#113883" : "#C9D2E3",
-
                 opacity: 1,
             });
         }
 
-        // Description
         if (description) {
             gsap.set(description, {
                 height: i === 0 ? "auto" : 0,
-
                 opacity: i === 0 ? 1 : 0,
             });
         }
 
-        // Line
         if (line) {
             gsap.set(line, {
                 height: i === 0 ? "100%" : 0,
             });
         }
     });
-
-    // ========================================================
-    // INITIAL ACTIVE STATE
-    // ========================================================
 
     activeIndex = 0;
 
@@ -216,17 +242,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     ScrollTrigger.create({
         trigger: story,
-
         start: "top top",
-
         end: "bottom bottom",
-
+        invalidateOnRefresh: true,
         onUpdate: (self) => {
             const progress = self.progress;
-
             const index = Math.min(
                 items.length - 1,
-
                 Math.floor(progress * items.length),
             );
 
@@ -235,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ========================================================
-    // REFRESH
+    // REFRESH SCROLLTRIGGER
     // ========================================================
 
     window.addEventListener("load", () => {
