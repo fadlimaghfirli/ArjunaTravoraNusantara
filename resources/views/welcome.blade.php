@@ -54,24 +54,22 @@
                         </h2>
 
                         <img src="{{ asset('images/shapes/hero-cutout.svg') }}" alt="" aria-hidden="true" class="max-md:hidden absolute md:bottom-[54px] lg:bottom-[80px] right-[-4px] h-[131px] w-[112px] pointer-events-none">
-                        <img src="{{ asset('images/shapes/hero-cutout-2.svg') }}" alt="" aria-hidden="true" class="md:hidden absolute bottom-[45px] right-[-1px] w-40 pointer-events-none">
+                        <img src="{{ asset('images/shapes/hero-cutout-2.svg') }}" alt="" aria-hidden="true" class="md:hidden absolute bottom-[46px] right-[-1px] w-50 pointer-events-none">
 
 
                         {{-- Tombol slider --}}
-                        <div class="absolute bottom-[60px] lg:bottom-[100px] max-md:right-[10px] right-[-76px] z-50 flex items-center gap-1.5">
+                        <div class="absolute bottom-[60px] md:bottom-[75px] lg:bottom-[100px] max-md:right-[10px] right-[-76px] z-50 flex items-center gap-1.5">
                             <button type="button" @click="previous()" aria-label="Slide sebelumnya"
-                                class="flex max-md:h-12 max-md:w-12 h-16 w-16 items-center justify-center rounded-2xl max-md:rounded-xl border border-slate-200 bg-white text-slate-400 transition-all duration-200 hover:border-primary hover:bg-primary hover:text-white">
-                                <svg viewBox="0 0 32 32" fill="none" width="20" height="20">
-                                    <path d="M19.03125 4.28125L8.03125 15.28125L7.34375 16L8.03125 16.71875L19.03125 27.71875L20.46875 26.28125L10.1875 16L20.46875 5.71875Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round" fill="currentColor" />
+                                class="group flex h-[62px] w-[62px] items-center justify-center rounded-l-xl border border-[#D8DDE7] bg-white transition-all duration-300 hover:border-primary hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50">
+                                <svg class="h-6 w-6 text-[#667085] transition-colors duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                    <path d="M15 18L9 12L15 6" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </button>
 
                             <button type="button" @click="next()" aria-label="Slide berikutnya"
-                                class="flex max-md:h-12 max-md:w-12 h-16 w-16 items-center justify-center rounded-2xl max-md:rounded-xl border border-slate-200 bg-white text-slate-400 transition-all duration-200 hover:border-primary hover:bg-primary hover:text-white">
-                                <svg viewBox="0 0 32 32" fill="none" width="20" height="20">
-                                    <path d="M12.96875 4.28125L11.53125 5.71875L21.8125 16L11.53125 26.28125L12.96875 27.71875L23.96875 16.71875L24.65625 16L23.96875 15.28125Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round" fill="currentColor" />
+                                class="group flex h-[62px] w-[62px] items-center justify-center rounded-r-xl border border-[#D8DDE7] bg-white transition-all duration-300 hover:border-primary hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50">
+                                <svg class="h-6 w-6 text-[#667085] transition-colors duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                    <path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </button>
                         </div>
@@ -163,109 +161,205 @@
 
         {{-- KEUNGGULAN --}}
         <section id="keunggulan" class="bg-white max-lg:py-14 xl:py-20">
-            <div class="mx-auto w-full max-w-[1400px] px-6 ">
+            <div class="mx-auto w-full max-w-[1400px] px-6">
                 <div id="advantages-story" class="relative min-h-[2800px] md:min-h-[2800px] lg:min-h-[2400px]">
-                    <div id="advantages-card" class="sticky top-24 grid overflow-hidden rounded-[22px] bg-[#F5F6F8] min-h-[680px] md:top-32 md:min-h-[560px] md:grid-cols-2 lg:top-40 lg:min-h-[560px]">
-
-                        <div class="relative h-[320px] min-h-0 overflow-hidden sm:h-[360px] md:h-[560px] lg:h-[620px]">
+                    {{-- CONTAINER KEUNGGULAN --}}
+                    <div id="advantages-card" class="sticky top-24 grid min-h-[680px] overflow-hidden rounded-[22px] bg-[#F5F6F8] md:top-32 md:min-h-[560px] md:grid-cols-2 lg:top-40 lg:min-h-[560px]" data-aos="fade-up" data-aos-duration="900"
+                        data-aos-easing="ease-out-cubic">
+                        {{-- GAMBAR --}}
+                        <div class="relative h-[320px] min-h-0 overflow-hidden sm:h-[360px] md:h-[560px] lg:h-[620px]" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="150" data-aos-easing="ease-out-cubic">
                             {{-- Image 01 --}}
                             <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1400&q=85" alt="Solusi teknologi terintegrasi" class="advantage-image absolute inset-0 h-full w-full object-cover" data-image="0">
-
                             {{-- Image 02 --}}
                             <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=85" alt="Teknologi untuk kebutuhan bisnis" class="advantage-image absolute inset-0 h-full w-full object-cover opacity-0"
                                 data-image="1">
-
                             {{-- Image 03 --}}
                             <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1400&q=85" alt="Dukungan teknis" class="advantage-image absolute inset-0 h-full w-full object-cover opacity-0" data-image="2">
-
                             {{-- Image 04 --}}
                             <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=85" alt="Layanan profesional" class="advantage-image absolute inset-0 h-full w-full object-cover opacity-0"
                                 data-image="3">
                         </div>
-
-
-                        <div class="relative flex min-h-0 flex-col justify-center overflow-hidden px-6 py-6 sm:px-8 sm:py-7 md:px-9 md:py-8 lg:px-12 lg:py-10 xl:px-14">
-
+                        {{-- KONTEN --}}
+                        <div class="relative flex min-h-0 flex-col justify-center overflow-hidden px-6 py-6 sm:px-8 sm:py-7 md:px-9 md:py-8 lg:px-12 lg:py-10 xl:px-14" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="250"
+                            data-aos-easing="ease-out-cubic">
                             {{-- Heading --}}
-                            <div class="mb-8">
-
+                            <div class="mb-8" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
                                 <h2 class="text-2xl font-bold leading-tight text-[#102238] sm:text-3xl">
                                     Mengapa Memilih ATN?
                                 </h2>
-                                <p class="mt-3 max-w-[580px] eading-6 text-bodytext text-[16px]">
-                                    Fondasi operasional teruji untuk memastikan
-                                    pengadaan tepat sasaran, akuntabel, dan
-                                    berkesinambungan jangka panjang.
+                                <p class="mt-3 max-w-[580px] text-[16px] leading-6 text-bodytext">
+                                    Fondasi operasional teruji untuk memastikan pengadaan tepat sasaran, akuntabel, dan berkesinambungan jangka panjang.
                                 </p>
                             </div>
-
-
+                            {{-- DAFTAR KEUNGGULAN --}}
                             <div class="advantages-items">
                                 {{-- ITEM 01 --}}
-                                <article class="advantage-item is-active relative border-l-2 border-[#D8DDE7] pl-4 sm:pl-5" data-index="0">
+                                <article class="advantage-item is-active relative border-l-2 border-[#D8DDE7] pl-4 sm:pl-5" data-index="0" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
                                     {{-- Active line --}}
                                     <span class="advantage-line absolute -left-[2px] top-0 h-full w-[2px] bg-primary"></span>
-                                    <span class="advantage-title block text-[15px] lg:text-[18px] font-bold">
+                                    <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
                                         Sesuai Kebutuhan
                                     </span>
                                     <div class="advantage-description mt-2 max-w-[580px]">
-                                        <p class="max-md:text-[14px] lg:text-[16px] leading-6 text-bodytext">
-                                            Spesifikasi dan arsitektur disesuaikan
-                                            tepat sasaran dengan kapasitas anggaran,
-                                            alur kerja nyata, dan skala pertumbuhan
-                                            bisnis Anda.
+                                        <p class="max-md:text-[14px] text-[16px] leading-6 text-bodytext">
+                                            Spesifikasi dan arsitektur disesuaikan tepat sasaran dengan kapasitas anggaran, alur kerja nyata, dan skala pertumbuhan bisnis Anda.
                                         </p>
                                     </div>
                                 </article>
-
-
                                 {{-- ITEM 02 --}}
-                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="1">
+                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="1" data-aos="fade-up" data-aos-duration="700" data-aos-delay="600">
                                     <span class="advantage-line absolute -left-[2px] top-0 h-0 w-[2px] bg-primary"></span>
-                                    <span class="advantage-title block text-[15px] lg:text-[18px] font-bold">
+                                    <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
                                         Solusi Terintegrasi
                                     </span>
                                     <div class="advantage-description mt-2 max-w-[580px]">
-                                        <p class="max-md:text-[14px] lg:text-[16px] leading-6 text-bodytext">
-                                            Setiap solusi dirancang agar dapat
-                                            terintegrasi dengan kebutuhan sistem dan
-                                            proses bisnis secara menyeluruh.
+                                        <p class="max-md:text-[14px] text-[16px] leading-6 text-bodytext">
+                                            Setiap solusi dirancang agar dapat terintegrasi dengan kebutuhan sistem dan proses bisnis secara menyeluruh.
                                         </p>
                                     </div>
                                 </article>
-
-
                                 {{-- ITEM 03 --}}
-                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="2">
+                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="2" data-aos="fade-up" data-aos-duration="700" data-aos-delay="700">
                                     <span class="advantage-line absolute -left-[2px] top-0 h-0 w-[2px] bg-primary"></span>
-                                    <span class="advantage-title block text-[15px] lg:text-[18px] font-bold">
+                                    <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
                                         Dukungan Teknis
                                     </span>
                                     <div class="advantage-description mt-2 max-w-[580px]">
-                                        <p class="max-md:text-[14px] lg:text-[16px] leading-6 text-bodytext">
-                                            Dukungan teknis diberikan untuk
-                                            memastikan solusi berjalan optimal
-                                            sesuai kebutuhan operasional.
+                                        <p class="max-md:text-[14px] text-[16px] leading-6 text-bodytext">
+                                            Dukungan teknis diberikan untuk memastikan solusi berjalan optimal sesuai kebutuhan operasional.
                                         </p>
                                     </div>
                                 </article>
-
-
                                 {{-- ITEM 04 --}}
-                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="3">
+                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="3" data-aos="fade-up" data-aos-duration="700" data-aos-delay="800">
                                     <span class="advantage-line absolute -left-[2px] top-0 h-0 w-[2px] bg-primary"></span>
-                                    <span class="advantage-title block text-[15px] lg:text-[18px] font-bold">
+                                    <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
                                         Profesional & Terukur
                                     </span>
                                     <div class="advantage-description mt-2 max-w-[580px]">
-                                        <p class="max-md:text-[14px] lg:text-[16px] leading-6 text-bodytext">
-                                            Proses kerja dilakukan secara profesional
-                                            dengan pendekatan terukur untuk
-                                            memberikan hasil yang jelas.
+                                        <p class="max-md:text-[14px] text-[16px] leading-6 text-bodytext">
+                                            Proses kerja dilakukan secara profesional dengan pendekatan terukur untuk memberikan hasil yang jelas.
                                         </p>
                                     </div>
                                 </article>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- TENTANG KAMI --}}
+        <section id="tentang-kami" class="overflow-hidden bg-white py-14 sm:py-16 lg:py-20">
+            <div class="mx-auto w-full max-w-[1400px] px-6">
+                <div x-data="aboutUsSlider()" x-init="init()" class="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14 xl:gap-20">
+                    {{-- =================================================
+            LEFT: CONTENT
+            ================================================== --}}
+                    <div class="relative min-w-0" data-aos="fade-right" data-aos-duration="800" data-aos-offset="100">
+                        {{-- Content slider --}}
+                        <div class="relative overflow-hidden">
+                            {{-- Tentang Kami --}}
+                            <div x-show="activeSlide === 0" x-transition:enter="transition duration-500 ease-out" x-transition:enter-start="translate-x-8 opacity-0" x-transition:enter-end="translate-x-0 opacity-100"
+                                x-transition:leave="absolute inset-0 transition duration-300 ease-in" x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="-translate-x-8 opacity-0" x-cloak>
+                                <h2 class="text-3xl font-bold leading-tight text-[#102238] sm:text-4xl">
+                                    Tentang Kami
+                                </h2>
+                                <div class="mt-7 max-w-[580px] space-y-5 text-[15px] leading-7 text-bodytext sm:text-base sm:leading-7">
+                                    <p>
+                                        <strong class="font-bold text-[#667085]">PT. Arjuna Travora Nusantara</strong>
+                                        merupakan perusahaan yang bergerak di bidang teknologi informasi dan pengadaan perangkat teknologi dengan menyediakan solusi software, hardware, infrastruktur IT, sistem keamanan dan perangkat digital display.
+                                    </p>
+                                    <p>
+                                        Kami membantu perusahaan, instansi pemerintah, fasilitas kesehatan, institusi pendidikan, maupun organisasi dalam memenuhi kebutuhan teknologi melalui layanan yang terintegrasi, mulai dari konsultasi,
+                                        perencanaan, pengadaan, pengembangan, instalasi, implementasi hingga dukungan teknis.
+                                    </p>
+                                </div>
+                            </div>
+                            {{-- Visi & Misi --}}
+                            <div x-show="activeSlide === 1" x-transition:enter="transition duration-500 ease-out" x-transition:enter-start="translate-x-8 opacity-0" x-transition:enter-end="translate-x-0 opacity-100"
+                                x-transition:leave="absolute inset-0 transition duration-300 ease-in" x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="-translate-x-8 opacity-0" x-cloak>
+                                <h2 class="text-3xl font-bold leading-tight text-[#102238] sm:text-4xl">
+                                    Visi & Misi
+                                </h2>
+                                <div class="mt-8 max-w-[650px] text-bodytext">
+                                    <div>
+                                        <h3 class="text-2xl font-bold text-[#667085]">
+                                            Visi
+                                        </h3>
+                                        <p class="mt-3 text-[15px] leading-7 sm:text-base">
+                                            Menjadi penyedia solusi IT dan pengadaan perangkat terintegrasi yang terdepan dan terpercaya.
+                                        </p>
+                                    </div>
+                                    <div class="mt-8">
+                                        <h3 class="text-2xl font-bold text-[#667085]">
+                                            Misi
+                                        </h3>
+                                        <ul class="mt-4 space-y-3 text-[15px] leading-7 sm:text-base">
+                                            <li class="flex gap-3">
+                                                <span class="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-bodytext"></span>
+                                                <span><strong>Solusi IT Lengkap:</strong> Menyediakan software, hardware, infrastruktur IT, keamanan, dan digital display.</span>
+                                            </li>
+                                            <li class="flex gap-3">
+                                                <span class="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-bodytext"></span>
+                                                <span><strong>Layanan Terpadu:</strong> Memberikan layanan dari konsultasi, pengadaan, hingga dukungan teknis.</span>
+                                            </li>
+                                            <li class="flex gap-3">
+                                                <span class="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-bodytext"></span>
+                                                <span><strong>Mitra Sektor:</strong> Membantu percepatan digitalisasi sektor bisnis, pemerintah, kesehatan, dan pendidikan.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Navigation --}}
+                        <div class="mt-10 flex items-center gap-2 sm:mt-12" data-aos="fade-up" data-aos-delay="150" data-aos-duration="700">
+                            <button type="button" @click="previous()" :disabled="activeSlide === 0"
+                                class="group flex h-[62px] w-[62px] items-center justify-center rounded-l-xl border border-[#E5E7EB] bg-white transition-all duration-300 hover:border-primary hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50"
+                                aria-label="Konten sebelumnya">
+                                <svg class="h-6 w-6 text-[#667085] transition-colors duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                    <path d="M15 18L9 12L15 6" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                            <button type="button" @click="next()" :disabled="activeSlide === slides.length - 1"
+                                class="group flex h-[62px] w-[62px] items-center justify-center rounded-r-xl border border-[#D8DDE7] bg-white transition-all duration-300 hover:border-primary hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50"
+                                aria-label="Konten berikutnya">
+                                <svg class="h-6 w-6 text-[#667085] transition-colors duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                    <path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    {{-- =================================================
+            RIGHT: GALLERY
+            ================================================== --}}
+                    <div class="relative" data-aos="fade-left" data-aos-duration="900" data-aos-delay="100" data-aos-offset="100">
+                        <div class="relative aspect-[1.28/1] overflow-hidden rounded-[26px] bg-[#F5F6F8] sm:aspect-[1.35/1]">
+                            {{-- Main images --}}
+                            <template x-for="(image, index) in gallery" :key="index">
+                                <img x-show="activeGallery === index" x-transition:enter="transition duration-700 ease-out" x-transition:enter-start="scale-105 opacity-0" x-transition:enter-end="scale-100 opacity-100" :src="image.src"
+                                    :alt="image.alt" class="absolute inset-0 h-full w-full object-cover" x-cloak>
+                            </template>
+                            {{-- Gallery thumbnails --}}
+                            <div class="absolute bottom-3 right-3 z-20 flex gap-2 sm:bottom-4 sm:right-4 sm:gap-2.5">
+                                <template x-for="(image, index) in gallery" :key="`thumb-${index}`">
+                                    <button type="button" @click="selectGallery(index)" class="relative h-[54px] w-[54px] overflow-hidden rounded-xl border-2 bg-white shadow-sm transition-all duration-300 sm:h-[60px] sm:w-[60px]"
+                                        :class="activeGallery === index ? 'border-primary' : 'border-white/80'" :aria-label="`Lihat foto ${index + 1}`">
+                                        <img :src="image.src" :alt="image.alt" class="h-full w-full object-cover">
+                                        <span x-show="activeGallery !== index" class="absolute inset-0 bg-white/10"></span>
+                                    </button>
+                                </template>
+                            </div>
+
+                            {{-- <img src="{{ asset('images/shapes/hero-cutout.svg') }}" alt="" aria-hidden="true" class="max-md:hidden absolute md:bottom-[54px] lg:bottom-[80px] right-[-4px] h-[131px] w-[112px] pointer-events-none"> --}}
+                            <div class="absolute bottom-[-4px] right-[100px] h-[84.5px] sm:h-[101px] max-sm:w-40 w-48 pointer-events-none overflow-hidden flex items-end justify-end">
+                                <img src="{{ asset('images/shapes/hero-cutout-2.svg') }}" aria-hidden="true" class="w-48 pointer-events-none">
+                            </div>
+                            <div class="absolute bottom-[-4px] right-[140px] sm:right-[150px] h-[84.5px] sm:h-[101px] max-sm:w-40 w-48 pointer-events-none overflow-hidden flex items-end justify-end">
+                                <img src="{{ asset('images/shapes/hero-cutout-2.svg') }}" aria-hidden="true" class="w-48 pointer-events-none">
+                            </div>
+                            <img src="{{ asset('images/shapes/hero-cutout-2.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
                         </div>
                     </div>
                 </div>
