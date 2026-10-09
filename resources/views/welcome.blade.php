@@ -53,8 +53,8 @@
                             Nusantara
                         </h2>
 
-                        <img src="{{ asset('images/shapes/hero-cutout.svg') }}" alt="" aria-hidden="true" class="max-md:hidden absolute md:bottom-[54px] lg:bottom-[80px] right-[-4px] h-[131px] w-[112px] pointer-events-none">
-                        <img src="{{ asset('images/shapes/hero-cutout-2.svg') }}" alt="" aria-hidden="true" class="md:hidden absolute bottom-[46px] right-[-1px] w-50 pointer-events-none">
+                        <img src="{{ asset('images/shapes/svg-white-potrait.svg') }}" alt="" aria-hidden="true" class="max-md:hidden absolute md:bottom-[54px] lg:bottom-[80px] right-[-4px] h-[131px] w-[112px] pointer-events-none">
+                        <img src="{{ asset('images/shapes/svg-white-landscape.svg') }}" alt="" aria-hidden="true" class="md:hidden absolute bottom-[46px] right-[-1px] w-50 pointer-events-none">
 
 
                         {{-- Tombol slider --}}
@@ -89,7 +89,7 @@
                             </div>
                         </template>
 
-                        <img src="{{ asset('images/shapes/hero-cutout.svg') }}" alt="" aria-hidden="true" class="absolute bottom-[-7px] left-[-3px] h-[131px] w-[112px] -scale-x-100 pointer-events-none">
+                        <img src="{{ asset('images/shapes/svg-white-potrait.svg') }}" alt="" aria-hidden="true" class="absolute bottom-[-7px] left-[-3px] h-[131px] w-[112px] -scale-x-100 pointer-events-none">
 
                     </div>
                 </div>
@@ -194,7 +194,8 @@
                             {{-- DAFTAR KEUNGGULAN --}}
                             <div class="advantages-items">
                                 {{-- ITEM 01 --}}
-                                <article class="advantage-item is-active relative border-l-2 border-[#D8DDE7] pl-4 sm:pl-5" data-index="0" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
+                                {{-- <article class="advantage-item is-active relative border-l-2 border-[#D8DDE7] pl-4 sm:pl-5" data-index="0" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500"> --}}
+                                <article class="advantage-item is-active relative border-l-2 border-[#D8DDE7] pl-4 sm:pl-5" data-index="0">
                                     {{-- Active line --}}
                                     <span class="advantage-line absolute -left-[2px] top-0 h-full w-[2px] bg-primary"></span>
                                     <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
@@ -207,7 +208,8 @@
                                     </div>
                                 </article>
                                 {{-- ITEM 02 --}}
-                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="1" data-aos="fade-up" data-aos-duration="700" data-aos-delay="600">
+                                {{-- <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="1" data-aos="fade-up" data-aos-duration="700" data-aos-delay="600"> --}}
+                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="1">
                                     <span class="advantage-line absolute -left-[2px] top-0 h-0 w-[2px] bg-primary"></span>
                                     <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
                                         Solusi Terintegrasi
@@ -219,7 +221,8 @@
                                     </div>
                                 </article>
                                 {{-- ITEM 03 --}}
-                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="2" data-aos="fade-up" data-aos-duration="700" data-aos-delay="700">
+                                {{-- <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="2" data-aos="fade-up" data-aos-duration="700" data-aos-delay="700"> --}}
+                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="2">
                                     <span class="advantage-line absolute -left-[2px] top-0 h-0 w-[2px] bg-primary"></span>
                                     <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
                                         Dukungan Teknis
@@ -231,7 +234,8 @@
                                     </div>
                                 </article>
                                 {{-- ITEM 04 --}}
-                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="3" data-aos="fade-up" data-aos-duration="700" data-aos-delay="800">
+                                {{-- <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="3" data-aos="fade-up" data-aos-duration="700" data-aos-delay="800"> --}}
+                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="3">
                                     <span class="advantage-line absolute -left-[2px] top-0 h-0 w-[2px] bg-primary"></span>
                                     <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
                                         Profesional & Terukur
@@ -352,15 +356,226 @@
                                 </template>
                             </div>
 
-                            {{-- <img src="{{ asset('images/shapes/hero-cutout.svg') }}" alt="" aria-hidden="true" class="max-md:hidden absolute md:bottom-[54px] lg:bottom-[80px] right-[-4px] h-[131px] w-[112px] pointer-events-none"> --}}
+                            {{-- <img src="{{ asset('images/shapes/svg-white-potrait.svg') }}" alt="" aria-hidden="true" class="max-md:hidden absolute md:bottom-[54px] lg:bottom-[80px] right-[-4px] h-[131px] w-[112px] pointer-events-none"> --}}
                             <div class="absolute bottom-[-4px] right-[100px] h-[84.5px] sm:h-[101px] max-sm:w-40 w-48 pointer-events-none overflow-hidden flex items-end justify-end">
-                                <img src="{{ asset('images/shapes/hero-cutout-2.svg') }}" aria-hidden="true" class="w-48 pointer-events-none">
+                                <img src="{{ asset('images/shapes/svg-white-landscape.svg') }}" aria-hidden="true" class="w-48 pointer-events-none">
                             </div>
                             <div class="absolute bottom-[-4px] right-[140px] sm:right-[150px] h-[84.5px] sm:h-[101px] max-sm:w-40 w-48 pointer-events-none overflow-hidden flex items-end justify-end">
-                                <img src="{{ asset('images/shapes/hero-cutout-2.svg') }}" aria-hidden="true" class="w-48 pointer-events-none">
+                                <img src="{{ asset('images/shapes/svg-white-landscape.svg') }}" aria-hidden="true" class="w-48 pointer-events-none">
                             </div>
-                            <img src="{{ asset('images/shapes/hero-cutout-2.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
+                            <img src="{{ asset('images/shapes/svg-white-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- LAYANAN KAMI --}}
+        <section id="layanan" class="bg-white">
+            <div id="services-story" class="relative">
+                <div id="services-pin" class="overflow-hidden bg-[#F9FAFB] py-16 sm:py-20 lg:py-24">
+                    {{-- HEADER --}}
+                    <div class="mx-auto w-full max-w-[1400px] px-6">
+                        <div data-aos="fade-up" data-aos-duration="800">
+                            <h2 class="text-3xl font-bold leading-tight text-[#102238] sm:text-4xl">
+                                Layanan Kami
+                            </h2>
+                            <p class="mt-3 max-w-[720px] text-[15px] leading-6 text-bodytext sm:text-base">
+                                Penyedia teknologi B2B: dari baris kode aplikasi hingga kabel optik dan rak server data center.
+                            </p>
+                        </div>
+                    </div>
+
+                    {{-- CARD TRACK --}}
+                    <div id="services-viewport" class="mt-8 overflow-hidden pl-6 lg:pl-[max(24px,calc((100vw-1400px)/2))]">
+                        <div id="services-track" class="flex w-max gap-7 pr-6 lg:gap-8 pr-[240px] lg:pr-[440px]">
+                            {{-- SOFTWARE DEVELOPMENT --}}
+                            <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:w-[320px] lg:w-[360px] xl:w-[380px]">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-[#102238]">
+                                    <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
+                                        <rect x="5" y="4" width="22" height="18" rx="2" stroke="currentColor" stroke-width="2" />
+                                        <path d="M11 28H21M16 22V28M11 14L14 17L11 20M21 14L18 17L21 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <h3 class="mt-4 text-[18px] font-bold text-[#102238]">
+                                    Software Development
+                                </h3>
+                                <p class="mt-3 text-[14px] leading-5 text-bodytext">
+                                    Pengembangan sistem ERP, CRM, portal web, serta aplikasi mobile kustom untuk otomatisasi alur kerja korporat dan integrasi API instansi.
+                                </p>
+                                <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
+                                    Konsultasi
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
+                                    </svg>
+                                </a>
+
+                                <img src="{{ asset('images/shapes/svg-F9FAFB-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
+                            </article>
+                            {{-- HARDWARE PROCUREMENT --}}
+                            <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-[#102238]">
+                                    <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
+                                        <rect x="8" y="8" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2" />
+                                        <rect x="12" y="12" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2" />
+                                        <path d="M8 12H4M8 16H4M8 20H4M28 12H24M28 16H24M28 20H24M12 8V4M16 8V4M20 8V4M12 28V24M16 28V24M20 28V24" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                                <h3 class="mt-4 text-[18px] font-bold text-[#102238]">
+                                    Hardware Procurement
+                                </h3>
+                                <p class="mt-3 text-[14px] leading-5 text-bodytext">
+                                    Pengadaan PC, laptop enterprise, server berdaya tahan tinggi, printer industri, serta perangkat kasir POS bergaransi distributor resmi.
+                                </p>
+                                <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
+                                    Konsultasi
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
+                                    </svg>
+                                </a>
+
+                                <img src="{{ asset('images/shapes/svg-F9FAFB-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
+                            </article>
+                            {{-- IT INFRASTRUCTURE --}}
+                            <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-[#102238]">
+                                    <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
+                                        <path d="M6 25H26M8 25V16H13V25M13 16L17 12L21 16M21 16V25M21 11C23 11 25 9 25 7M21 7C22 7 23 6 23 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <h3 class="mt-4 text-[18px] font-bold text-[#102238]">
+                                    IT Infrastructure
+                                </h3>
+                                <p class="mt-3 text-[14px] leading-5 text-bodytext">
+                                    Pemasangan kabel fiber optic, data center rack, router gateway, switch manageable L2/L3, serta managed Wi-Fi kantor skala ribuan user.
+                                </p>
+                                <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
+                                    Konsultasi
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
+                                    </svg>
+                                </a>
+
+                                <img src="{{ asset('images/shapes/svg-F9FAFB-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
+                            </article>
+                            {{-- CCTV & SECURITY --}}
+                            <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-[#102238]">
+                                    <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
+                                        <rect x="5" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2" />
+                                        <path d="M21 14L27 11V21L21 18M10 24H22M16 21V24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <h3 class="mt-4 text-[18px] font-bold text-[#102238]">
+                                    CCTV & Security
+                                </h3>
+                                <p class="mt-3 text-[14px] leading-5 text-bodytext">
+                                    Solusi IP camera surveillance resolusi tinggi, access control pintu biometric & RFID, alarm kebakaran, dan perimeter security alert.
+                                </p>
+                                <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
+                                    Konsultasi
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
+                                    </svg>
+                                </a>
+
+                                <img src="{{ asset('images/shapes/svg-F9FAFB-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
+                            </article>
+                            {{-- VIDEOTRON & DIGITAL DISPLAY --}}
+                            <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-[#102238]">
+                                    <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
+                                        <rect x="4" y="6" width="24" height="17" rx="2" stroke="currentColor" stroke-width="2" />
+                                        <path d="M11 27H21M16 23V27M9 11H23M9 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                                <h3 class="mt-4 text-[18px] font-bold text-[#102238]">
+                                    Videotron & Digital Display
+                                </h3>
+                                <p class="mt-3 text-[14px] leading-5 text-bodytext">
+                                    Instalasi LED Videotron, interactive flat panel display meeting room, dan commercial digital signage.
+                                </p>
+                                <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
+                                    Konsultasi
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
+                                    </svg>
+                                </a>
+
+                                <img src="{{ asset('images/shapes/svg-F9FAFB-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        {{-- SOLUSI BERBAGAI SEKTOR --}}
+        <section id="solusi-sektor" class="bg-white py-16 sm:py-20 lg:py-24">
+            <div class="mx-auto w-full max-w-[1400px] px-6">
+                {{-- BARIS 1: HEADER --}}
+                <div class="mb-8 sm:mb-10" data-aos="fade-up">
+                    <h2 class="text-3xl font-bold leading-tight text-[#102238] sm:text-4xl">
+                        Solusi untuk Berbagai Sektor
+                    </h2>
+                    <p class="mt-3 max-w-[650px] text-[15px] leading-6 text-bodytext sm:text-base">
+                        Solusi infrastruktur dan perangkat lunak yang dirancang khusus untuk memenuhi standar industri dan menyederhanakan operasional harian Anda.
+                    </p>
+                </div>
+
+                {{-- BARIS 2: GAMBAR DAN KONTEN --}}
+                <div x-data="sectorSolutions()" class="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 xl:gap-20">
+                    {{-- KOLOM KIRI: GAMBAR --}}
+                    <div class="relative aspect-[4/3] w-full overflow-hidden rounded-[24px] sm:aspect-[5/4] lg:aspect-[4/3]" data-aos="fade-right">
+                        <template x-for="(slide, index) in slides" :key="slide.category">
+                            <div x-show="activeSlide === index" class="absolute inset-0" x-transition:enter="transition-opacity duration-500" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+                                <img :src="slide.image" :alt="slide.title" class="h-full w-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#113883]/95 via-[#113883]/20 to-transparent"></div>
+                                <div class="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
+                                    <p class="text-xl font-bold sm:text-2xl" x-text="slide.category"></p>
+                                    <p class="mt-2 max-w-sm text-sm leading-5 sm:text-[15px]" x-text="slide.title"></p>
+                                </div>
+                            </div>
+                        </template>
+
+
+                        {{-- NAVIGASI GAMBAR --}}
+                        <img src="{{ asset('images/shapes/svg-white-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[0px] max-sm:w-44 w-50 pointer-events-none">
+
+                        <div class="absolute bottom-[17px] right-[10px] z-10 flex items-center gap-2">
+                            <button type="button" @click="previous()" aria-label="Sektor sebelumnya"
+                                class="group flex max-sm:h-[54px] max-sm:w-[54px] h-[62px] w-[62px] items-center justify-center rounded-l-xl border border-[#D8DDE7] bg-white transition-all duration-300 hover:border-primary hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50">
+                                <svg class="h-6 w-6 text-[#667085] transition-colors duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                    <path d="M15 18L9 12L15 6" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                            <button type="button" @click="next()" aria-label="Sektor berikutnya"
+                                class="group flex max-sm:h-[54px] max-sm:w-[54px] h-[62px] w-[62px] items-center justify-center rounded-r-xl border border-[#D8DDE7] bg-white transition-all duration-300 hover:border-primary hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50">
+                                <svg class="h-6 w-6 text-[#667085] transition-colors duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                    <path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- KOLOM KANAN: KONTEN --}}
+                    <div data-aos="fade-left">
+                        <h3 class="text-xl font-semibold leading-snug text-primary sm:text-2xl" x-text="slides[activeSlide].heading"></h3>
+                        <p class="mt-4 text-sm leading-6 text-bodytext sm:text-[15px]" x-text="slides[activeSlide].description"></p>
+
+                        <ul class="mt-5 space-y-5">
+                            <template x-for="(feature, index) in slides[activeSlide].features" :key="index">
+                                <li class="flex items-start gap-4">
+                                    <span class="mt-1 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-[#FFB800] text-white">
+                                        <svg class="h-3 w-3" viewBox="0 0 16 16" fill="none">
+                                            <path d="M3.5 8L6.5 11L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </span>
+                                    <span class="text-sm leading-6 text-bodytext sm:text-[15px]" x-text="feature"></span>
+                                </li>
+                            </template>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -399,6 +614,56 @@
                         % this.slides.length
                 }
             }
+        }
+
+        function sectorSolutions() {
+            return {
+                activeSlide: 0,
+                slides: [
+                    {
+                        category: "HealthCare",
+                        title: "Sistem Manajemen Rumah Sakit (SIMRS) & Keamanan Data Medis",
+                        image: "{{ asset('images/solutions/healthcare.png') }}",
+                        heading: "Sistem Manajemen Rumah Sakit (SIMRS) & Keamanan Data Medis",
+                        description: "Membangun ekosistem digital rumah sakit yang aman dan terintegrasi. Kami memastikan sistem Rekam Medis Elektronik (RME) terhubung lancar dengan operasional klinis, didukung infrastruktur anti-down dan perlindungan data pasien standar Kemenkes.",
+                        features: [
+                            "Integrasi dengan platform SatuSehat Kemenkes RI serta enkripsi data end-to-end untuk keamanan maksimal.",
+                            "Jaringan internet ganda (Dual-ISP) dengan failover otomatis untuk menjaga operasional rumah sakit tetap berjalan 24/7.",
+                            "Pemantauan keamanan terpusat melalui Smart CCTV dan sensor suhu IoT untuk ruang farmasi."
+                        ]
+                    },
+                    {
+                        category: "Corporate",
+                        title: "Global SD-WAN Mesh & Akses Private Multi-Cloud",
+                        image: "{{ asset('images/solutions/corporate.png') }}",
+                        heading: "Global SD-WAN Mesh & Akses Private Multi-Cloud",
+                        description: "Optimalisasi konektivitas kantor cabang terdistribusi dengan orkestrasi software-defined WAN, koneksi cloud, dan perlindungan jaringan berbasis zero-trust.",
+                        features: [
+                            "Optimasi jalur koneksi jaringan untuk meningkatkan efisiensi dan mengurangi biaya operasional.",
+                            "Integrasi Zero Trust Network Access (ZTNA) dan CASB untuk mendukung akses kerja yang aman.",
+                            "Konektivitas cloud yang andal dengan pemantauan jaringan secara real-time."
+                        ]
+                    },
+                    {
+                        category: "Government",
+                        title: "Intranet Berdaulat Tertutup & Integrasi SPBE Nasional",
+                        image: "{{ asset('images/solutions/government.png') }}",
+                        heading: "Intranet Berdaulat Tertutup & Integrasi SPBE Nasional",
+                        description: "Infrastruktur komunikasi data tertutup untuk mendukung kedaulatan data, integrasi pusat data nasional, serta pengamanan informasi instansi pemerintah.",
+                        features: [
+                            "Arsitektur jaringan tertutup melalui Dedicated Private APN.",
+                            "Dukungan infrastruktur untuk memenuhi kebutuhan keamanan dan regulasi SPBE.",
+                            "Interkoneksi antarinstansi dengan perlindungan dan enkripsi jaringan."
+                        ]
+                    }
+                ],
+                next() {
+                    this.activeSlide = (this.activeSlide + 1) % this.slides.length;
+                },
+                previous() {
+                    this.activeSlide = (this.activeSlide - 1 + this.slides.length) % this.slides.length;
+                }
+            };
         }
     </script>
 

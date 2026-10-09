@@ -136,11 +136,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // ITEM
             // ==================================================
 
-            gsap.to(item, {
+            gsap.set(item, {
                 opacity: isActive ? 1 : 0.35,
-                duration: 0.15,
-                ease: "power1.out",
-                overwrite: true,
             });
 
             // ==================================================
@@ -148,12 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
             // ==================================================
 
             if (title) {
-                gsap.to(title, {
+                gsap.set(title, {
                     color: isActive ? "#113883" : "#C9D2E3",
                     opacity: isActive ? 1 : 0.9,
-                    duration: 0.15,
-                    ease: "power1.out",
-                    overwrite: true,
                 });
             }
 
@@ -236,6 +230,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     activeIndex = 0;
 
+    const entranceObserver = new IntersectionObserver(
+        (entries, observer) => {
+            if (!entries[0].isIntersecting) {
+                return;
+            }
+
+            items.forEach((item, i) => {
+                gsap.fromTo(
+                    item,
+                    {
+                        y: 35,
+                    },
+                    {
+                        y: 0,
+                        duration: 0.7,
+                        delay: i * 0.15,
+                        ease: "power2.out",
+                        overwrite: true,
+                    },
+                );
+            });
+
+            observer.disconnect();
+        },
+        {
+            threshold: 0.15,
+        },
+    );
+
+    entranceObserver.observe(story);
+
     // ========================================================
     // SCROLL STORY
     // ========================================================
@@ -260,6 +285,51 @@ document.addEventListener("DOMContentLoaded", () => {
     // REFRESH SCROLLTRIGGER
     // ========================================================
 
+    window.addEventListener("load", () => {
+        ScrollTrigger.refresh();
+    });
+});
+
+// ============================================================
+// SECTION: LAYANAN KAMI
+// ============================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+    const story = document.querySelector("#services-story");
+    const pin = document.querySelector("#services-pin");
+    const viewport = document.querySelector("#services-viewport");
+    const track = document.querySelector("#services-track");
+    if (!story || !pin || !viewport || !track) {
+        return;
+    }
+    const getScrollDistance = () => {
+        return Math.max(0, track.scrollWidth - viewport.clientWidth);
+    };
+    gsap.to(track, {
+        x: () => -getScrollDistance(),
+        ease: "none",
+        scrollTrigger: {
+            trigger: story,
+            start: () => {
+                if (window.innerWidth < 640) {
+                    return "top 120px";
+                }
+                if (window.innerWidth < 1024) {
+                    return "top 140px";
+                }
+                return "top 180px";
+            },
+            end: () => `+=${getScrollDistance()}`,
+            pin: pin,
+            pinSpacing: true,
+            scrub: 1,
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
+        },
+    });
+    window.addEventListener("resize", () => {
+        ScrollTrigger.refresh();
+    });
     window.addEventListener("load", () => {
         ScrollTrigger.refresh();
     });
