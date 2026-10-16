@@ -53,12 +53,12 @@
                             Nusantara
                         </h2>
 
-                        <img src="{{ asset('images/shapes/svg-white-potrait.svg') }}" alt="" aria-hidden="true" class="max-md:hidden absolute md:bottom-[54px] lg:bottom-[80px] right-[-4px] h-[131px] w-[112px] pointer-events-none">
-                        <img src="{{ asset('images/shapes/svg-white-landscape.svg') }}" alt="" aria-hidden="true" class="md:hidden absolute bottom-[46px] right-[-1px] w-50 pointer-events-none">
+                        <img src="{{ asset('images/shapes/svg-white-potrait.svg') }}" aria-hidden="true" class="max-md:hidden absolute md:bottom-[54px] lg:bottom-[80px] right-[-4px] h-[131px] w-[112px] pointer-events-none">
+                        <img src="{{ asset('images/shapes/svg-white-landscape.svg') }}" aria-hidden="true" class="md:hidden absolute bottom-[46px] right-[-1px] w-50 pointer-events-none">
 
 
                         {{-- Tombol slider --}}
-                        <div class="absolute bottom-[60px] md:bottom-[75px] lg:bottom-[100px] max-md:right-[10px] right-[-76px] z-50 flex items-center gap-1.5">
+                        <div class="absolute bottom-[60px] md:bottom-[75px] lg:bottom-[100px] max-md:right-[10px] right-[-74px] z-50 flex items-center gap-1.5">
                             <button type="button" @click="previous()" aria-label="Slide sebelumnya"
                                 class="group flex h-[62px] w-[62px] items-center justify-center rounded-l-xl border border-[#D8DDE7] bg-white transition-all duration-300 hover:border-primary hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50">
                                 <svg class="h-6 w-6 text-[#667085] transition-colors duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
@@ -89,7 +89,7 @@
                             </div>
                         </template>
 
-                        <img src="{{ asset('images/shapes/svg-white-potrait.svg') }}" alt="" aria-hidden="true" class="absolute bottom-[-7px] left-[-3px] h-[131px] w-[112px] -scale-x-100 pointer-events-none">
+                        <img src="{{ asset('images/shapes/svg-white-potrait.svg') }}" aria-hidden="true" class="absolute bottom-[-7px] left-[-4px] h-[131px] w-[112px] -scale-x-100 pointer-events-none">
 
                     </div>
                 </div>
@@ -164,8 +164,8 @@
             <div class="mx-auto w-full max-w-[1400px] px-6">
                 <div id="advantages-story" class="relative min-h-[2800px] md:min-h-[2800px] lg:min-h-[2400px]">
                     {{-- CONTAINER KEUNGGULAN --}}
-                    <div id="advantages-card" class="sticky top-24 grid min-h-[680px] overflow-hidden rounded-[22px] bg-[#F5F6F8] md:top-32 md:min-h-[560px] md:grid-cols-2 lg:top-40 lg:min-h-[560px]" data-aos="fade-up" data-aos-duration="900"
-                        data-aos-easing="ease-out-cubic">
+                    <div id="advantages-card" class="sticky top-[max(5rem,calc(50vh-340px))] md:top-[max(6rem,calc(50vh-280px))] grid w-full min-h-[680px] overflow-hidden rounded-[22px] bg-[#F5F6F8] md:min-h-[560px] md:grid-cols-2 lg:min-h-[560px]"
+                        data-aos="fade-up" data-aos-duration="900" data-aos-easing="ease-out-cubic">
                         {{-- GAMBAR --}}
                         <div class="relative h-[320px] min-h-0 overflow-hidden sm:h-[360px] md:h-[560px] lg:h-[620px]" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="150" data-aos-easing="ease-out-cubic">
                             {{-- Image 01 --}}
@@ -387,20 +387,20 @@
                     </div>
 
                     {{-- CARD TRACK --}}
-                    <div id="services-viewport" class="mt-8 overflow-hidden pl-6 lg:pl-[max(24px,calc((100vw-1400px)/2))]">
+                    <div id="services-viewport" class="mt-8 overflow-hidden pl-6 lg:pl-[max(24px,calc((100vw-1400px)/2))]" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
                         <div id="services-track" class="flex w-max gap-7 pr-6 lg:gap-8 pr-[240px] lg:pr-[440px]">
                             {{-- SOFTWARE DEVELOPMENT --}}
                             <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:w-[320px] lg:w-[360px] xl:w-[380px]">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-[#102238]">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-primary">
                                     <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
                                         <rect x="5" y="4" width="22" height="18" rx="2" stroke="currentColor" stroke-width="2" />
                                         <path d="M11 28H21M16 22V28M11 14L14 17L11 20M21 14L18 17L21 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </div>
-                                <h3 class="mt-4 text-[18px] font-bold text-[#102238]">
+                                <h3 class="mt-4 text-[18px] md:text-[20px] font-bold text-primary">
                                     Software Development
                                 </h3>
-                                <p class="mt-3 text-[14px] leading-5 text-bodytext">
+                                <p class="mt-3 text-[14px] leading-6 text-bodytext">
                                     Pengembangan sistem ERP, CRM, portal web, serta aplikasi mobile kustom untuk otomatisasi alur kerja korporat dan integrasi API instansi.
                                 </p>
                                 <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
@@ -414,17 +414,17 @@
                             </article>
                             {{-- HARDWARE PROCUREMENT --}}
                             <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-[#102238]">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-primary">
                                     <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
                                         <rect x="8" y="8" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2" />
                                         <rect x="12" y="12" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2" />
                                         <path d="M8 12H4M8 16H4M8 20H4M28 12H24M28 16H24M28 20H24M12 8V4M16 8V4M20 8V4M12 28V24M16 28V24M20 28V24" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                                     </svg>
                                 </div>
-                                <h3 class="mt-4 text-[18px] font-bold text-[#102238]">
+                                <h3 class="mt-4 text-[18px] md:text-[20px] font-bold text-primary">
                                     Hardware Procurement
                                 </h3>
-                                <p class="mt-3 text-[14px] leading-5 text-bodytext">
+                                <p class="mt-3 text-[14px] leading-6 text-bodytext">
                                     Pengadaan PC, laptop enterprise, server berdaya tahan tinggi, printer industri, serta perangkat kasir POS bergaransi distributor resmi.
                                 </p>
                                 <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
@@ -438,15 +438,15 @@
                             </article>
                             {{-- IT INFRASTRUCTURE --}}
                             <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-[#102238]">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-primary">
                                     <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
                                         <path d="M6 25H26M8 25V16H13V25M13 16L17 12L21 16M21 16V25M21 11C23 11 25 9 25 7M21 7C22 7 23 6 23 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </div>
-                                <h3 class="mt-4 text-[18px] font-bold text-[#102238]">
+                                <h3 class="mt-4 text-[18px] md:text-[20px] font-bold text-primary">
                                     IT Infrastructure
                                 </h3>
-                                <p class="mt-3 text-[14px] leading-5 text-bodytext">
+                                <p class="mt-3 text-[14px] leading-6 text-bodytext">
                                     Pemasangan kabel fiber optic, data center rack, router gateway, switch manageable L2/L3, serta managed Wi-Fi kantor skala ribuan user.
                                 </p>
                                 <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
@@ -460,16 +460,16 @@
                             </article>
                             {{-- CCTV & SECURITY --}}
                             <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-[#102238]">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-primary">
                                     <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
                                         <rect x="5" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2" />
                                         <path d="M21 14L27 11V21L21 18M10 24H22M16 21V24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </div>
-                                <h3 class="mt-4 text-[18px] font-bold text-[#102238]">
+                                <h3 class="mt-4 text-[18px] md:text-[20px] font-bold text-primary">
                                     CCTV & Security
                                 </h3>
-                                <p class="mt-3 text-[14px] leading-5 text-bodytext">
+                                <p class="mt-3 text-[14px] leading-6 text-bodytext">
                                     Solusi IP camera surveillance resolusi tinggi, access control pintu biometric & RFID, alarm kebakaran, dan perimeter security alert.
                                 </p>
                                 <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
@@ -483,16 +483,16 @@
                             </article>
                             {{-- VIDEOTRON & DIGITAL DISPLAY --}}
                             <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-[#102238]">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-primary">
                                     <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
                                         <rect x="4" y="6" width="24" height="17" rx="2" stroke="currentColor" stroke-width="2" />
                                         <path d="M11 27H21M16 23V27M9 11H23M9 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                                     </svg>
                                 </div>
-                                <h3 class="mt-4 text-[18px] font-bold text-[#102238]">
+                                <h3 class="mt-4 text-[18px] md:text-[20px] font-bold text-primary">
                                     Videotron & Digital Display
                                 </h3>
-                                <p class="mt-3 text-[14px] leading-5 text-bodytext">
+                                <p class="mt-3 text-[14px] leading-6 text-bodytext">
                                     Instalasi LED Videotron, interactive flat panel display meeting room, dan commercial digital signage.
                                 </p>
                                 <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
@@ -509,7 +509,6 @@
                 </div>
             </div>
         </section>
-
 
         {{-- SOLUSI BERBAGAI SEKTOR --}}
         <section id="solusi-sektor" class="bg-white py-16 sm:py-20 lg:py-24">
@@ -577,6 +576,138 @@
                             </template>
                         </ul>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- PORTOFOLIO & PROJECT --}}
+        <section id="portofolio" class="bg-white py-16 sm:py-20 lg:py-24">
+            <div class="mx-auto grid w-full max-w-[1400px] grid-cols-1 items-start gap-7 px-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[320px_minmax(0,1fr)] xl:gap-10">
+                {{-- KOLOM KIRI: INTRODUCTION --}}
+                <div class="relative flex min-h-[420px] flex-col overflow-hidden rounded-[26px] bg-[#F7F8FA] p-6 sm:min-h-[460px] sm:p-7 lg:sticky lg:top-28 lg:min-h-[440px] xl:p-8" data-aos="fade-up" data-aos-duration="800">
+                    <h2 class="relative z-10 text-2xl font-extrabold leading-tight text-[#102238] sm:text-4xl">
+                        Portofolio
+                        <br>
+                        & Project
+                    </h2>
+                    <p class="relative z-10 mt-4 max-w-[520px] text-[15px] leading-7 text-bodytext">
+                        Pengalaman menangani instalasi skala menengah hingga proyek infrastruktur kritikal di seluruh wilayah Indonesia.
+                    </p>
+                    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-[220px] overflow-hidden sm:h-[250px]">
+                        <img src="{{ asset('images/portfolio/illustration.png') }}" alt="" aria-hidden="true" class="absolute bottom-0 left-1/2 w-full -translate-x-1/2 object-cover">
+                    </div>
+
+                    <div class="">
+                        <img src="{{ asset('images/shapes/svg-white-landscape-2.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[-1px] w-48 pointer-events-none">
+
+                        <a href="#daftar-portofolio" class="group absolute bottom-5 right-5 z-20 inline-flex items-center gap-1.5 text-md font-semibold text-primary">
+                            Selengkapnya
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                {{-- KOLOM KANAN: DAFTAR PROJECT --}}
+                <div id="daftar-portofolio" class="grid min-w-0 grid-cols-1 items-start gap-5 sm:grid-cols-2 sm:gap-6">
+                    {{-- PROJECT 1 --}}
+                    <a href="#kontak" class="portfolio-card group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] bg-[#F7F8FA] duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <div
+                            class="relative h-0 w-full overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:h-[220px] group-focus-visible:h-[220px] sm:group-hover:h-[250px] sm:group-focus-visible:h-[250px]">
+                            <img src="{{ asset('images/portfolio/portfolio_1.png') }}" alt="Mockup Sistem Klinik Dora Medika" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-100">
+                        </div>
+                        <div class="relative flex min-h-[174px] flex-col p-6 transition-colors duration-500">
+                            <h3 class="max-w-[300px] text-lg font-semibold leading-snug text-[#333333]">
+                                Sistem Klinik Dora
+                                <br>
+                                Medika Sidoarjo
+                            </h3>
+                            <p class="mt-2 text-sm text-bodytext">Web System, Sidoarjo</p>
+                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] transition-all duration-300 group-hover:opacity-0 sm:text-[54px]">2025</span>
+                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] opacity-0 transition-all duration-300 group-hover:opacity-100 sm:text-[54px]">Portfolio</span>
+                        </div>
+
+                        <div class="">
+                            <img src="{{ asset('images/shapes/svg-white-square.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[-1px] w-24 pointer-events-none">
+                            <svg class="absolute bottom-[16px] right-[16px] h-8 w-8 transition-transform duration-300 text-black" viewBox="0 0 32 32" fill="none">
+                                <path d="M8 24L24 8M10 8H24V22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </a>
+
+                    {{-- PROJECT 2 --}}
+                    <a href="#kontak" class="portfolio-card group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] bg-[#F7F8FA] duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <div
+                            class="relative h-0 w-full overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:h-[220px] group-focus-visible:h-[220px] sm:group-hover:h-[250px] sm:group-focus-visible:h-[250px]">
+                            <img src="{{ asset('images/portfolio/portfolio_2.png') }}" alt="Mockup Web Social Commerce Cakning" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-100">
+                        </div>
+                        <div class="relative flex min-h-[174px] flex-col p-6 transition-colors duration-500">
+                            <h3 class="max-w-[280px] text-lg font-semibold leading-snug text-[#333333]">
+                                Web Social
+                                <br>
+                                Commerce Cakning
+                            </h3>
+                            <p class="mt-2 text-sm text-bodytext">E-commerce, Surabaya</p>
+                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] transition-all duration-300 group-hover:opacity-0 sm:text-[54px]">2026</span>
+                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] opacity-0 transition-all duration-300 group-hover:opacity-100 sm:text-[54px]">Project</span>
+                        </div>
+
+                        <div class="">
+                            <img src="{{ asset('images/shapes/svg-white-square.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[-1px] w-24 pointer-events-none">
+                            <svg class="absolute bottom-[16px] right-[16px] h-8 w-8 transition-transform duration-300 text-black" viewBox="0 0 32 32" fill="none">
+                                <path d="M8 24L24 8M10 8H24V22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </a>
+
+                    {{-- PROJECT 3 --}}
+                    <a href="#kontak" class="portfolio-card group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] bg-[#F7F8FA] duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <div
+                            class="relative h-0 w-full overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:h-[220px] group-focus-visible:h-[220px] sm:group-hover:h-[250px] sm:group-focus-visible:h-[250px]">
+                            <img src="{{ asset('images/portfolio/portfolio_3.png') }}" alt="Mockup Sistem Informasi Kesehatan Masyarakat" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-100">
+                        </div>
+                        <div class="relative flex min-h-[174px] flex-col p-6 transition-colors duration-500">
+                            <h3 class="max-w-[300px] text-lg font-semibold leading-snug text-[#333333]">
+                                Sistem Informasi
+                                <br>
+                                Kesehatan Masyarakat
+                            </h3>
+                            <p class="mt-2 text-sm text-bodytext">Web System, Surabaya</p>
+                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] transition-all duration-300 group-hover:opacity-0 sm:text-[54px]">2025</span>
+                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] opacity-0 transition-all duration-300 group-hover:opacity-100 sm:text-[54px]">Project</span>
+                        </div>
+
+                        <div class="">
+                            <img src="{{ asset('images/shapes/svg-white-square.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[-1px] w-24 pointer-events-none">
+                            <svg class="absolute bottom-[16px] right-[16px] h-8 w-8 transition-transform duration-300 text-black" viewBox="0 0 32 32" fill="none">
+                                <path d="M8 24L24 8M10 8H24V22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </a>
+
+                    {{-- PROJECT 4 --}}
+                    <a href="#kontak" class="portfolio-card group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] bg-[#F7F8FA] duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <div
+                            class="relative h-0 w-full overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:h-[220px] group-focus-visible:h-[220px] sm:group-hover:h-[250px] sm:group-focus-visible:h-[250px]">
+                            <img src="{{ asset('images/portfolio/portfolio_4.png') }}" alt="Mockup aplikasi VERTIGO" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-100">
+                        </div>
+                        <div class="relative flex min-h-[174px] flex-col p-6 transition-colors duration-500">
+                            <h3 class="max-w-[300px] text-lg font-semibold leading-snug text-[#333333]">
+                                VERTIGO (Verifikasi Terintegrasi Rujukan Online)
+                            </h3>
+                            <p class="mt-2 text-sm text-bodytext">Mobile Apps, Mojokerto</p>
+                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] transition-all duration-300 group-hover:opacity-0 sm:text-[54px]">2025</span>
+                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] opacity-0 transition-all duration-300 group-hover:opacity-100 sm:text-[54px]">Project</span>
+                        </div>
+
+                        <div class="">
+                            <img src="{{ asset('images/shapes/svg-white-square.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[-1px] w-24 pointer-events-none">
+                            <svg class="absolute bottom-[16px] right-[16px] h-8 w-8 transition-transform duration-300 text-black" viewBox="0 0 32 32" fill="none">
+                                <path d="M8 24L24 8M10 8H24V22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
