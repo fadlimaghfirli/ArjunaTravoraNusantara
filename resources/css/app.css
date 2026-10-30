@@ -52,3 +52,22 @@ a {
 .advantage-description {
     overflow: hidden;
 }
+
+/* ============================================================
+   CARA KAMI BEKERJA
+============================================================ */
+.workflow-item {
+    will-change: opacity;
+}
+
+.workflow-number,
+.workflow-title,
+.workflow-description {
+    transition: color 0.3s ease;
+}
+
+.workflow-dot {
+    transition:
+        transform 0.3s ease,
+        background-color 0.3s ease;
+}

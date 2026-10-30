@@ -334,3 +334,91 @@ document.addEventListener("DOMContentLoaded", () => {
         ScrollTrigger.refresh();
     });
 });
+
+// ============================================================
+// SECTION: CARA KAMI BEKERJA
+// ============================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+    const story = document.querySelector("#workflow-story");
+
+    if (!story) return;
+
+    const items = gsap.utils.toArray(".workflow-item");
+    if (!items.length) return;
+
+    let activeIndex = -1;
+
+    function activateItem(index) {
+        if (index === activeIndex) return;
+        activeIndex = index;
+
+        items.forEach((item, i) => {
+            const number = item.querySelector(".workflow-number");
+            const dot = item.querySelector(".workflow-dot");
+            const title = item.querySelector(".workflow-title");
+            const description = item.querySelector(".workflow-description");
+            const isActive = i === index;
+
+            // Animasi untuk seluruh kontainer item
+            gsap.to(item, {
+                opacity: isActive ? 1 : 0.35,
+                duration: 0.3,
+                ease: "power2.out",
+                overwrite: true,
+            });
+
+            // Ganti warna nomor
+            if (number) {
+                gsap.to(number, {
+                    color: isActive ? "#113883" : "#C9D2E3",
+                    duration: 0.3,
+                });
+            }
+
+            // Ganti warna titik indikator
+            if (dot) {
+                gsap.to(dot, {
+                    backgroundColor: isActive ? "#113883" : "#E5E7EB",
+                    scale: isActive ? 1.2 : 1,
+                    duration: 0.3,
+                });
+            }
+
+            // Ganti warna judul
+            if (title) {
+                gsap.to(title, {
+                    color: isActive ? "#102238" : "#C9D2E3",
+                    duration: 0.3,
+                });
+            }
+
+            // Ganti warna deskripsi
+            if (description) {
+                gsap.to(description, {
+                    color: isActive ? "#667085" : "#C9D2E3",
+                    duration: 0.3,
+                });
+            }
+        });
+    }
+
+    // Set state awal
+    activateItem(0);
+
+    // Memicu trigger saat melakukan scroll
+    ScrollTrigger.create({
+        trigger: story,
+        start: "top top",
+        end: "bottom bottom",
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+            const progress = self.progress;
+            const index = Math.min(
+                items.length - 1,
+                Math.floor(progress * items.length),
+            );
+            activateItem(index);
+        },
+    });
+});
