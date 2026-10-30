@@ -40,5 +40,9 @@ export default defineConfig({
         watch: {
             ignored: ["**/storage/framework/views/**"],
         },
+        // host: '192.168.2.106', // atau masukkan IP laptop Anda, misal: '192.168.1.5'
+        // hmr: {
+        //     host: "192.168.2.106", // Ganti dengan IP Lokal Laptop Anda
+        // },
     },
 });

@@ -19,7 +19,7 @@
 
     <x-navbar />
 
-    <main class="h-[10000px]">
+    <main>
 
         {{-- HERO --}}
         <section id="beranda" x-data="heroSlider()" class="relative overflow-hidden bg-white">
@@ -708,6 +708,131 @@
                             </svg>
                         </div>
                     </a>
+                </div>
+            </div>
+        </section>
+
+        {{-- CARA KAMI BEKERJA --}}
+        <section id="cara-kerja" class="bg-white pb-16 sm:pb-20 lg:pb-24">
+            <div class="mx-auto w-full max-w-[1400px] px-6">
+
+                {{-- Container dengan tinggi pasti 2500px agar GSAP scroll berjalan mulus --}}
+                <div id="workflow-story" class="relative h-[2500px]">
+
+                    {{-- WRAPPER UTAMA --}}
+                    {{-- Mobile: Flex & tinggi full 2500px. Desktop: Grid & Card otomatis menjadi sticky --}}
+                    <div id="workflow-card" class="flex h-full flex-col gap-6 sm:gap-10 lg:h-auto lg:grid lg:sticky lg:top-[max(6rem,calc(50vh-280px))] lg:grid-cols-2 lg:gap-36 lg:min-h-[560px]" data-aos="fade-up" data-aos-duration="900">
+
+                        {{-- KOLOM KIRI (Judul & Gambar) --}}
+                        {{-- shrink-0 memastikan ukurannya tidak memuai, akan scroll normal ke atas di mobile --}}
+                        <div class="shrink-0 flex flex-col justify-center pt-8 lg:pt-0" data-aos="fade-right" data-aos-delay="100">
+                            <h2 class="text-3xl font-extrabold leading-tight text-[#102238] sm:text-4xl">
+                                Bagaimana Cara Kami Bekerja?
+                            </h2>
+                            <p class="mt-4 max-w-[480px] text-[15px] leading-7 text-bodytext">
+                                Pendekatan strategis untuk memastikan solusi teknologi yang tepat guna dan berkelanjutan untuk klien kami.
+                            </p>
+
+                            {{-- GAMBAR & TAUTAN --}}
+                            <div class="relative mt-6 h-[240px] w-full overflow-hidden rounded-[26px] sm:mt-8 sm:h-[280px] lg:h-[350px]">
+                                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=85" alt="Tim sedang berdiskusi" class="h-full w-full object-cover">
+
+                                <div class="">
+                                    <img src="{{ asset('images/shapes/svg-white-landscape-2.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[-1px] w-48 pointer-events-none">
+
+                                    <a href="#daftar-portofolio" class="group absolute bottom-5 right-9 z-20 inline-flex items-center gap-1.5 text-md font-semibold text-primary">
+                                        Konsultasi
+                                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- JALUR LINTASAN KOLOM KANAN (Mobile) --}}
+                        {{-- flex-1 mengambil sisa tinggi dari 2500px, memberi ruang sangat panjang untuk sticky --}}
+                        <div class="flex-1 lg:flex-none">
+
+                            {{-- KOLOM KANAN: DAFTAR LANGKAH (Sticky di Mobile) --}}
+                            <div class="sticky top-[max(7rem,calc(50vh-230px))] sm:top-[max(9rem,calc(50vh-270px))] lg:static lg:top-auto flex w-full flex-col items-center justify-center pb-[60px] pt-5 sm:pb-[80px] lg:items-start lg:py-10"
+                                data-aos="fade-left" data-aos-delay="200">
+
+                                {{-- CONTAINER ABSOLUTE UNTUK PRESISI LENGKUNGAN --}}
+                                <div class="relative h-[400px] w-[400px] sm:h-[480px] lg:h-[520px] lg:w-full">
+
+                                    {{-- SVG Garis Lengkung Putus-putus --}}
+                                    <div class="absolute top-[16px] h-full w-[70px] pointer-events-none left-[57px] sm:left-[61px]">
+                                        <svg class="h-full w-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                            <path d="M 100 0 Q -100 50 100 100" fill="none" stroke="#D8DDE7" stroke-width="1.5" stroke-dasharray="6 6" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+                                        </svg>
+                                    </div>
+
+                                    {{-- LANGKAH 1 --}}
+                                    <div class="workflow-item absolute left-[70px] w-full flex items-start gap-4 sm:gap-5" style="top: 0%;" data-index="0">
+                                        <span class="workflow-number w-[35px] shrink-0 text-right text-3xl font-bold text-primary sm:text-[34px]">01</span>
+                                        <div class="relative mt-[10px] flex shrink-0 items-center justify-center">
+                                            <div class="workflow-dot relative z-10 h-3 w-3 rounded-full border-2 border-primary bg-primary ring-[6px] ring-white"></div>
+                                        </div>
+                                        <div class="pt-1">
+                                            <h3 class="workflow-title text-xl font-bold text-[#102238]">Konsultasi</h3>
+                                            <p class="workflow-description mt-1.5 text-[14px] sm:text-[15px] text-bodytext">Klien menyampaikan permasalahan.</p>
+                                        </div>
+                                    </div>
+
+                                    {{-- LANGKAH 2 --}}
+                                    <div class="workflow-item absolute left-[18px] w-full flex items-start gap-4 sm:gap-5 opacity-30" style="top: 25%;" data-index="1">
+                                        <span class="workflow-number w-[35px] shrink-0 text-right text-3xl font-bold text-[#C9D2E3] sm:text-[34px]">02</span>
+                                        <div class="relative mt-[10px] flex shrink-0 items-center justify-center">
+                                            <div class="workflow-dot relative z-10 h-3 w-3 rounded-full border-2 border-[#E5E7EB] bg-white ring-[6px] ring-white"></div>
+                                        </div>
+                                        <div class="pt-1">
+                                            <h3 class="workflow-title text-xl font-bold text-[#C9D2E3]">Analisis Kebutuhan</h3>
+                                            <p class="workflow-description mt-1.5 text-[14px] sm:text-[15px] text-[#C9D2E3]">Tim merancang spesifikasi teknis.</p>
+                                        </div>
+                                    </div>
+
+                                    {{-- LANGKAH 3 --}}
+                                    <div class="workflow-item absolute left-0 w-full flex items-start gap-4 sm:gap-5 opacity-30" style="top: 50%;" data-index="2">
+                                        <span class="workflow-number w-[35px] shrink-0 text-right text-3xl font-bold text-[#C9D2E3] sm:text-[34px]">03</span>
+                                        <div class="relative mt-[10px] flex shrink-0 items-center justify-center">
+                                            <div class="workflow-dot relative z-10 h-3 w-3 rounded-full border-2 border-[#E5E7EB] bg-white ring-[6px] ring-white"></div>
+                                        </div>
+                                        <div class="pt-1">
+                                            <h3 class="workflow-title text-xl font-bold text-[#C9D2E3]">Perancangan</h3>
+                                            <p class="workflow-description mt-1.5 text-[14px] sm:text-[15px] text-[#C9D2E3]">Pembuatan arsitektur sistem.</p>
+                                        </div>
+                                    </div>
+
+                                    {{-- LANGKAH 4 --}}
+                                    <div class="workflow-item absolute left-[18px] w-full flex items-start gap-4 sm:gap-5 opacity-30" style="top: 75%;" data-index="3">
+                                        <span class="workflow-number w-[35px] shrink-0 text-right text-3xl font-bold text-[#C9D2E3] sm:text-[34px]">04</span>
+                                        <div class="relative mt-[10px] flex shrink-0 items-center justify-center">
+                                            <div class="workflow-dot relative z-10 h-3 w-3 rounded-full border-2 border-[#E5E7EB] bg-white ring-[6px] ring-white"></div>
+                                        </div>
+                                        <div class="pt-1">
+                                            <h3 class="workflow-title text-xl font-bold text-[#C9D2E3]">Pengembangan</h3>
+                                            <p class="workflow-description mt-1.5 text-[14px] sm:text-[15px] text-[#C9D2E3]">Implementasi & instalasi.</p>
+                                        </div>
+                                    </div>
+
+                                    {{-- LANGKAH 5 --}}
+                                    <div class="workflow-item absolute left-[70px] w-full flex items-start gap-4 sm:gap-5 opacity-30" style="top: 100%;" data-index="4">
+                                        <span class="workflow-number w-[35px] shrink-0 text-right text-3xl font-bold text-[#C9D2E3] sm:text-[34px]">05</span>
+                                        <div class="relative mt-[10px] flex shrink-0 items-center justify-center">
+                                            <div class="workflow-dot relative z-10 h-3 w-3 rounded-full border-2 border-[#E5E7EB] bg-white ring-[6px] ring-white"></div>
+                                        </div>
+                                        <div class="pt-1">
+                                            <h3 class="workflow-title text-xl font-bold text-[#C9D2E3]">Pemeliharaan</h3>
+                                            <p class="workflow-description mt-1.5 text-[14px] sm:text-[15px] text-[#C9D2E3]">Dukungan SLA berkelanjutan.</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
