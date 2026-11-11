@@ -836,6 +836,263 @@
                 </div>
             </div>
         </section>
+
+        {{-- PARTNER & KLIEN KAMI --}}
+        <section id="klien" class="bg-white py-16 sm:py-20 lg:py-24 overflow-hidden">
+            <div class="mx-auto w-full max-w-[1400px] px-6 text-center" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="text-3xl font-bold leading-tight text-[#102238] sm:text-4xl">
+                    Partner & Klien Kami
+                </h2>
+                <p class="mx-auto mt-4 max-w-[600px] text-[15px] leading-7 text-bodytext">
+                    Mitra teknologi terpercaya bagi BUMN, instansi kementerian daerah, rumah sakit, dan swasta nasional.
+                </p>
+            </div>
+
+            <!-- Marquee Container -->
+            <!-- Class 'group' mendeteksi kursor untuk mengontrol animasi -->
+            <div class="relative mt-12 flex overflow-x-hidden group" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                <!-- Efek Blur Gradien (Kiri & Kanan) -->
+                <div class="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-16 bg-gradient-to-r from-white to-transparent sm:w-32"></div>
+                <div class="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-16 bg-gradient-to-l from-white to-transparent sm:w-32"></div>
+
+                <!-- Marquee Track -->
+                <!-- Animasi akan dijeda saat area ini di-hover berkat group-hover:[animation-play-state:paused] -->
+                <div class="animate-marquee flex w-max items-center gap-6 py-1 pr-6 group-hover:[animation-play-state:paused]">
+
+                    @php
+                    // Array daftar klien menggunakan placehold.co yang pasti muncul
+                    $clients = [
+                    ['name' => 'Perbakin', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Perbakin'],
+                    ['name' => 'Bhayangkara', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Bhayangkara'],
+                    ['name' => 'Pemkab', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Pemkab'],
+                    ['name' => 'Kemenpora', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Kemenpora'],
+                    ['name' => 'Warih', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Warih'],
+                    ['name' => 'Bintang Harapan', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Bintang+Harapan'],
+                    ['name' => 'Mitra Citra', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Mitra+Citra'],
+                    ['name' => 'Hikost', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Hikost'],
+                    ];
+                    @endphp
+
+                    <!-- Set 1 (Logo Asli) -->
+                    @foreach($clients as $client)
+                    <div
+                        class="flex h-[110px] w-[180px] shrink-0 items-center justify-center rounded-[20px] border border-[#D8DDE7] bg-white p-4 transition-transform duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_4px_20px_-5px_rgba(6,81,237,0.15)] sm:h-[130px] sm:w-[220px]">
+                        <img src="{{ $client['logo'] }}" alt="{{ $client['name'] }}" class="max-h-full max-w-full object-contain grayscale transition-all duration-300 hover:grayscale-0">
+                    </div>
+                    @endforeach
+
+                    <!-- Set 2 (Duplikat wajib untuk infinite loop) -->
+                    @foreach($clients as $client)
+                    <div
+                        class="flex h-[110px] w-[180px] shrink-0 items-center justify-center rounded-[20px] border border-[#D8DDE7] bg-white p-4 transition-transform duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_4px_20px_-5px_rgba(6,81,237,0.15)] sm:h-[130px] sm:w-[220px]">
+                        <img src="{{ $client['logo'] }}" alt="{{ $client['name'] }}" class="max-h-full max-w-full object-contain grayscale transition-all duration-300 hover:grayscale-0">
+                    </div>
+                    @endforeach
+
+                </div>
+            </div>
+        </section>
+
+        {{-- BLOG / BERITA --}}
+        <section id="blog" class="bg-white py-16 sm:py-20 lg:py-24 overflow-hidden">
+            <div class="mx-auto w-full max-w-[1400px] px-6">
+
+                <div x-data="blogSlider()" class="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
+
+                    {{-- PANEL JUDUL & DESKRIPSI (Kiri) --}}
+                    {{-- Lebar panel diperkecil menjadi w-[320px] --}}
+                    <div class="w-full lg:w-[280px] shrink-0" data-aos="fade-right" data-aos-duration="800">
+                        <div class="relative bg-[#F9FAFB] rounded-[24px] p-7 md:p-8 h-full flex flex-col min-h-[300px]">
+                            <h2 class="text-3xl font-extrabold text-[#102238] mb-3">Blog</h2>
+                            <p class="text-[14px] leading-relaxed text-bodytext mb-8">
+                                Sumber berita perkembangan infrastruktur teknologi dari tim ATN.
+                            </p>
+
+                            <div class="mt-auto flex items-end justify-between relative">
+                                <a href="#" class="inline-flex items-center gap-1.5 text-[15px] text-primary font-semibold hover:underline">
+                                    Selengkapnya
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </a>
+
+                                <div class="absolute -right-7 -bottom-7 md:-right-8 md:-bottom-8 bg-white rounded-tl-[24px] p-3 flex gap-0 border-t border-l border-white">
+                                    <button @click="prev()" :disabled="atStart" class="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-l-lg bg-white hover:bg-gray-50 text-gray-600 disabled:opacity-50 transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                        </svg>
+                                    </button>
+                                    <button @click="next()" :disabled="atEnd"
+                                        class="w-10 h-10 flex items-center justify-center border-y border-r border-gray-200 rounded-r-lg bg-white hover:bg-gray-50 text-gray-600 disabled:opacity-50 transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- SLIDER ARTIKEL (Kanan) --}}
+                    <div class="w-full overflow-hidden" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+                        {{-- Gap antar card diubah menjadi gap-5 (20px) --}}
+                        <div class="flex gap-5 transition-transform duration-500 ease-in-out" :style="`transform: translateX(-${scrollPosition}px)`" x-ref="sliderContainer">
+
+                            <template x-for="(blog, index) in blogs" :key="index">
+                                {{-- Ukuran card artikel diperkecil --}}
+                                <article class="w-[220px] lg:w-[240px] shrink-0 group cursor-pointer">
+                                    <div class="relative overflow-hidden rounded-[20px] mb-4 aspect-[16/10] bg-slate-100">
+                                        <img :src="blog.img" :alt="blog.title" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                        {{-- Desain irisan tanggal mirip dengan mockup --}}
+                                        <div class="absolute bottom-0 left-0 bg-white rounded-tr-[16px] px-3 py-1.5">
+                                            <span class="text-[11px] font-semibold text-slate-600" x-text="blog.date"></span>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-[16px] font-bold text-[#102238] mb-1.5 group-hover:text-primary transition-colors line-clamp-2" x-text="blog.title"></h3>
+                                    <p class="text-[13px] text-bodytext leading-relaxed line-clamp-3" x-text="blog.desc"></p>
+                                </article>
+                            </template>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        {{-- FOOTER --}}
+        <footer class="bg-white pb-10 pt-4">
+            <div class="mx-auto w-full max-w-[1400px] px-6">
+
+                {{-- Container Utama Footer --}}
+                <div class="relative bg-[#1A1C1F] rounded-[32px] px-8 py-10 md:px-12 md:py-14 lg:p-16 flex flex-col lg:flex-row gap-12 lg:gap-16 overflow-hidden" data-aos="fade-up" data-aos-duration="1000">
+
+                    {{-- CUTOUT LOGO AREA --}}
+                    {{-- Area putih yang menutupi sudut kiri atas footer gelap --}}
+                    <div class="absolute top-0 left-0 bg-white rounded-br-[32px] z-10 pr-8 pb-6 max-md:pr-6 max-md:pb-5">
+                        <img src="{{ asset('images/logo-atn.png') }}" alt="Arjuna Travora Nusantara" class="h-10 md:h-12 mt-6 ml-8 max-md:mt-5 max-md:ml-6">
+
+                        {{-- Efek Lengkungan Sudut (Inverted Border Radius) --}}
+                        <div class="absolute top-0 -right-6 w-6 h-6 bg-transparent rounded-tl-[24px] shadow-[-10px_-10px_0_0_#ffffff] pointer-events-none"></div>
+                        <div class="absolute -bottom-6 left-0 w-6 h-6 bg-transparent rounded-tl-[24px] shadow-[-10px_-10px_0_0_#ffffff] pointer-events-none"></div>
+                    </div>
+
+                    {{-- KOLOM 1: KONTAK & SOSIAL MEDIA --}}
+                    {{-- mt-24 pada mobile untuk memberi ruang pada logo cutout --}}
+                    <div class="w-full lg:w-[380px] shrink-0 flex flex-col mt-20 lg:mt-4">
+
+                        {{-- Card Kontak --}}
+                        <div class="bg-[#24262A] rounded-2xl p-6 flex flex-col gap-6">
+                            {{-- WhatsApp --}}
+                            <div class="flex items-center gap-4">
+                                <div class="w-11 h-11 shrink-0 rounded-xl bg-[#0F291E] flex items-center justify-center text-[#25D366]">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.553 4.17 1.604 5.986L.04 24l6.125-1.606a11.968 11.968 0 005.866 1.53h.005c6.645 0 12.03-5.385 12.03-12.03S18.676 0 12.031 0zm0 21.916a9.98 9.98 0 01-5.093-1.39l-.365-.217-3.784.992.99-3.69-.237-.378a9.96 9.96 0 01-1.523-5.334c0-5.534 4.502-10.037 10.037-10.037s10.036 4.503 10.036 10.037-4.501 10.02-10.036 10.02zm5.512-7.534c-.302-.15-1.787-.882-2.063-.983-.277-.101-.479-.151-.68.151-.202.302-.781.983-.957 1.184-.176.202-.353.227-.655.076-1.523-.761-2.617-1.428-3.606-3.136-.202-.349.198-.328.636-.882.08-.101.121-.202.161-.302.04-.101.02-.202-.02-.302-.04-.101-.68-1.64-.932-2.245-.245-.591-.495-.512-.68-.521-.176-.008-.378-.008-.579-.008s-.529.076-.806.378c-.277.302-1.058 1.033-1.058 2.518s1.083 2.921 1.234 3.123c.151.202 2.131 3.255 5.162 4.561 1.838.791 2.535.882 3.483.743.766-.113 2.368-.968 2.701-1.905.332-.937.332-1.74.232-1.905-.101-.166-.353-.267-.655-.418z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-400 mb-0.5">WhatsApp</p>
+                                    <a href="https://wa.me/6282142430296" target="_blank" class="text-sm font-semibold text-white hover:text-[#25D366] transition-colors">0821-4243-0296</a>
+                                </div>
+                            </div>
+
+                            {{-- Email --}}
+                            <div class="flex items-center gap-4">
+                                <div class="w-11 h-11 shrink-0 rounded-xl bg-[#2D1A1A] flex items-center justify-center text-[#EA4335]">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-400 mb-0.5">Email</p>
+                                    <a href="mailto:info@arjunatravora.co.id" class="text-sm font-semibold text-white hover:text-[#EA4335] transition-colors">info@arjunatravora.co.id</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Social Media --}}
+                        <div class="mt-8">
+                            <h4 class="text-xs font-bold text-gray-400 tracking-wider mb-4 uppercase">Connect With Us</h4>
+                            <div class="flex gap-3">
+                                <a href="#" class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                                    </svg>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                        <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                    </svg>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                                    </svg>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- Copyright --}}
+                        <div class="mt-8 pt-6 border-t border-gray-700 w-full">
+                            <p class="text-[13px] text-gray-400">© 2026 PT. Arjuna Travora Nusantara. All Rights Reserved.</p>
+                        </div>
+                    </div>
+
+                    {{-- KOLOM 2: NAVIGASI --}}
+                    <div class="w-full lg:w-[220px] shrink-0 lg:border-l lg:border-gray-700 lg:pl-12 flex flex-col mt-4 lg:mt-8">
+                        <h4 class="text-xs font-bold text-gray-400 tracking-wider mb-6 uppercase">Navigasi Utama</h4>
+                        <ul class="flex flex-col gap-4">
+                            <li><a href="#layanan" class="text-gray-300 hover:text-white text-[15px] transition-colors">Layanan</a></li>
+                            <li><a href="#solusi-sektor" class="text-gray-300 hover:text-white text-[15px] transition-colors">Solusi</a></li>
+                            <li><a href="#tentang-kami" class="text-gray-300 hover:text-white text-[15px] transition-colors">Tentang Kami</a></li>
+                            <li><a href="#portofolio" class="text-gray-300 hover:text-white text-[15px] transition-colors">Portofolio</a></li>
+                            <li><a href="#blog" class="text-gray-300 hover:text-white text-[15px] transition-colors">Blog</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-white text-[15px] transition-colors">Karir</a></li>
+                            <li><a href="#kontak" class="text-gray-300 hover:text-white text-[15px] transition-colors">Hubungi Kami</a></li>
+                        </ul>
+                    </div>
+
+                    {{-- KOLOM 3: KANTOR OPERASIONAL --}}
+                    <div class="w-full flex-1 flex flex-col mt-4 lg:mt-8">
+                        <div class="flex items-start gap-4 mb-5">
+                            <div class="w-10 h-10 shrink-0 rounded-full bg-[#2D1A1A] flex items-center justify-center text-[#EA4335]">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="pt-0.5">
+                                <h4 class="text-xs font-bold text-gray-400 tracking-wider uppercase mb-1">Kantor Operasional</h4>
+                                <p class="text-white text-[15px] font-semibold">Mojokerto, Jawa Timur, Indonesia.</p>
+                            </div>
+                        </div>
+
+                        {{-- Google Maps Area --}}
+                        <div class="w-full h-[200px] md:h-[220px] rounded-[20px] overflow-hidden bg-gray-800 relative group">
+                            {{-- Placeholder Map, ganti src dengan asset map asli Anda jika ada --}}
+                            <img src="https://placehold.co/800x400/24262A/667085?text=Peta+Lokasi+Mojokerto" alt="Peta Lokasi" class="w-full h-full object-cover">
+
+                            {{-- Overlay CTA untuk Maps (Opsional untuk interaktifitas) --}}
+                            <a href="https://maps.google.com" target="_blank" class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                                <span class="bg-white text-slate-900 px-5 py-2.5 rounded-xl text-sm font-semibold">Buka di Google Maps</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
     </main>
 
 

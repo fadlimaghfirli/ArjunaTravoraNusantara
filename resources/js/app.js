@@ -74,6 +74,7 @@ window.AOS = AOS;
 window.gsap = gsap;
 window.ScrollTrigger = ScrollTrigger;
 window.aboutUsSlider = aboutUsSlider;
+window.blogSlider = blogSlider;
 
 // ============================================================
 // INITIALIZE ALPINE
@@ -422,3 +423,112 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     });
 });
+
+// ============================================================
+// SECTION: BLOG SLIDER
+// ============================================================
+function blogSlider() {
+    return {
+        scrollPosition: 0,
+        maxScroll: 0,
+
+        blogs: [
+            {
+                date: "30 Oktober 2026",
+                title: "Cara Memilih CCTV yang Tepat",
+                desc: "Klien menyampaikan permasalahan.",
+                img: "https://placehold.co/400x250/e2e8f0/475569?text=CCTV",
+            },
+            {
+                date: "21 Oktober 2026",
+                title: "Apa Itu Videotron?",
+                desc: "Kenali teknologi digital display untuk kebutuhan promosi.",
+                img: "https://placehold.co/400x250/e2e8f0/475569?text=Videotron",
+            },
+            {
+                date: "8 Oktober 2026",
+                title: "Panduan Memilih Server",
+                desc: "Spesifikasi saat merancang infrastruktur IT yang stabil.",
+                img: "https://placehold.co/400x250/e2e8f0/475569?text=Server",
+            },
+            {
+                date: "28 September 2026",
+                title: "Tips Membangun Infrastruktur IT",
+                desc: "Langkah strategis merancang topologi jaringan andal, skalabel, dan aman.",
+                img: "https://placehold.co/400x250/e2e8f0/475569?text=Infrastruktur",
+            },
+            {
+                date: "15 September 2026",
+                title: "Pentingnya Keamanan Siber",
+                desc: "Melindungi aset digital dari ancaman modern.",
+                img: "https://placehold.co/400x250/e2e8f0/475569?text=CyberSecurity",
+            },
+        ],
+
+        init() {
+            this.$nextTick(() => {
+                this.calculateScroll();
+            });
+
+            window.addEventListener("resize", () => {
+                this.calculateScroll();
+            });
+        },
+
+        calculateScroll() {
+            const container = this.$refs.sliderContainer;
+            if (!container) return;
+
+            const viewportWidth = container.parentElement.offsetWidth;
+            const totalWidth = container.scrollWidth;
+
+            // Maksimal scroll adalah total lebar konten dikurangi lebar area tampil (viewport)
+            this.maxScroll = Math.max(0, totalWidth - viewportWidth);
+
+            if (this.scrollPosition > this.maxScroll) {
+                this.scrollPosition = this.maxScroll;
+            }
+        },
+
+        get atStart() {
+            return this.scrollPosition <= 5;
+        },
+
+        get atEnd() {
+            return this.scrollPosition >= this.maxScroll - 5;
+        },
+
+        next() {
+            const container = this.$refs.sliderContainer;
+            if (!container) return;
+
+            const card = container.querySelector("article");
+            if (!card) return;
+
+            // gap-5 di tailwind = 20px
+            const gap = 20;
+            const scrollAmount = card.offsetWidth + gap;
+
+            this.scrollPosition = Math.min(
+                this.scrollPosition + scrollAmount,
+                this.maxScroll,
+            );
+        },
+
+        prev() {
+            const container = this.$refs.sliderContainer;
+            if (!container) return;
+
+            const card = container.querySelector("article");
+            if (!card) return;
+
+            const gap = 20;
+            const scrollAmount = card.offsetWidth + gap;
+
+            this.scrollPosition = Math.max(
+                this.scrollPosition - scrollAmount,
+                0,
+            );
+        },
+    };
+}

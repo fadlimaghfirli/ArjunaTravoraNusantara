@@ -71,3 +71,19 @@ a {
         transform 0.3s ease,
         background-color 0.3s ease;
 }
+
+/* ============================================================
+   PARTNER & KLIEN KAMI (MARQUEE)
+============================================================ */
+@keyframes marquee {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee {
+    animation: marquee 35s linear infinite;
+}
