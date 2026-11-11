@@ -1,16 +1,21 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClientController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Client;
+use Illuminate\Support\Facades\Route;
+use App\Models\Portfolio;
 
 Route::get('/', function () {
-    // Ambil data klien yang aktif, diurutkan dari yang terbaru
+    // Ambil data klien yang aktif
     $clients = Client::where('is_active', true)->latest()->get();
 
-    // Kirim variabel $clients ke welcome.blade.php
-    return view('welcome', compact('clients'));
+    // Ambil 4 data portofolio terbaru
+    $portfolios = Portfolio::latest()->take(4)->get();
+
+    // Kirim kedua variabel ke tampilan welcome
+    return view('welcome', compact('clients', 'portfolios'));
 });
 
 Route::get('/dashboard', function () {
@@ -26,6 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
     Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
     Route::delete('/clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
+
+    Route::get('/portfolios', [PortfolioController::class, 'index'])->name('portfolios.index');
+    Route::post('/portfolios', [PortfolioController::class, 'store'])->name('portfolios.store');
+    Route::delete('/portfolios/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolios.destroy');
 });
 
 require __DIR__ . '/auth.php';
