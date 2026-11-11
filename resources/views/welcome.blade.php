@@ -611,21 +611,24 @@
 
                 {{-- KOLOM KANAN: DAFTAR PROJECT --}}
                 <div id="daftar-portofolio" class="grid min-w-0 grid-cols-1 items-start gap-5 sm:grid-cols-2 sm:gap-6">
-                    {{-- PROJECT 1 --}}
-                    <a href="#kontak" class="portfolio-card group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] bg-[#F7F8FA] duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+
+                    @forelse($portfolios as $portfolio)
+                    {{-- Animasi delay bergantian: ganjil 100ms, genap 200ms --}}
+                    <a href="#kontak" class="portfolio-card group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] bg-[#F7F8FA] duration-500" data-aos="fade-up" data-aos-duration="800"
+                        data-aos-delay="{{ $loop->iteration % 2 == 0 ? '200' : '100' }}">
                         <div
                             class="relative h-0 w-full overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:h-[220px] group-focus-visible:h-[220px] sm:group-hover:h-[250px] sm:group-focus-visible:h-[250px]">
-                            <img src="{{ asset('images/portfolio/portfolio_1.png') }}" alt="Mockup Sistem Klinik Dora Medika" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-100">
+                            <img src="{{ asset('storage/' . $portfolio->image) }}" alt="{{ $portfolio->title }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-100">
                         </div>
                         <div class="relative flex min-h-[174px] flex-col p-6 transition-colors duration-500">
                             <h3 class="max-w-[300px] text-lg font-semibold leading-snug text-[#333333]">
-                                Sistem Klinik Dora
-                                <br>
-                                Medika Sidoarjo
+                                {{ $portfolio->title }}
                             </h3>
-                            <p class="mt-2 text-sm text-bodytext">Web System, Sidoarjo</p>
-                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] transition-all duration-300 group-hover:opacity-0 sm:text-[54px]">2025</span>
-                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] opacity-0 transition-all duration-300 group-hover:opacity-100 sm:text-[54px]">Portfolio</span>
+                            <p class="mt-2 text-sm text-bodytext">{{ $portfolio->category }}</p>
+
+                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] transition-all duration-300 group-hover:opacity-0 sm:text-[54px]">{{ $portfolio->year }}</span>
+                            <span
+                                class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] opacity-0 transition-all duration-300 group-hover:opacity-100 sm:text-[54px]">{{ $portfolio->type }}</span>
                         </div>
 
                         <div class="">
@@ -635,79 +638,12 @@
                             </svg>
                         </div>
                     </a>
+                    @empty
+                    <div class="col-span-1 sm:col-span-2 py-12 text-center text-gray-400 text-sm border-2 border-dashed border-gray-200 rounded-[22px]">
+                        Belum ada project yang ditambahkan di database.
+                    </div>
+                    @endforelse
 
-                    {{-- PROJECT 2 --}}
-                    <a href="#kontak" class="portfolio-card group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] bg-[#F7F8FA] duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
-                        <div
-                            class="relative h-0 w-full overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:h-[220px] group-focus-visible:h-[220px] sm:group-hover:h-[250px] sm:group-focus-visible:h-[250px]">
-                            <img src="{{ asset('images/portfolio/portfolio_2.png') }}" alt="Mockup Web Social Commerce Cakning" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-100">
-                        </div>
-                        <div class="relative flex min-h-[174px] flex-col p-6 transition-colors duration-500">
-                            <h3 class="max-w-[280px] text-lg font-semibold leading-snug text-[#333333]">
-                                Web Social
-                                <br>
-                                Commerce Cakning
-                            </h3>
-                            <p class="mt-2 text-sm text-bodytext">E-commerce, Surabaya</p>
-                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] transition-all duration-300 group-hover:opacity-0 sm:text-[54px]">2026</span>
-                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] opacity-0 transition-all duration-300 group-hover:opacity-100 sm:text-[54px]">Project</span>
-                        </div>
-
-                        <div class="">
-                            <img src="{{ asset('images/shapes/svg-white-square.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[-1px] w-24 pointer-events-none">
-                            <svg class="absolute bottom-[16px] right-[16px] h-8 w-8 transition-transform duration-300 text-black" viewBox="0 0 32 32" fill="none">
-                                <path d="M8 24L24 8M10 8H24V22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </a>
-
-                    {{-- PROJECT 3 --}}
-                    <a href="#kontak" class="portfolio-card group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] bg-[#F7F8FA] duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
-                        <div
-                            class="relative h-0 w-full overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:h-[220px] group-focus-visible:h-[220px] sm:group-hover:h-[250px] sm:group-focus-visible:h-[250px]">
-                            <img src="{{ asset('images/portfolio/portfolio_3.png') }}" alt="Mockup Sistem Informasi Kesehatan Masyarakat" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-100">
-                        </div>
-                        <div class="relative flex min-h-[174px] flex-col p-6 transition-colors duration-500">
-                            <h3 class="max-w-[300px] text-lg font-semibold leading-snug text-[#333333]">
-                                Sistem Informasi
-                                <br>
-                                Kesehatan Masyarakat
-                            </h3>
-                            <p class="mt-2 text-sm text-bodytext">Web System, Surabaya</p>
-                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] transition-all duration-300 group-hover:opacity-0 sm:text-[54px]">2025</span>
-                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] opacity-0 transition-all duration-300 group-hover:opacity-100 sm:text-[54px]">Project</span>
-                        </div>
-
-                        <div class="">
-                            <img src="{{ asset('images/shapes/svg-white-square.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[-1px] w-24 pointer-events-none">
-                            <svg class="absolute bottom-[16px] right-[16px] h-8 w-8 transition-transform duration-300 text-black" viewBox="0 0 32 32" fill="none">
-                                <path d="M8 24L24 8M10 8H24V22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </a>
-
-                    {{-- PROJECT 4 --}}
-                    <a href="#kontak" class="portfolio-card group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] bg-[#F7F8FA] duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
-                        <div
-                            class="relative h-0 w-full overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:h-[220px] group-focus-visible:h-[220px] sm:group-hover:h-[250px] sm:group-focus-visible:h-[250px]">
-                            <img src="{{ asset('images/portfolio/portfolio_4.png') }}" alt="Mockup aplikasi VERTIGO" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-100">
-                        </div>
-                        <div class="relative flex min-h-[174px] flex-col p-6 transition-colors duration-500">
-                            <h3 class="max-w-[300px] text-lg font-semibold leading-snug text-[#333333]">
-                                VERTIGO (Verifikasi Terintegrasi Rujukan Online)
-                            </h3>
-                            <p class="mt-2 text-sm text-bodytext">Mobile Apps, Mojokerto</p>
-                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] transition-all duration-300 group-hover:opacity-0 sm:text-[54px]">2025</span>
-                            <span class="pointer-events-none absolute bottom-3 left-6 text-[48px] font-bold leading-none tracking-tight text-[#E1E4E8] opacity-0 transition-all duration-300 group-hover:opacity-100 sm:text-[54px]">Project</span>
-                        </div>
-
-                        <div class="">
-                            <img src="{{ asset('images/shapes/svg-white-square.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[-1px] w-24 pointer-events-none">
-                            <svg class="absolute bottom-[16px] right-[16px] h-8 w-8 transition-transform duration-300 text-black" viewBox="0 0 32 32" fill="none">
-                                <path d="M8 24L24 8M10 8H24V22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </a>
                 </div>
             </div>
         </section>
