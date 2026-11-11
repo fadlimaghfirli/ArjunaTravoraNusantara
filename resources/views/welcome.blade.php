@@ -855,41 +855,33 @@
                 <div class="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-16 bg-gradient-to-r from-white to-transparent sm:w-32"></div>
                 <div class="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-16 bg-gradient-to-l from-white to-transparent sm:w-32"></div>
 
+                @if($clients->count() > 0)
                 <!-- Marquee Track -->
                 <!-- Animasi akan dijeda saat area ini di-hover berkat group-hover:[animation-play-state:paused] -->
                 <div class="animate-marquee flex w-max items-center gap-6 py-1 pr-6 group-hover:[animation-play-state:paused]">
 
-                    @php
-                    // Array daftar klien menggunakan placehold.co yang pasti muncul
-                    $clients = [
-                    ['name' => 'Perbakin', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Perbakin'],
-                    ['name' => 'Bhayangkara', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Bhayangkara'],
-                    ['name' => 'Pemkab', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Pemkab'],
-                    ['name' => 'Kemenpora', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Kemenpora'],
-                    ['name' => 'Warih', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Warih'],
-                    ['name' => 'Bintang Harapan', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Bintang+Harapan'],
-                    ['name' => 'Mitra Citra', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Mitra+Citra'],
-                    ['name' => 'Hikost', 'logo' => 'https://placehold.co/400x200/ffffff/113883?text=Hikost'],
-                    ];
-                    @endphp
-
-                    <!-- Set 1 (Logo Asli) -->
+                    <!-- Set 1 (Data Asli dari Database) -->
                     @foreach($clients as $client)
                     <div
                         class="flex h-[110px] w-[180px] shrink-0 items-center justify-center rounded-[20px] border border-[#D8DDE7] bg-white p-4 transition-transform duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_4px_20px_-5px_rgba(6,81,237,0.15)] sm:h-[130px] sm:w-[220px]">
-                        <img src="{{ $client['logo'] }}" alt="{{ $client['name'] }}" class="max-h-full max-w-full object-contain grayscale transition-all duration-300 hover:grayscale-0">
+                        <img src="{{ asset('storage/' . $client->logo) }}" alt="{{ $client->name }}" class="max-h-full max-w-full object-contain grayscale transition-all duration-300 hover:grayscale-0">
                     </div>
                     @endforeach
 
-                    <!-- Set 2 (Duplikat wajib untuk infinite loop) -->
+                    <!-- Set 2 (Duplikat wajib untuk infinite loop animasi marquee) -->
                     @foreach($clients as $client)
                     <div
                         class="flex h-[110px] w-[180px] shrink-0 items-center justify-center rounded-[20px] border border-[#D8DDE7] bg-white p-4 transition-transform duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_4px_20px_-5px_rgba(6,81,237,0.15)] sm:h-[130px] sm:w-[220px]">
-                        <img src="{{ $client['logo'] }}" alt="{{ $client['name'] }}" class="max-h-full max-w-full object-contain grayscale transition-all duration-300 hover:grayscale-0">
+                        <img src="{{ asset('storage/' . $client->logo) }}" alt="{{ $client->name }}" class="max-h-full max-w-full object-contain grayscale transition-all duration-300 hover:grayscale-0">
                     </div>
                     @endforeach
 
                 </div>
+                @else
+                <div class="w-full text-center py-8 text-gray-400 text-sm">
+                    Belum ada data klien yang ditambahkan.
+                </div>
+                @endif
             </div>
         </section>
 
