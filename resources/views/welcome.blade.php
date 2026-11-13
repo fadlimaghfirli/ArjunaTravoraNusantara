@@ -389,44 +389,26 @@
                     {{-- CARD TRACK --}}
                     <div id="services-viewport" class="mt-8 overflow-hidden pl-6 lg:pl-[max(24px,calc((100vw-1400px)/2))]" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
                         <div id="services-track" class="flex w-max gap-7 pr-6 lg:gap-8 pr-[240px] lg:pr-[440px]">
-                            {{-- SOFTWARE DEVELOPMENT --}}
-                            <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:w-[320px] lg:w-[360px] xl:w-[380px]">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-primary">
-                                    <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
-                                        <rect x="5" y="4" width="22" height="18" rx="2" stroke="currentColor" stroke-width="2" />
-                                        <path d="M11 28H21M16 22V28M11 14L14 17L11 20M21 14L18 17L21 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                </div>
-                                <h3 class="mt-4 text-[18px] md:text-[20px] font-bold text-primary">
-                                    Software Development
-                                </h3>
-                                <p class="mt-3 text-[14px] leading-6 text-bodytext">
-                                    Pengembangan sistem ERP, CRM, portal web, serta aplikasi mobile kustom untuk otomatisasi alur kerja korporat dan integrasi API instansi.
-                                </p>
-                                <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
-                                    Konsultasi
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
-                                    </svg>
-                                </a>
 
-                                <img src="{{ asset('images/shapes/svg-F9FAFB-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
-                            </article>
-                            {{-- HARDWARE PROCUREMENT --}}
+                            @forelse($services as $service)
                             <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-primary">
-                                    <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
-                                        <rect x="8" y="8" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2" />
-                                        <rect x="12" y="12" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2" />
-                                        <path d="M8 12H4M8 16H4M8 20H4M28 12H24M28 16H24M28 20H24M12 8V4M16 8V4M20 8V4M12 28V24M16 28V24M20 28V24" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                    </svg>
+
+                                <!-- Ikon Render Langsung dari Teks SVG -->
+                                <!-- Class [&>svg] memastikan ukuran ikon SVG menyesuaikan proporsi aslinya di landing page -->
+                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-primary [&>svg]:h-8 [&>svg]:w-8 [&>svg]:stroke-[1.5]">
+                                    {!! $service->icon !!}
                                 </div>
+
                                 <h3 class="mt-4 text-[18px] md:text-[20px] font-bold text-primary">
-                                    Hardware Procurement
+                                    {{ $service->title }}
                                 </h3>
-                                <p class="mt-3 text-[14px] leading-6 text-bodytext">
-                                    Pengadaan PC, laptop enterprise, server berdaya tahan tinggi, printer industri, serta perangkat kasir POS bergaransi distributor resmi.
+
+                                <!-- Line-clamp-3 untuk memotong teks otomatis jika admin mengisi deskripsi terlalu panjang (agar tinggi card tetap 273px) -->
+                                <p class="mt-3 text-[14px] leading-6 text-bodytext line-clamp-3">
+                                    {{ $service->description }}
                                 </p>
+
+                                <!-- Tombol Konsultasi (Statis, selalu mengarah ke form kontak) -->
                                 <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
                                     Konsultasi
                                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -434,76 +416,16 @@
                                     </svg>
                                 </a>
 
+                                <!-- Ornamen Bentuk Lengkung Sudut Kanan Bawah -->
                                 <img src="{{ asset('images/shapes/svg-F9FAFB-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
                             </article>
-                            {{-- IT INFRASTRUCTURE --}}
-                            <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-primary">
-                                    <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
-                                        <path d="M6 25H26M8 25V16H13V25M13 16L17 12L21 16M21 16V25M21 11C23 11 25 9 25 7M21 7C22 7 23 6 23 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                </div>
-                                <h3 class="mt-4 text-[18px] md:text-[20px] font-bold text-primary">
-                                    IT Infrastructure
-                                </h3>
-                                <p class="mt-3 text-[14px] leading-6 text-bodytext">
-                                    Pemasangan kabel fiber optic, data center rack, router gateway, switch manageable L2/L3, serta managed Wi-Fi kantor skala ribuan user.
-                                </p>
-                                <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
-                                    Konsultasi
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
-                                    </svg>
-                                </a>
+                            @empty
+                            <!-- Placeholder jika database layanan kosong -->
+                            <div class="flex h-[273px] w-[320px] items-center justify-center rounded-[20px] border-2 border-dashed border-gray-300">
+                                <p class="text-gray-500 text-sm font-medium">Belum ada layanan.</p>
+                            </div>
+                            @endforelse
 
-                                <img src="{{ asset('images/shapes/svg-F9FAFB-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
-                            </article>
-                            {{-- CCTV & SECURITY --}}
-                            <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-primary">
-                                    <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
-                                        <rect x="5" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="2" />
-                                        <path d="M21 14L27 11V21L21 18M10 24H22M16 21V24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                </div>
-                                <h3 class="mt-4 text-[18px] md:text-[20px] font-bold text-primary">
-                                    CCTV & Security
-                                </h3>
-                                <p class="mt-3 text-[14px] leading-6 text-bodytext">
-                                    Solusi IP camera surveillance resolusi tinggi, access control pintu biometric & RFID, alarm kebakaran, dan perimeter security alert.
-                                </p>
-                                <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
-                                    Konsultasi
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
-                                    </svg>
-                                </a>
-
-                                <img src="{{ asset('images/shapes/svg-F9FAFB-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
-                            </article>
-                            {{-- VIDEOTRON & DIGITAL DISPLAY --}}
-                            <article class="service-card relative flex h-[273px] w-[280px] shrink-0 flex-col rounded-[20px] bg-white p-6 sm:h-[273px] sm:w-[320px] lg:w-[360px] xl:w-[380px]">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#EEF1F6] text-primary">
-                                    <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
-                                        <rect x="4" y="6" width="24" height="17" rx="2" stroke="currentColor" stroke-width="2" />
-                                        <path d="M11 27H21M16 23V27M9 11H23M9 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                                <h3 class="mt-4 text-[18px] md:text-[20px] font-bold text-primary">
-                                    Videotron & Digital Display
-                                </h3>
-                                <p class="mt-3 text-[14px] leading-6 text-bodytext">
-                                    Instalasi LED Videotron, interactive flat panel display meeting room, dan commercial digital signage.
-                                </p>
-                                <a href="#kontak" class="absolute bottom-[10px] right-[20px] sm:bottom-[18px] sm:right-[35px] text-[15px] sm:text-[17px] z-10 group mt-auto inline-flex items-center justify-end gap-3 font-semibold text-primary">
-                                    Konsultasi
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
-                                    </svg>
-                                </a>
-
-                                <img src="{{ asset('images/shapes/svg-F9FAFB-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[-4px] right-[-1px] max-sm:w-40 w-48 pointer-events-none">
-                            </article>
                         </div>
                     </div>
                 </div>
