@@ -9,6 +9,7 @@ use App\Http\Controllers\SettingController;
 use App\Models\Client;
 use App\Models\Hero;
 use App\Models\Portfolio;
+use App\Models\Service;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
 
@@ -16,12 +17,11 @@ Route::get('/', function () {
     $clients = Client::where('is_active', true)->latest()->get();
     $portfolios = Portfolio::latest()->take(4)->get();
     $heroes = Hero::where('is_active', true)->latest()->get();
-
-    // 2. Ambil data pengaturan (jika kosong, fallback ke instansiasi baru agar tidak error)
     $setting = Setting::first() ?? new Setting();
+    $services = Service::where('is_active', true)->orderBy('sort_order', 'asc')->get();
 
-    // Kirim $setting ke tampilan welcome
-    return view('welcome', compact('clients', 'portfolios', 'heroes', 'setting'));
+    // Kirim $services ke tampilan welcome
+    return view('welcome', compact('clients', 'portfolios', 'heroes', 'setting', 'services'));
 });
 
 Route::get('/dashboard', function () {
@@ -55,6 +55,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
     Route::post('/services', [ServiceController::class, 'store'])->name('services.store');
     Route::delete('/services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
+
+    // Rute Baru: Update & Reorder
+    Route::put('/services/{service}', [ServiceController::class, 'update'])->name('services.update');
+    Route::post('/services/reorder', [ServiceController::class, 'reorder'])->name('services.reorder');
 });
 
 require __DIR__ . '/auth.php';
