@@ -111,7 +111,7 @@
                         <div data-aos="fade-up" data-aos-delay="150" class="grid grid-cols-3 gap-5 max-lg:text-center text-end">
                             <div>
                                 <p class="text-[27px] font-bold leading-none tracking-[-0.03em] text-primary sm:text-[30px]">
-                                    500+
+                                    {{ $setting->stat_projects ?? '500+' }}
                                 </p>
                                 <p class="mt-1.5 text-[12px] md:text-[16px]  text-bodytext">
                                     Projek Selesai
@@ -119,7 +119,7 @@
                             </div>
                             <div>
                                 <p class="text-[27px] font-bold leading-none tracking-[-0.03em] text-primary sm:text-[30px]">
-                                    40+
+                                    {{ $setting->stat_clients ?? '40+' }}
                                 </p>
                                 <p class="mt-1.5 text-[12px] md:text-[16px]  text-bodytext">
                                     Klien Terpercaya
@@ -127,7 +127,7 @@
                             </div>
                             <div>
                                 <p class="text-[27px] font-bold leading-none tracking-[-0.03em] text-primary sm:text-[30px]">
-                                    ISO/IEC
+                                    {{ $setting->stat_certification ?? 'ISO/IEC' }}
                                 </p>
                                 <p class="mt-1.5 text-[12px] md:text-[16px]  text-bodytext">
                                     Resmi & Bergaransi
@@ -911,6 +911,13 @@
 
                         {{-- Card Kontak --}}
                         <div class="bg-[#24262A] rounded-2xl p-6 flex flex-col gap-6">
+
+                            @php
+                            // Format nomor untuk link WhatsApp (hilangkan spasi/strip, ganti 0 di depan jadi 62)
+                            $rawPhone = preg_replace('/[^0-9]/', '', $setting->phone ?? '082142430296');
+                            $waLink = preg_replace('/^0/', '62', $rawPhone);
+                            @endphp
+
                             {{-- WhatsApp --}}
                             <div class="flex items-center gap-4">
                                 <div class="w-11 h-11 shrink-0 rounded-xl bg-[#0F291E] flex items-center justify-center text-[#25D366]">
@@ -921,7 +928,9 @@
                                 </div>
                                 <div>
                                     <p class="text-xs text-gray-400 mb-0.5">WhatsApp</p>
-                                    <a href="https://wa.me/6282142430296" target="_blank" class="text-sm font-semibold text-white hover:text-[#25D366] transition-colors">0821-4243-0296</a>
+                                    <a href="https://wa.me/{{ $waLink }}" target="_blank" class="text-sm font-semibold text-white hover:text-[#25D366] transition-colors">
+                                        {{ $setting->phone ?? '0821-4243-0296' }}
+                                    </a>
                                 </div>
                             </div>
 
@@ -934,7 +943,9 @@
                                 </div>
                                 <div>
                                     <p class="text-xs text-gray-400 mb-0.5">Email</p>
-                                    <a href="mailto:info@arjunatravora.co.id" class="text-sm font-semibold text-white hover:text-[#EA4335] transition-colors">info@arjunatravora.co.id</a>
+                                    <a href="mailto:{{ $setting->email ?? 'info@arjunatravora.co.id' }}" class="text-sm font-semibold text-white hover:text-[#EA4335] transition-colors">
+                                        {{ $setting->email ?? 'info@arjunatravora.co.id' }}
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -1002,7 +1013,7 @@
                             </div>
                             <div class="pt-0.5">
                                 <h4 class="text-xs font-bold text-gray-400 tracking-wider uppercase mb-1">Kantor Operasional</h4>
-                                <p class="text-white text-[15px] font-semibold">Mojokerto, Jawa Timur, Indonesia.</p>
+                                <p class="text-white text-[15px] font-semibold">{{ $setting->address ?? 'Mojokerto, Jawa Timur, Indonesia.' }}</p>
                             </div>
                         </div>
 
@@ -1029,30 +1040,34 @@
         function heroSlider() {
             return {
                 activeSlide: 0,
+                // Mengambil data dinamis dari database menggunakan Blade
                 slides: [
+                    @forelse($heroes as $hero)
+                    {
+                        main: "{{ asset('storage/' . $hero->main_image) }}",
+                        side: "{{ asset('storage/' . $hero->side_image) }}",
+                        alt: "{{ $hero->label }}",
+                        label: "{{ $hero->label }}",
+                        description: "{{ $hero->description }}"
+                    },
+                    @empty
+                    // Fallback (cadangan) jika database kosong agar slider tidak error
                     {
                         main: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=85',
                         side: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=85',
                         alt: 'Teknologi dan infrastruktur digital',
                         label: 'B2B Technology',
-                        description: 'Solution & Procurement Partner.'
-                    },
-                    {
-                        main: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1600&q=85',
-                        side: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=85',
-                        alt: 'Solusi teknologi untuk berbagai sektor',
-                        label: 'Technology Solution',
-                        description: 'Solusi teknologi terintegrasi.'
+                        description: 'Belum ada data hero di database.'
                     }
+                    @endforelse
                 ],
                 next() {
-                    this.activeSlide =
-                        (this.activeSlide + 1) % this.slides.length
+                    if (this.slides.length === 0) return;
+                    this.activeSlide = (this.activeSlide + 1) % this.slides.length;
                 },
                 previous() {
-                    this.activeSlide =
-                        (this.activeSlide - 1 + this.slides.length)
-                        % this.slides.length
+                    if (this.slides.length === 0) return;
+                    this.activeSlide = (this.activeSlide - 1 + this.slides.length) % this.slides.length;
                 }
             }
         }
