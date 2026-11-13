@@ -1,21 +1,27 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\HeroController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SettingController;
 use App\Models\Client;
-use Illuminate\Support\Facades\Route;
+use App\Models\Hero;
 use App\Models\Portfolio;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    // Ambil data klien yang aktif
     $clients = Client::where('is_active', true)->latest()->get();
-
-    // Ambil 4 data portofolio terbaru
     $portfolios = Portfolio::latest()->take(4)->get();
+    $heroes = Hero::where('is_active', true)->latest()->get();
 
-    // Kirim kedua variabel ke tampilan welcome
-    return view('welcome', compact('clients', 'portfolios'));
+    // 2. Ambil data pengaturan (jika kosong, fallback ke instansiasi baru agar tidak error)
+    $setting = Setting::first() ?? new Setting();
+
+    // Kirim $setting ke tampilan welcome
+    return view('welcome', compact('clients', 'portfolios', 'heroes', 'setting'));
 });
 
 Route::get('/dashboard', function () {
@@ -35,6 +41,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/portfolios', [PortfolioController::class, 'index'])->name('portfolios.index');
     Route::post('/portfolios', [PortfolioController::class, 'store'])->name('portfolios.store');
     Route::delete('/portfolios/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolios.destroy');
+
+    // CRUD Hero (Beranda)
+    Route::get('/heroes', [HeroController::class, 'index'])->name('heroes.index');
+    Route::post('/heroes', [HeroController::class, 'store'])->name('heroes.store');
+    Route::delete('/heroes/{hero}', [HeroController::class, 'destroy'])->name('heroes.destroy');
+
+    // Pengaturan Umum
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
+
+    // Layanan Kami
+    Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+    Route::post('/services', [ServiceController::class, 'store'])->name('services.store');
+    Route::delete('/services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
 });
 
 require __DIR__ . '/auth.php';
