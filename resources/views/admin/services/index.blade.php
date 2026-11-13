@@ -15,11 +15,11 @@
     @endif
 
     <!-- Alpine Wrapper Utama -->
-    <div x-data="serviceManager()" class="grid grid-cols-1 xl:grid-cols-[380px_minmax(0,1fr)] gap-8">
+    <div x-data="serviceManager()" class="grid grid-cols-1 xl:grid-cols-[500px_minmax(0,1fr)] gap-8">
 
         <!-- PANEL KIRI (Form Tambah / Edit) -->
         <div>
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sticky top-6 transition-all" :class="editMode ? 'ring-2 ring-[#F8B41C]' : ''">
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sticky transition-all" :class="editMode ? 'ring-2 ring-[#F8B41C]' : ''">
 
                 <!-- Header Form Dinamis -->
                 <div class="flex justify-between items-center mb-5">

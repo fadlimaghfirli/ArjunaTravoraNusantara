@@ -4,11 +4,13 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SectorController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Models\Client;
 use App\Models\Hero;
 use App\Models\Portfolio;
+use App\Models\Sector;
 use App\Models\Service;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
@@ -19,9 +21,9 @@ Route::get('/', function () {
     $heroes = Hero::where('is_active', true)->latest()->get();
     $setting = Setting::first() ?? new Setting();
     $services = Service::where('is_active', true)->orderBy('sort_order', 'asc')->get();
+    $sectors = Sector::where('is_active', true)->latest()->get();
 
-    // Kirim $services ke tampilan welcome
-    return view('welcome', compact('clients', 'portfolios', 'heroes', 'setting', 'services'));
+    return view('welcome', compact('clients', 'portfolios', 'heroes', 'setting', 'services', 'sectors'));
 });
 
 Route::get('/dashboard', function () {
@@ -59,6 +61,15 @@ Route::middleware('auth')->group(function () {
     // Rute Baru: Update & Reorder
     Route::put('/services/{service}', [ServiceController::class, 'update'])->name('services.update');
     Route::post('/services/reorder', [ServiceController::class, 'reorder'])->name('services.reorder');
+
+    // Solusi Sektor
+    Route::get('/sectors', [SectorController::class, 'index'])->name('sectors.index');
+    Route::post('/sectors', [SectorController::class, 'store'])->name('sectors.store');
+    Route::delete('/sectors/{sector}', [SectorController::class, 'destroy'])->name('sectors.destroy');
+
+    // Rute Baru: Update & Reorder
+    Route::put('/sectors/{sector}', [SectorController::class, 'update'])->name('sectors.update');
+    Route::post('/sectors/reorder', [SectorController::class, 'reorder'])->name('sectors.reorder');
 });
 
 require __DIR__ . '/auth.php';

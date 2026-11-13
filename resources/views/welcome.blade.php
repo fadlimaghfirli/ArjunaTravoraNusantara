@@ -449,8 +449,9 @@
                 <div x-data="sectorSolutions()" class="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 xl:gap-20">
                     {{-- KOLOM KIRI: GAMBAR --}}
                     <div class="relative aspect-[4/3] w-full overflow-hidden rounded-[24px] sm:aspect-[5/4] lg:aspect-[4/3]" data-aos="fade-right">
-                        <template x-for="(slide, index) in slides" :key="slide.category">
-                            <div x-show="activeSlide === index" class="absolute inset-0" x-transition:enter="transition-opacity duration-500" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+                        <!-- Ganti slides menjadi sectors, dan aktifkan activeTab -->
+                        <template x-for="(slide, index) in sectors" :key="slide.category">
+                            <div x-show="activeTab === index" class="absolute inset-0" x-transition:enter="transition-opacity duration-500" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
                                 <img :src="slide.image" :alt="slide.title" class="h-full w-full object-cover">
                                 <div class="absolute inset-0 bg-gradient-to-t from-[#113883]/95 via-[#113883]/20 to-transparent"></div>
                                 <div class="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
@@ -465,13 +466,15 @@
                         <img src="{{ asset('images/shapes/svg-white-landscape.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[0px] max-sm:w-44 w-50 pointer-events-none">
 
                         <div class="absolute bottom-[17px] right-[10px] z-10 flex items-center gap-2">
-                            <button type="button" @click="previous()" aria-label="Sektor sebelumnya"
+                            <!-- Ubah fungsi @click -->
+                            <button type="button" @click="activeTab = (activeTab === 0) ? sectors.length - 1 : activeTab - 1" aria-label="Sektor sebelumnya"
                                 class="group flex max-sm:h-[54px] max-sm:w-[54px] h-[62px] w-[62px] items-center justify-center rounded-l-xl border border-[#D8DDE7] bg-white transition-all duration-300 hover:border-primary hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50">
                                 <svg class="h-6 w-6 text-[#667085] transition-colors duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
                                     <path d="M15 18L9 12L15 6" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </button>
-                            <button type="button" @click="next()" aria-label="Sektor berikutnya"
+                            <!-- Ubah fungsi @click -->
+                            <button type="button" @click="activeTab = (activeTab === sectors.length - 1) ? 0 : activeTab + 1" aria-label="Sektor berikutnya"
                                 class="group flex max-sm:h-[54px] max-sm:w-[54px] h-[62px] w-[62px] items-center justify-center rounded-r-xl border border-[#D8DDE7] bg-white transition-all duration-300 hover:border-primary hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50">
                                 <svg class="h-6 w-6 text-[#667085] transition-colors duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
                                     <path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round" />
@@ -482,11 +485,13 @@
 
                     {{-- KOLOM KANAN: KONTEN --}}
                     <div data-aos="fade-left">
-                        <h3 class="text-xl font-semibold leading-snug text-primary sm:text-2xl" x-text="slides[activeSlide].heading"></h3>
-                        <p class="mt-4 text-sm leading-6 text-bodytext sm:text-[15px]" x-text="slides[activeSlide].description"></p>
+                        <!-- Ganti slides[activeSlide] dengan sectors[activeTab] -->
+                        <h3 class="text-xl font-semibold leading-snug text-primary sm:text-2xl" x-text="sectors[activeTab].title"></h3>
+                        <p class="mt-4 text-sm leading-6 text-bodytext sm:text-[15px]" x-text="sectors[activeTab].description"></p>
 
                         <ul class="mt-5 space-y-5">
-                            <template x-for="(feature, index) in slides[activeSlide].features" :key="index">
+                            <!-- Ganti array features -->
+                            <template x-for="(feature, index) in sectors[activeTab].features" :key="index">
                                 <li class="flex items-start gap-4">
                                     <span class="mt-1 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-[#FFB800] text-white">
                                         <svg class="h-3 w-3" viewBox="0 0 16 16" fill="none">
@@ -996,52 +1001,30 @@
 
         function sectorSolutions() {
             return {
-                activeSlide: 0,
-                slides: [
+                activeTab: 0,
+                // Mengambil data Sektor dari database
+                sectors: [
+                    @forelse($sectors as $sector)
                     {
-                        category: "HealthCare",
-                        title: "Sistem Manajemen Rumah Sakit (SIMRS) & Keamanan Data Medis",
-                        image: "{{ asset('images/solutions/healthcare.png') }}",
-                        heading: "Sistem Manajemen Rumah Sakit (SIMRS) & Keamanan Data Medis",
-                        description: "Membangun ekosistem digital rumah sakit yang aman dan terintegrasi. Kami memastikan sistem Rekam Medis Elektronik (RME) terhubung lancar dengan operasional klinis, didukung infrastruktur anti-down dan perlindungan data pasien standar Kemenkes.",
-                        features: [
-                            "Integrasi dengan platform SatuSehat Kemenkes RI serta enkripsi data end-to-end untuk keamanan maksimal.",
-                            "Jaringan internet ganda (Dual-ISP) dengan failover otomatis untuk menjaga operasional rumah sakit tetap berjalan 24/7.",
-                            "Pemantauan keamanan terpusat melalui Smart CCTV dan sensor suhu IoT untuk ruang farmasi."
-                        ]
+                        category: @json($sector->category),
+                        title: @json($sector->title),
+                        description: @json($sector->description),
+                        image: "{{ asset('storage/' . $sector->image) }}",
+                        // Sihir PHP: Memecah teks berdasarkan 'Enter' (baris baru), menghapus spasi kosong, dan menjadikannya Array JS
+                        features: @json(array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', $sector->features)))))
                     },
+                    @empty
+                    // Data Cadangan jika database kosong agar halaman tidak error
                     {
-                        category: "Corporate",
-                        title: "Global SD-WAN Mesh & Akses Private Multi-Cloud",
-                        image: "{{ asset('images/solutions/corporate.png') }}",
-                        heading: "Global SD-WAN Mesh & Akses Private Multi-Cloud",
-                        description: "Optimalisasi konektivitas kantor cabang terdistribusi dengan orkestrasi software-defined WAN, koneksi cloud, dan perlindungan jaringan berbasis zero-trust.",
-                        features: [
-                            "Optimasi jalur koneksi jaringan untuk meningkatkan efisiensi dan mengurangi biaya operasional.",
-                            "Integrasi Zero Trust Network Access (ZTNA) dan CASB untuk mendukung akses kerja yang aman.",
-                            "Konektivitas cloud yang andal dengan pemantauan jaringan secara real-time."
-                        ]
-                    },
-                    {
-                        category: "Government",
-                        title: "Intranet Berdaulat Tertutup & Integrasi SPBE Nasional",
-                        image: "{{ asset('images/solutions/government.png') }}",
-                        heading: "Intranet Berdaulat Tertutup & Integrasi SPBE Nasional",
-                        description: "Infrastruktur komunikasi data tertutup untuk mendukung kedaulatan data, integrasi pusat data nasional, serta pengamanan informasi instansi pemerintah.",
-                        features: [
-                            "Arsitektur jaringan tertutup melalui Dedicated Private APN.",
-                            "Dukungan infrastruktur untuk memenuhi kebutuhan keamanan dan regulasi SPBE.",
-                            "Interkoneksi antarinstansi dengan perlindungan dan enkripsi jaringan."
-                        ]
+                        category: "Belum Ada Data",
+                        title: "Solusi Sektor Belum Ditambahkan",
+                        description: "Silakan tambahkan data melalui Dasbor Admin pada menu Solusi Sektor.",
+                        image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1400",
+                        features: ["Fitur 1 belum tersedia", "Fitur 2 belum tersedia"]
                     }
-                ],
-                next() {
-                    this.activeSlide = (this.activeSlide + 1) % this.slides.length;
-                },
-                previous() {
-                    this.activeSlide = (this.activeSlide - 1 + this.slides.length) % this.slides.length;
-                }
-            };
+                    @endforelse
+                ]
+            }
         }
     </script>
 
