@@ -168,17 +168,14 @@
                         data-aos="fade-up" data-aos-duration="900" data-aos-easing="ease-out-cubic">
                         {{-- GAMBAR --}}
                         <div class="relative h-[320px] min-h-0 overflow-hidden sm:h-[360px] md:h-[560px] lg:h-[620px]" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="150" data-aos-easing="ease-out-cubic">
-                            {{-- Image 01 --}}
+                            @forelse($advantages as $advantage)
+                            <img src="{{ asset('storage/' . $advantage->image) }}" alt="{{ $advantage->title }}" class="advantage-image absolute inset-0 h-full w-full object-cover {{ $loop->first ? '' : 'opacity-0' }}"
+                                data-image="{{ $loop->index }}">
+                            @empty
                             <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1400&q=85" alt="Solusi teknologi terintegrasi" class="advantage-image absolute inset-0 h-full w-full object-cover" data-image="0">
-                            {{-- Image 02 --}}
-                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=85" alt="Teknologi untuk kebutuhan bisnis" class="advantage-image absolute inset-0 h-full w-full object-cover opacity-0"
-                                data-image="1">
-                            {{-- Image 03 --}}
-                            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1400&q=85" alt="Dukungan teknis" class="advantage-image absolute inset-0 h-full w-full object-cover opacity-0" data-image="2">
-                            {{-- Image 04 --}}
-                            <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=85" alt="Layanan profesional" class="advantage-image absolute inset-0 h-full w-full object-cover opacity-0"
-                                data-image="3">
+                            @endforelse
                         </div>
+
                         {{-- KONTEN --}}
                         <div class="relative flex min-h-0 flex-col justify-center overflow-hidden px-6 py-6 sm:px-8 sm:py-7 md:px-9 md:py-8 lg:px-12 lg:py-10 xl:px-14" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="250"
                             data-aos-easing="ease-out-cubic">
@@ -191,61 +188,34 @@
                                     Fondasi operasional teruji untuk memastikan pengadaan tepat sasaran, akuntabel, dan berkesinambungan jangka panjang.
                                 </p>
                             </div>
+
                             {{-- DAFTAR KEUNGGULAN --}}
                             <div class="advantages-items">
-                                {{-- ITEM 01 --}}
-                                {{-- <article class="advantage-item is-active relative border-l-2 border-[#D8DDE7] pl-4 sm:pl-5" data-index="0" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500"> --}}
+                                @forelse($advantages as $advantage)
+                                <article class="advantage-item {{ $loop->first ? 'is-active' : 'mt-5 transition-all duration-500' }} relative border-l-2 border-[#D8DDE7] pl-4 sm:pl-5" data-index="{{ $loop->index }}">
+                                    <span class="advantage-line absolute -left-[2px] top-0 {{ $loop->first ? 'h-full' : 'h-0' }} w-[2px] bg-primary"></span>
+                                    <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
+                                        {{ $advantage->title }}
+                                    </span>
+                                    <div class="advantage-description mt-2 max-w-[580px]">
+                                        <p class="max-md:text-[14px] text-[16px] leading-6 text-bodytext">
+                                            {{ $advantage->description }}
+                                        </p>
+                                    </div>
+                                </article>
+                                @empty
                                 <article class="advantage-item is-active relative border-l-2 border-[#D8DDE7] pl-4 sm:pl-5" data-index="0">
-                                    {{-- Active line --}}
                                     <span class="advantage-line absolute -left-[2px] top-0 h-full w-[2px] bg-primary"></span>
                                     <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
-                                        Sesuai Kebutuhan
+                                        Belum Ada Data Keunggulan
                                     </span>
                                     <div class="advantage-description mt-2 max-w-[580px]">
                                         <p class="max-md:text-[14px] text-[16px] leading-6 text-bodytext">
-                                            Spesifikasi dan arsitektur disesuaikan tepat sasaran dengan kapasitas anggaran, alur kerja nyata, dan skala pertumbuhan bisnis Anda.
+                                            Silakan tambahkan poin keunggulan melalui Dasbor Admin pada menu Keunggulan.
                                         </p>
                                     </div>
                                 </article>
-                                {{-- ITEM 02 --}}
-                                {{-- <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="1" data-aos="fade-up" data-aos-duration="700" data-aos-delay="600"> --}}
-                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="1">
-                                    <span class="advantage-line absolute -left-[2px] top-0 h-0 w-[2px] bg-primary"></span>
-                                    <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
-                                        Solusi Terintegrasi
-                                    </span>
-                                    <div class="advantage-description mt-2 max-w-[580px]">
-                                        <p class="max-md:text-[14px] text-[16px] leading-6 text-bodytext">
-                                            Setiap solusi dirancang agar dapat terintegrasi dengan kebutuhan sistem dan proses bisnis secara menyeluruh.
-                                        </p>
-                                    </div>
-                                </article>
-                                {{-- ITEM 03 --}}
-                                {{-- <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="2" data-aos="fade-up" data-aos-duration="700" data-aos-delay="700"> --}}
-                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="2">
-                                    <span class="advantage-line absolute -left-[2px] top-0 h-0 w-[2px] bg-primary"></span>
-                                    <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
-                                        Dukungan Teknis
-                                    </span>
-                                    <div class="advantage-description mt-2 max-w-[580px]">
-                                        <p class="max-md:text-[14px] text-[16px] leading-6 text-bodytext">
-                                            Dukungan teknis diberikan untuk memastikan solusi berjalan optimal sesuai kebutuhan operasional.
-                                        </p>
-                                    </div>
-                                </article>
-                                {{-- ITEM 04 --}}
-                                {{-- <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="3" data-aos="fade-up" data-aos-duration="700" data-aos-delay="800"> --}}
-                                <article class="advantage-item relative mt-5 border-l-2 border-[#D8DDE7] pl-4 transition-all duration-500 sm:pl-5" data-index="3">
-                                    <span class="advantage-line absolute -left-[2px] top-0 h-0 w-[2px] bg-primary"></span>
-                                    <span class="advantage-title block text-[15px] font-bold lg:text-[18px]">
-                                        Profesional & Terukur
-                                    </span>
-                                    <div class="advantage-description mt-2 max-w-[580px]">
-                                        <p class="max-md:text-[14px] text-[16px] leading-6 text-bodytext">
-                                            Proses kerja dilakukan secara profesional dengan pendekatan terukur untuk memberikan hasil yang jelas.
-                                        </p>
-                                    </div>
-                                </article>
+                                @endforelse
                             </div>
                         </div>
                     </div>

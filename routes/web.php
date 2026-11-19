@@ -7,6 +7,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\AdvantageController;
+use App\Models\Advantage;
 use App\Models\Client;
 use App\Models\Hero;
 use App\Models\Portfolio;
@@ -22,8 +24,9 @@ Route::get('/', function () {
     $setting = Setting::first() ?? new Setting();
     $services = Service::where('is_active', true)->orderBy('sort_order', 'asc')->get();
     $sectors = Sector::where('is_active', true)->orderBy('sort_order', 'asc')->get();
+    $advantages = Advantage::where('is_active', true)->orderBy('sort_order', 'asc')->get();
 
-    return view('welcome', compact('clients', 'portfolios', 'heroes', 'setting', 'services', 'sectors'));
+    return view('welcome', compact('clients', 'portfolios', 'heroes', 'setting', 'services', 'sectors', 'advantages'));
 });
 
 Route::get('/dashboard', function () {
@@ -73,6 +76,13 @@ Route::middleware('auth')->group(function () {
     Route::put('/sectors/{sector}', [SectorController::class, 'update'])->name('sectors.update');
     Route::post('/sectors/reorder', [SectorController::class, 'reorder'])->name('sectors.reorder');
     Route::delete('/sectors/{sector}', [SectorController::class, 'destroy'])->name('sectors.destroy');
+
+    // Keunggulan (Mengapa Memilih ATN)
+    Route::get('/advantages', [AdvantageController::class, 'index'])->name('advantages.index');
+    Route::post('/advantages', [AdvantageController::class, 'store'])->name('advantages.store');
+    Route::put('/advantages/{advantage}', [AdvantageController::class, 'update'])->name('advantages.update');
+    Route::post('/advantages/reorder', [AdvantageController::class, 'reorder'])->name('advantages.reorder');
+    Route::delete('/advantages/{advantage}', [AdvantageController::class, 'destroy'])->name('advantages.destroy');
 });
 
 require __DIR__ . '/auth.php';

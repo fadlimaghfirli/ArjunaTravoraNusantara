@@ -35,7 +35,8 @@
             Hero & Beranda
         </a>
 
-        <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all font-medium text-sm">
+        <a href="{{ route('advantages.index') }}"
+            class="{{ request()->routeIs('advantages.index') ? 'bg-[#113883] text-white shadow-md' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all font-medium text-sm">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">

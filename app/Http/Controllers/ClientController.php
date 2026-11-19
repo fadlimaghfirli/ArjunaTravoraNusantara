@@ -10,40 +10,73 @@ class ClientController extends Controller
 {
     public function index()
     {
-        // Mengambil semua data klien, diurutkan dari yang terbaru
-        $clients = Client::latest()->get();
+        $clients = Client::orderBy('sort_order', 'asc')->get();
         return view('admin.clients.index', compact('clients'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
+            'name' => 'required|string|max:100',
+            'logo' => 'required|file|mimes:jpeg,png,jpg,svg,webp|max:2048',
         ]);
 
-        // Simpan gambar ke folder storage/app/public/clients
+        $lastOrder = Client::max('sort_order') ?? 0;
         $logoPath = $request->file('logo')->store('clients', 'public');
 
         Client::create([
             'name' => $request->name,
             'logo' => $logoPath,
             'is_active' => true,
+            'sort_order' => $lastOrder + 1,
         ]);
 
-        return back()->with('success', 'Data klien berhasil ditambahkan!');
+        return back()->with('success', 'Partner & Klien baru berhasil ditambahkan!');
+    }
+
+    public function update(Request $request, Client $client)
+    {
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'logo' => 'nullable|file|mimes:jpeg,png,jpg,svg,webp|max:2048',
+        ]);
+
+        $data = ['name' => $request->name];
+
+        if ($request->hasFile('logo')) {
+            if (Storage::disk('public')->exists($client->logo)) {
+                Storage::disk('public')->delete($client->logo);
+            }
+            $data['logo'] = $request->file('logo')->store('clients', 'public');
+        }
+
+        $client->update($data);
+
+        return back()->with('success', 'Data Partner & Klien berhasil diperbarui!');
+    }
+
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'order' => 'required|array',
+            'order.*' => 'integer|exists:clients,id',
+        ]);
+
+        foreach ($request->order as $index => $id) {
+            Client::where('id', $id)->update(['sort_order' => $index]);
+        }
+
+        return response()->json(['success' => true]);
     }
 
     public function destroy(Client $client)
     {
-        // Hapus file gambar fisik dari storage jika ada
         if (Storage::disk('public')->exists($client->logo)) {
             Storage::disk('public')->delete($client->logo);
         }
 
-        // Hapus data dari database
         $client->delete();
 
-        return back()->with('success', 'Data klien berhasil dihapus!');
+        return back()->with('success', 'Partner & Klien berhasil dihapus!');
     }
 }
