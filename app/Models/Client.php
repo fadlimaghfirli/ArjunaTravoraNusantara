@@ -13,5 +13,6 @@ class Client extends Model
         'name',
         'logo',
         'is_active',
+        'sort_order',
     ];
 }

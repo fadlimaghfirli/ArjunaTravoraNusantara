@@ -16,8 +16,8 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $clients = Client::where('is_active', true)->latest()->get();
-    $portfolios = Portfolio::latest()->take(4)->get();
+    $clients = Client::where('is_active', true)->orderBy('sort_order', 'asc')->get();
+    $portfolios = Portfolio::orderBy('sort_order', 'asc')->take(4)->get();
     $heroes = Hero::where('is_active', true)->orderBy('sort_order', 'asc')->get();
     $setting = Setting::first() ?? new Setting();
     $services = Service::where('is_active', true)->orderBy('sort_order', 'asc')->get();
@@ -38,11 +38,15 @@ Route::middleware('auth')->group(function () {
     // Partner & Klien
     Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
     Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
+    Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
+    Route::post('/clients/reorder', [ClientController::class, 'reorder'])->name('clients.reorder');
     Route::delete('/clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
 
     // Portofolio Project
     Route::get('/portfolios', [PortfolioController::class, 'index'])->name('portfolios.index');
     Route::post('/portfolios', [PortfolioController::class, 'store'])->name('portfolios.store');
+    Route::put('/portfolios/{portfolio}', [PortfolioController::class, 'update'])->name('portfolios.update');
+    Route::post('/portfolios/reorder', [PortfolioController::class, 'reorder'])->name('portfolios.reorder');
     Route::delete('/portfolios/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolios.destroy');
 
     // Hero & Beranda

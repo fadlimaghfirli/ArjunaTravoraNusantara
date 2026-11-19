@@ -15,5 +15,6 @@ class Portfolio extends Model
         'year',
         'type',
         'image',
+        'sort_order',
     ];
 }

@@ -10,20 +10,21 @@ class PortfolioController extends Controller
 {
     public function index()
     {
-        $portfolios = Portfolio::latest()->get();
+        $portfolios = Portfolio::orderBy('sort_order', 'asc')->get();
         return view('admin.portfolios.index', compact('portfolios'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
-            'year' => 'required|string|max:4',
-            'type' => 'required|string|max:50',
+            'title' => 'required|string|max:150',
+            'category' => 'required|string|max:100',
+            'year' => 'required|digits:4',
+            'type' => 'required|in:Project,Portfolio',
             'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
+        $lastOrder = Portfolio::max('sort_order') ?? 0;
         $imagePath = $request->file('image')->store('portfolios', 'public');
 
         Portfolio::create([
@@ -32,9 +33,48 @@ class PortfolioController extends Controller
             'year' => $request->year,
             'type' => $request->type,
             'image' => $imagePath,
+            'sort_order' => $lastOrder + 1,
         ]);
 
-        return back()->with('success', 'Data portofolio berhasil ditambahkan!');
+        return back()->with('success', 'Portofolio baru berhasil ditambahkan!');
+    }
+
+    public function update(Request $request, Portfolio $portfolio)
+    {
+        $request->validate([
+            'title' => 'required|string|max:150',
+            'category' => 'required|string|max:100',
+            'year' => 'required|digits:4',
+            'type' => 'required|in:Project,Portfolio',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
+        $data = $request->only(['title', 'category', 'year', 'type']);
+
+        if ($request->hasFile('image')) {
+            if (Storage::disk('public')->exists($portfolio->image)) {
+                Storage::disk('public')->delete($portfolio->image);
+            }
+            $data['image'] = $request->file('image')->store('portfolios', 'public');
+        }
+
+        $portfolio->update($data);
+
+        return back()->with('success', 'Data portofolio berhasil diperbarui!');
+    }
+
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'order' => 'required|array',
+            'order.*' => 'integer|exists:portfolios,id',
+        ]);
+
+        foreach ($request->order as $index => $id) {
+            Portfolio::where('id', $id)->update(['sort_order' => $index]);
+        }
+
+        return response()->json(['success' => true]);
     }
 
     public function destroy(Portfolio $portfolio)
@@ -45,6 +85,6 @@ class PortfolioController extends Controller
 
         $portfolio->delete();
 
-        return back()->with('success', 'Data portofolio berhasil dihapus!');
+        return back()->with('success', 'Portofolio berhasil dihapus!');
     }
 }
