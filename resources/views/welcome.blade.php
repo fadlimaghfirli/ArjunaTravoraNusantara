@@ -943,7 +943,8 @@
                             <li><a href="#layanan" class="text-gray-300 hover:text-white text-[15px] transition-colors">Layanan</a></li>
                             <li><a href="#solusi-sektor" class="text-gray-300 hover:text-white text-[15px] transition-colors">Solusi</a></li>
                             <li><a href="#tentang-kami" class="text-gray-300 hover:text-white text-[15px] transition-colors">Tentang Kami</a></li>
-                            <li><a href="#portofolio" class="text-gray-300 hover:text-white text-[15px] transition-colors">Portofolio</a></li>
+                            <li><a href="{{ route('legality.public.index') }}" class="text-gray-300 hover:text-white text-[15px] transition-colors">Legalitas</a></li>
+                            <li><a href="{{ route('portfolio.public.index') }}" class="text-gray-300 hover:text-white text-[15px] transition-colors">Portofolio</a></li>
                             <li><a href="{{ route('blog.public.index') }}" class="text-gray-300 hover:text-white text-[15px] transition-colors">Blog</a></li>
                             <li>
                                 <a href="{{ $setting->career_url ?: 'https://wa.me/' . $waLink }}" target="_blank" rel="noopener" class="text-gray-300 hover:text-white text-[15px] transition-colors">

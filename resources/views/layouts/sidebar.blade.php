@@ -62,6 +62,15 @@
             Layanan Kami
         </a>
 
+        <a href="{{ route('legalities.index') }}"
+            class="{{ request()->routeIs('legalities.index') ? 'bg-[#113883] text-white shadow-md' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all font-medium text-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+            Legalitas
+        </a>
+
         <a href="{{ route('sectors.index') }}"
             class="{{ request()->routeIs('sectors.index') ? 'bg-[#113883] text-white shadow-md' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all font-medium text-sm">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

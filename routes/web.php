@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\HeroController;
+use App\Http\Controllers\LegalityController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SectorController;
@@ -58,8 +59,15 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+// Halaman Publik Blog & Berita
+Route::get('/blog', [BlogController::class, 'publicIndex'])->name('blog.public.index');
+Route::get('/blog/{blog:slug}', [BlogController::class, 'publicShow'])->name('blog.public.show');
+
 // Halaman Publik Portofolio & Project
 Route::get('/portofolio', [PortfolioController::class, 'publicIndex'])->name('portfolio.public.index');
+
+// Halaman Publik Legalitas Perusahaan
+Route::get('/legalitas', [LegalityController::class, 'publicIndex'])->name('legality.public.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -141,10 +149,13 @@ Route::middleware('auth')->group(function () {
     // Kelola Footer
     Route::get('/footer', [FooterController::class, 'index'])->name('footer.index');
     Route::put('/footer', [FooterController::class, 'update'])->name('footer.update');
-});
 
-// Halaman Publik Blog & Berita
-Route::get('/blog', [BlogController::class, 'publicIndex'])->name('blog.public.index');
-Route::get('/blog/{blog:slug}', [BlogController::class, 'publicShow'])->name('blog.public.show');
+    // Legalitas Perusahaan
+    Route::get('/legalities', [LegalityController::class, 'index'])->name('legalities.index');
+    Route::post('/legalities', [LegalityController::class, 'store'])->name('legalities.store');
+    Route::post('/legalities/reorder', [LegalityController::class, 'reorder'])->name('legalities.reorder');
+    Route::put('/legalities/{legality}', [LegalityController::class, 'update'])->name('legalities.update');
+    Route::delete('/legalities/{legality}', [LegalityController::class, 'destroy'])->name('legalities.destroy');
+});
 
 require __DIR__ . '/auth.php';
