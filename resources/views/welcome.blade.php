@@ -773,14 +773,13 @@
         </section>
 
         {{-- FOOTER --}}
-        <footer class="bg-white pb-10 pt-4">
+        <footer id="kontak" class="bg-white pb-10 pt-4">
             <div class="mx-auto w-full max-w-[1400px] px-6">
 
                 {{-- Container Utama Footer --}}
                 <div class="relative bg-[#1A1C1F] rounded-[32px] px-8 py-10 md:px-12 md:py-14 lg:p-16 flex flex-col lg:flex-row gap-12 lg:gap-16 overflow-hidden" data-aos="fade-up" data-aos-duration="1000">
 
                     {{-- CUTOUT LOGO AREA --}}
-                    {{-- Area putih yang menutupi sudut kiri atas footer gelap --}}
                     <div class="absolute top-0 left-0 bg-white rounded-br-[32px] z-10 pr-8 pb-6 max-md:pr-6 max-md:pb-5">
                         <img src="{{ asset('images/logo-atn.png') }}" alt="Arjuna Travora Nusantara" class="h-10 md:h-12 mt-6 ml-8 max-md:mt-5 max-md:ml-6">
 
@@ -790,14 +789,12 @@
                     </div>
 
                     {{-- KOLOM 1: KONTAK & SOSIAL MEDIA --}}
-                    {{-- mt-24 pada mobile untuk memberi ruang pada logo cutout --}}
                     <div class="w-full lg:w-[380px] shrink-0 flex flex-col mt-20 lg:mt-4">
 
                         {{-- Card Kontak --}}
                         <div class="bg-[#24262A] rounded-2xl p-6 flex flex-col gap-6">
 
                             @php
-                            // Format nomor untuk link WhatsApp (hilangkan spasi/strip, ganti 0 di depan jadi 62)
                             $rawPhone = preg_replace('/[^0-9]/', '', $setting->phone ?? '082142430296');
                             $waLink = preg_replace('/^0/', '62', $rawPhone);
                             @endphp
@@ -835,40 +832,60 @@
                         </div>
 
                         {{-- Social Media --}}
+                        @php
+                        $hasAnySocial = $setting->facebook_url || $setting->instagram_url || $setting->linkedin_url || $setting->youtube_url;
+                        @endphp
                         <div class="mt-8">
                             <h4 class="text-xs font-bold text-gray-400 tracking-wider mb-4 uppercase">Connect With Us</h4>
                             <div class="flex gap-3">
-                                <a href="#" class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                                @if($setting->facebook_url || !$hasAnySocial)
+                                <a href="{{ $setting->facebook_url ?? '#' }}" {{ $setting->facebook_url ? 'target=_blank rel=noopener' : '' }} aria-label="Facebook"
+                                    class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                         <path
                                             d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
                                     </svg>
                                 </a>
-                                <a href="#" class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                                @endif
+
+                                @if($setting->instagram_url || !$hasAnySocial)
+                                <a href="{{ $setting->instagram_url ?? '#' }}" {{ $setting->instagram_url ? 'target=_blank rel=noopener' : '' }} aria-label="Instagram"
+                                    class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                                         <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
                                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                                     </svg>
                                 </a>
-                                <a href="#" class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                                @endif
+
+                                @if($setting->linkedin_url || !$hasAnySocial)
+                                <a href="{{ $setting->linkedin_url ?? '#' }}" {{ $setting->linkedin_url ? 'target=_blank rel=noopener' : '' }} aria-label="LinkedIn"
+                                    class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                         <path
                                             d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                                     </svg>
                                 </a>
-                                <a href="#" class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                                @endif
+
+                                @if($setting->youtube_url || !$hasAnySocial)
+                                <a href="{{ $setting->youtube_url ?? '#' }}" {{ $setting->youtube_url ? 'target=_blank rel=noopener' : '' }} aria-label="YouTube"
+                                    class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                         <path
                                             d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                                     </svg>
                                 </a>
+                                @endif
                             </div>
                         </div>
 
                         {{-- Copyright --}}
                         <div class="mt-8 pt-6 border-t border-gray-700 w-full">
-                            <p class="text-[13px] text-gray-400">© 2026 PT. Arjuna Travora Nusantara. All Rights Reserved.</p>
+                            <p class="text-[13px] text-gray-400">
+                                {{ $setting->copyright_text ?? '© 2026 PT. Arjuna Travora Nusantara. All Rights Reserved.' }}
+                            </p>
                         </div>
                     </div>
 
@@ -880,9 +897,13 @@
                             <li><a href="#solusi-sektor" class="text-gray-300 hover:text-white text-[15px] transition-colors">Solusi</a></li>
                             <li><a href="#tentang-kami" class="text-gray-300 hover:text-white text-[15px] transition-colors">Tentang Kami</a></li>
                             <li><a href="#portofolio" class="text-gray-300 hover:text-white text-[15px] transition-colors">Portofolio</a></li>
-                            <li><a href="#blog" class="text-gray-300 hover:text-white text-[15px] transition-colors">Blog</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-white text-[15px] transition-colors">Karir</a></li>
-                            <li><a href="#kontak" class="text-gray-300 hover:text-white text-[15px] transition-colors">Hubungi Kami</a></li>
+                            <li><a href="{{ route('blog.public.index') }}" class="text-gray-300 hover:text-white text-[15px] transition-colors">Blog</a></li>
+                            <li>
+                                <a href="{{ $setting->career_url ?: 'https://wa.me/' . $waLink }}" target="_blank" rel="noopener" class="text-gray-300 hover:text-white text-[15px] transition-colors">
+                                    Karir
+                                </a>
+                            </li>
+                            <li><a href="https://wa.me/{{ $waLink }}" target="_blank" rel="noopener" class="text-gray-300 hover:text-white text-[15px] transition-colors">Hubungi Kami</a></li>
                         </ul>
                     </div>
 
@@ -903,13 +924,21 @@
 
                         {{-- Google Maps Area --}}
                         <div class="w-full h-[200px] md:h-[220px] rounded-[20px] overflow-hidden bg-gray-800 relative group">
-                            {{-- Placeholder Map, ganti src dengan asset map asli Anda jika ada --}}
-                            <img src="https://placehold.co/800x400/24262A/667085?text=Peta+Lokasi+Mojokerto" alt="Peta Lokasi" class="w-full h-full object-cover">
+                            @if($setting->maps_embed && str_starts_with($setting->maps_embed, 'https://www.google.com/maps/embed'))
+                            <iframe src="{{ $setting->maps_embed }}" class="w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Peta Lokasi Kantor Operasional"></iframe>
+                            @if($setting->maps_url)
+                            <a href="{{ $setting->maps_url }}" target="_blank" rel="noopener" class="absolute bottom-3 right-3 bg-white/95 hover:bg-white text-slate-900 px-3.5 py-2 rounded-xl text-xs font-bold shadow-md transition-all">
+                                Buka di Google Maps
+                            </a>
+                            @endif
+                            @else
+                            <img src="{{ $setting->maps_image ? asset('storage/' . $setting->maps_image) : 'https://placehold.co/800x400/24262A/667085?text=Peta+Lokasi+Mojokerto' }}" alt="Peta Lokasi" class="w-full h-full object-cover">
 
-                            {{-- Overlay CTA untuk Maps (Opsional untuk interaktifitas) --}}
-                            <a href="https://maps.google.com" target="_blank" class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                            <a href="{{ $setting->maps_url ?? 'https://maps.google.com' }}" target="_blank" rel="noopener"
+                                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
                                 <span class="bg-white text-slate-900 px-5 py-2.5 rounded-xl text-sm font-semibold">Buka di Google Maps</span>
                             </a>
+                            @endif
                         </div>
                     </div>
 

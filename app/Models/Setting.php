@@ -17,5 +17,14 @@ class Setting extends Model
         'email',
         'address',
         'workflow_image',
+        'facebook_url',
+        'instagram_url',
+        'linkedin_url',
+        'youtube_url',
+        'copyright_text',
+        'career_url',
+        'maps_url',
+        'maps_embed',
+        'maps_image',
     ];
 }
