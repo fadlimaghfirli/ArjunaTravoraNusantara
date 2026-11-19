@@ -6,6 +6,7 @@ $isHome = request()->is('/');
 $initialActive = match (true) {
 request()->routeIs('portfolio.public.*') => 'portofolio',
 request()->routeIs('blog.public.*') => 'blog',
+request()->routeIs('legality.public.*') => 'legalitas',
 default => 'beranda',
 };
 
@@ -39,6 +40,11 @@ $navLinks = [
 'id' => 'blog',
 'label' => 'Blog',
 'href' => $isHome ? '#blog' : route('blog.public.index'),
+],
+[
+'id' => 'legalitas',
+'label' => 'Legalitas',
+'href' => route('legality.public.index'),
 ],
 ];
 @endphp
