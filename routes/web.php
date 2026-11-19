@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdvantageController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\PortfolioController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\WorkflowController;
 use App\Models\About;
 use App\Models\AboutGallery;
 use App\Models\Advantage;
+use App\Models\Blog;
 use App\Models\Client;
 use App\Models\Hero;
 use App\Models\Portfolio;
@@ -33,6 +35,7 @@ Route::get('/', function () {
     $workflows = Workflow::where('is_active', true)->orderBy('sort_order', 'asc')->get();
     $about = About::first();
     $aboutGalleries = AboutGallery::where('is_active', true)->orderBy('sort_order', 'asc')->get();
+    $blogs = Blog::where('is_active', true)->orderBy('sort_order', 'asc')->orderByDesc('published_at')->take(8)->get();
 
     return view('welcome', compact(
         'clients',
@@ -44,7 +47,8 @@ Route::get('/', function () {
         'advantages',
         'workflows',
         'about',
-        'aboutGalleries'
+        'aboutGalleries',
+        'blogs'
     ));
 });
 
@@ -118,6 +122,20 @@ Route::middleware('auth')->group(function () {
     Route::post('/about/galleries/reorder', [AboutController::class, 'reorderGalleries'])->name('about.galleries.reorder');
     Route::put('/about/galleries/{gallery}', [AboutController::class, 'updateGallery'])->name('about.galleries.update');
     Route::delete('/about/galleries/{gallery}', [AboutController::class, 'destroyGallery'])->name('about.galleries.destroy');
+
+    // Blog & Berita
+    Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+    Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
+    Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.store');
+    Route::post('/blogs/reorder', [BlogController::class, 'reorder'])->name('blogs.reorder');
+    Route::post('/blogs/upload-image', [BlogController::class, 'uploadImage'])->name('blogs.uploadImage');
+    Route::get('/blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
+    Route::put('/blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
+    Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
 });
+
+// Halaman Publik Blog & Berita
+Route::get('/blog', [BlogController::class, 'publicIndex'])->name('blog.public.index');
+Route::get('/blog/{blog:slug}', [BlogController::class, 'publicShow'])->name('blog.public.show');
 
 require __DIR__ . '/auth.php';

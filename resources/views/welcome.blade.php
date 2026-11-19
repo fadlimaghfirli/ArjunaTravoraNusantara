@@ -710,10 +710,9 @@
         <section id="blog" class="bg-white py-16 sm:py-20 lg:py-24 overflow-hidden">
             <div class="mx-auto w-full max-w-[1400px] px-6">
 
-                <div x-data="blogSlider()" class="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
+                <div x-data="blogDynamicSlider()" x-init="init()" class="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
 
                     {{-- PANEL JUDUL & DESKRIPSI (Kiri) --}}
-                    {{-- Lebar panel diperkecil menjadi w-[320px] --}}
                     <div class="w-full lg:w-[280px] shrink-0" data-aos="fade-right" data-aos-duration="800">
                         <div class="relative bg-[#F9FAFB] rounded-[24px] p-7 md:p-8 h-full flex flex-col min-h-[300px]">
                             <h2 class="text-3xl font-extrabold text-[#102238] mb-3">Blog</h2>
@@ -722,7 +721,7 @@
                             </p>
 
                             <div class="mt-auto flex items-end justify-between relative">
-                                <a href="#" class="inline-flex items-center gap-1.5 text-[15px] text-primary font-semibold hover:underline">
+                                <a href="{{ route('blog.public.index') }}" class="inline-flex items-center gap-1.5 text-[15px] text-primary font-semibold hover:underline">
                                     Selengkapnya
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
@@ -730,12 +729,13 @@
                                 </a>
 
                                 <div class="absolute -right-7 -bottom-7 md:-right-8 md:-bottom-8 bg-white rounded-tl-[24px] p-3 flex gap-0 border-t border-l border-white">
-                                    <button @click="prev()" :disabled="atStart" class="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-l-lg bg-white hover:bg-gray-50 text-gray-600 disabled:opacity-50 transition-colors">
+                                    <button type="button" @click="prev()" :disabled="atStart"
+                                        class="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-l-lg bg-white hover:bg-gray-50 text-gray-600 disabled:opacity-50 transition-colors">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                                         </svg>
                                     </button>
-                                    <button @click="next()" :disabled="atEnd"
+                                    <button type="button" @click="next()" :disabled="atEnd"
                                         class="w-10 h-10 flex items-center justify-center border-y border-r border-gray-200 rounded-r-lg bg-white hover:bg-gray-50 text-gray-600 disabled:opacity-50 transition-colors">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -748,22 +748,21 @@
 
                     {{-- SLIDER ARTIKEL (Kanan) --}}
                     <div class="w-full overflow-hidden" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
-                        {{-- Gap antar card diubah menjadi gap-5 (20px) --}}
                         <div class="flex gap-5 transition-transform duration-500 ease-in-out" :style="`transform: translateX(-${scrollPosition}px)`" x-ref="sliderContainer">
 
                             <template x-for="(blog, index) in blogs" :key="index">
-                                {{-- Ukuran card artikel diperkecil --}}
-                                <article class="w-[220px] lg:w-[240px] shrink-0 group cursor-pointer">
-                                    <div class="relative overflow-hidden rounded-[20px] mb-4 aspect-[16/10] bg-slate-100">
-                                        <img :src="blog.img" :alt="blog.title" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                        {{-- Desain irisan tanggal mirip dengan mockup --}}
-                                        <div class="absolute bottom-0 left-0 bg-white rounded-tr-[16px] px-3 py-1.5">
-                                            <span class="text-[11px] font-semibold text-slate-600" x-text="blog.date"></span>
+                                <a :href="blog.url" class="block w-[220px] lg:w-[240px] shrink-0 group cursor-pointer">
+                                    <article>
+                                        <div class="relative overflow-hidden rounded-[20px] mb-4 aspect-[16/10] bg-slate-100">
+                                            <img :src="blog.img" :alt="blog.title" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                            <div class="absolute bottom-0 left-0 bg-white rounded-tr-[16px] px-3 py-1.5">
+                                                <span class="text-[11px] font-semibold text-slate-600" x-text="blog.date"></span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <h3 class="text-[16px] font-bold text-[#102238] mb-1.5 group-hover:text-primary transition-colors line-clamp-2" x-text="blog.title"></h3>
-                                    <p class="text-[13px] text-bodytext leading-relaxed line-clamp-3" x-text="blog.desc"></p>
-                                </article>
+                                        <h3 class="text-[16px] font-bold text-[#102238] mb-1.5 group-hover:text-primary transition-colors line-clamp-2" x-text="blog.title"></h3>
+                                        <p class="text-[13px] text-bodytext leading-relaxed line-clamp-3" x-text="blog.desc"></p>
+                                    </article>
+                                </a>
                             </template>
 
                         </div>
@@ -1041,6 +1040,58 @@
                     if (this.activeSlide > 0) {
                         this.activeSlide--;
                     }
+                }
+            }
+        }
+
+        function blogDynamicSlider() {
+            return {
+                scrollPosition: 0,
+                maxScroll: 0,
+                step: 260,
+                blogs: [
+                    @forelse($blogs as $blog)
+                    {
+                        title: @json($blog->title),
+                        desc: @json($blog->excerpt),
+                        date: @json($blog->published_at->format('d M Y')),
+                        img: "{{ asset('storage/' . $blog->image) }}",
+                        url: "{{ route('blog.public.show', $blog->slug) }}"
+                    },
+                    @empty
+                    {
+                        title: 'Belum Ada Artikel Berita',
+                        desc: 'Tambahkan artikel melalui Dasbor Admin pada menu Blog & Berita.',
+                        date: '{{ now()->format("d M Y") }}',
+                        img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=85',
+                        url: '{{ route("blog.public.index") }}'
+                    }
+                    @endforelse
+                ],
+                init() {
+                    this.$nextTick(() => this.calculateBounds());
+                    window.addEventListener('resize', () => this.calculateBounds());
+                },
+                calculateBounds() {
+                    const container = this.$refs.sliderContainer;
+                    if (!container || !container.parentElement) return;
+                    this.maxScroll = Math.max(0, container.scrollWidth - container.parentElement.clientWidth);
+                    if (this.scrollPosition > this.maxScroll) {
+                        this.scrollPosition = this.maxScroll;
+                    }
+                },
+                get atStart() {
+                    return this.scrollPosition <= 0;
+                },
+                get atEnd() {
+                    return this.scrollPosition >= this.maxScroll;
+                },
+                next() {
+                    this.calculateBounds();
+                    this.scrollPosition = Math.min(this.scrollPosition + this.step, this.maxScroll);
+                },
+                prev() {
+                    this.scrollPosition = Math.max(this.scrollPosition - this.step, 0);
                 }
             }
         }
