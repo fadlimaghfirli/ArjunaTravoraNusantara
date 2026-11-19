@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdvantageController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HeroController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\SectorController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\WorkflowController;
+use App\Models\About;
+use App\Models\AboutGallery;
 use App\Models\Advantage;
 use App\Models\Client;
 use App\Models\Hero;
@@ -28,8 +31,21 @@ Route::get('/', function () {
     $sectors = Sector::where('is_active', true)->orderBy('sort_order', 'asc')->get();
     $advantages = Advantage::where('is_active', true)->orderBy('sort_order', 'asc')->get();
     $workflows = Workflow::where('is_active', true)->orderBy('sort_order', 'asc')->get();
+    $about = About::first();
+    $aboutGalleries = AboutGallery::where('is_active', true)->orderBy('sort_order', 'asc')->get();
 
-    return view('welcome', compact('clients', 'portfolios', 'heroes', 'setting', 'services', 'sectors', 'advantages', 'workflows'));
+    return view('welcome', compact(
+        'clients',
+        'portfolios',
+        'heroes',
+        'setting',
+        'services',
+        'sectors',
+        'advantages',
+        'workflows',
+        'about',
+        'aboutGalleries'
+    ));
 });
 
 Route::get('/dashboard', function () {
@@ -94,6 +110,14 @@ Route::middleware('auth')->group(function () {
     Route::put('/workflows/{workflow}', [WorkflowController::class, 'update'])->name('workflows.update');
     Route::post('/workflows/reorder', [WorkflowController::class, 'reorder'])->name('workflows.reorder');
     Route::delete('/workflows/{workflow}', [WorkflowController::class, 'destroy'])->name('workflows.destroy');
+
+    // Tentang Kami (Profil, Visi & Misi, Galeri Foto)
+    Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+    Route::put('/about/content', [AboutController::class, 'updateContent'])->name('about.updateContent');
+    Route::post('/about/galleries', [AboutController::class, 'storeGallery'])->name('about.galleries.store');
+    Route::post('/about/galleries/reorder', [AboutController::class, 'reorderGalleries'])->name('about.galleries.reorder');
+    Route::put('/about/galleries/{gallery}', [AboutController::class, 'updateGallery'])->name('about.galleries.update');
+    Route::delete('/about/galleries/{gallery}', [AboutController::class, 'destroyGallery'])->name('about.galleries.destroy');
 });
 
 require __DIR__ . '/auth.php';

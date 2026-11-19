@@ -225,8 +225,20 @@
 
         {{-- TENTANG KAMI --}}
         <section id="tentang-kami" class="overflow-hidden bg-white py-14 sm:py-16 lg:py-20">
+            @php
+            $aboutDescription = $about?->description ?? "PT. Arjuna Travora Nusantara merupakan perusahaan yang bergerak di bidang teknologi informasi dan pengadaan perangkat teknologi dengan menyediakan solusi software, hardware, infrastruktur IT,
+            sistem keamanan dan perangkat digital display.\nKami membantu perusahaan, instansi pemerintah, fasilitas kesehatan, institusi pendidikan, maupun organisasi dalam memenuhi kebutuhan teknologi melalui layanan yang terintegrasi, mulai dari
+            konsultasi, perencanaan, pengadaan, pengembangan, instalasi, implementasi hingga dukungan teknis.";
+            $aboutParagraphs = array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', $aboutDescription))));
+
+            $aboutVision = $about?->vision ?? 'Menjadi penyedia solusi IT dan pengadaan perangkat terintegrasi yang terdepan dan terpercaya.';
+            $aboutMissionsRaw = $about?->missions ?? "Solusi IT Lengkap: Menyediakan software, hardware, infrastruktur IT, keamanan, dan digital display.\nLayanan Terpadu: Memberikan layanan dari konsultasi, pengadaan, hingga dukungan teknis.\nMitra
+            Sektor: Membantu percepatan digitalisasi sektor bisnis, pemerintah, kesehatan, dan pendidikan.";
+            $aboutMissions = array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', $aboutMissionsRaw))));
+            @endphp
+
             <div class="mx-auto w-full max-w-[1400px] px-6">
-                <div x-data="aboutUsSlider()" x-init="init()" class="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14 xl:gap-20">
+                <div x-data="aboutUsDynamicSlider()" x-init="init()" class="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14 xl:gap-20">
                     {{-- =================================================
             LEFT: CONTENT
             ================================================== --}}
@@ -240,14 +252,9 @@
                                     Tentang Kami
                                 </h2>
                                 <div class="mt-7 max-w-[580px] space-y-5 text-[15px] leading-7 text-bodytext sm:text-base sm:leading-7">
-                                    <p>
-                                        <strong class="font-bold text-[#667085]">PT. Arjuna Travora Nusantara</strong>
-                                        merupakan perusahaan yang bergerak di bidang teknologi informasi dan pengadaan perangkat teknologi dengan menyediakan solusi software, hardware, infrastruktur IT, sistem keamanan dan perangkat digital display.
-                                    </p>
-                                    <p>
-                                        Kami membantu perusahaan, instansi pemerintah, fasilitas kesehatan, institusi pendidikan, maupun organisasi dalam memenuhi kebutuhan teknologi melalui layanan yang terintegrasi, mulai dari konsultasi,
-                                        perencanaan, pengadaan, pengembangan, instalasi, implementasi hingga dukungan teknis.
-                                    </p>
+                                    @foreach($aboutParagraphs as $paragraph)
+                                    <p>{!! str_replace('PT. Arjuna Travora Nusantara', '<strong class="font-bold text-[#667085]">PT. Arjuna Travora Nusantara</strong>', e($paragraph)) !!}</p>
+                                    @endforeach
                                 </div>
                             </div>
                             {{-- Visi & Misi --}}
@@ -262,7 +269,7 @@
                                             Visi
                                         </h3>
                                         <p class="mt-3 text-[15px] leading-7 sm:text-base">
-                                            Menjadi penyedia solusi IT dan pengadaan perangkat terintegrasi yang terdepan dan terpercaya.
+                                            {{ $aboutVision }}
                                         </p>
                                     </div>
                                     <div class="mt-8">
@@ -270,18 +277,21 @@
                                             Misi
                                         </h3>
                                         <ul class="mt-4 space-y-3 text-[15px] leading-7 sm:text-base">
+                                            @foreach($aboutMissions as $mission)
+                                            @php
+                                            $parts = explode(':', $mission, 2);
+                                            @endphp
                                             <li class="flex gap-3">
                                                 <span class="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-bodytext"></span>
-                                                <span><strong>Solusi IT Lengkap:</strong> Menyediakan software, hardware, infrastruktur IT, keamanan, dan digital display.</span>
+                                                <span>
+                                                    @if(count($parts) === 2)
+                                                    <strong>{{ trim($parts[0]) }}:</strong> {{ trim($parts[1]) }}
+                                                    @else
+                                                    {{ $mission }}
+                                                    @endif
+                                                </span>
                                             </li>
-                                            <li class="flex gap-3">
-                                                <span class="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-bodytext"></span>
-                                                <span><strong>Layanan Terpadu:</strong> Memberikan layanan dari konsultasi, pengadaan, hingga dukungan teknis.</span>
-                                            </li>
-                                            <li class="flex gap-3">
-                                                <span class="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-bodytext"></span>
-                                                <span><strong>Mitra Sektor:</strong> Membantu percepatan digitalisasi sektor bisnis, pemerintah, kesehatan, dan pendidikan.</span>
-                                            </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
@@ -326,7 +336,6 @@
                                 </template>
                             </div>
 
-                            {{-- <img src="{{ asset('images/shapes/svg-white-potrait.svg') }}" alt="" aria-hidden="true" class="max-md:hidden absolute md:bottom-[54px] lg:bottom-[80px] right-[-4px] h-[131px] w-[112px] pointer-events-none"> --}}
                             <div class="absolute bottom-[-4px] right-[100px] h-[84.5px] sm:h-[101px] max-sm:w-40 w-48 pointer-events-none overflow-hidden flex items-end justify-end">
                                 <img src="{{ asset('images/shapes/svg-white-landscape.svg') }}" aria-hidden="true" class="w-48 pointer-events-none">
                             </div>
@@ -973,6 +982,66 @@
                     }
                     @endforelse
                 ]
+            }
+        }
+
+        function aboutUsDynamicSlider() {
+            return {
+                activeSlide: 0,
+                slides: ['tentang', 'visi-misi'],
+                activeGallery: 0,
+                galleryTimer: null,
+                gallery: [
+                    @forelse($aboutGalleries as $item)
+                    {
+                        src: "{{ asset('storage/' . $item->image) }}",
+                        alt: @json($item->caption)
+                    },
+                    @empty
+                    {
+                        src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85',
+                        alt: 'Kantor operasional PT. Arjuna Travora Nusantara'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=85',
+                        alt: 'Kolaborasi tim teknologi ATN'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=85',
+                        alt: 'Infrastruktur server dan data center'
+                    }
+                    @endforelse
+                ],
+                init() {
+                    if (this.gallery.length > 1) {
+                        this.startAutoplay();
+                    }
+                },
+                startAutoplay() {
+                    this.stopAutoplay();
+                    this.galleryTimer = setInterval(() => {
+                        this.activeGallery = (this.activeGallery + 1) % this.gallery.length;
+                    }, 5000);
+                },
+                stopAutoplay() {
+                    if (this.galleryTimer) clearInterval(this.galleryTimer);
+                },
+                selectGallery(index) {
+                    this.activeGallery = index;
+                    if (this.gallery.length > 1) {
+                        this.startAutoplay();
+                    }
+                },
+                next() {
+                    if (this.activeSlide < this.slides.length - 1) {
+                        this.activeSlide++;
+                    }
+                },
+                previous() {
+                    if (this.activeSlide > 0) {
+                        this.activeSlide--;
+                    }
+                }
             }
         }
     </script>
