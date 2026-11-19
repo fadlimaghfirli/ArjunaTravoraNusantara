@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdvantageController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\PortfolioController;
@@ -7,7 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\AdvantageController;
+use App\Http\Controllers\WorkflowController;
 use App\Models\Advantage;
 use App\Models\Client;
 use App\Models\Hero;
@@ -15,6 +16,7 @@ use App\Models\Portfolio;
 use App\Models\Sector;
 use App\Models\Service;
 use App\Models\Setting;
+use App\Models\Workflow;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,8 +27,9 @@ Route::get('/', function () {
     $services = Service::where('is_active', true)->orderBy('sort_order', 'asc')->get();
     $sectors = Sector::where('is_active', true)->orderBy('sort_order', 'asc')->get();
     $advantages = Advantage::where('is_active', true)->orderBy('sort_order', 'asc')->get();
+    $workflows = Workflow::where('is_active', true)->orderBy('sort_order', 'asc')->get();
 
-    return view('welcome', compact('clients', 'portfolios', 'heroes', 'setting', 'services', 'sectors', 'advantages'));
+    return view('welcome', compact('clients', 'portfolios', 'heroes', 'setting', 'services', 'sectors', 'advantages', 'workflows'));
 });
 
 Route::get('/dashboard', function () {
@@ -83,6 +86,14 @@ Route::middleware('auth')->group(function () {
     Route::put('/advantages/{advantage}', [AdvantageController::class, 'update'])->name('advantages.update');
     Route::post('/advantages/reorder', [AdvantageController::class, 'reorder'])->name('advantages.reorder');
     Route::delete('/advantages/{advantage}', [AdvantageController::class, 'destroy'])->name('advantages.destroy');
+
+    // Cara Kami Bekerja
+    Route::get('/workflows', [WorkflowController::class, 'index'])->name('workflows.index');
+    Route::post('/workflows', [WorkflowController::class, 'store'])->name('workflows.store');
+    Route::put('/workflows/image', [WorkflowController::class, 'updateImage'])->name('workflows.updateImage');
+    Route::put('/workflows/{workflow}', [WorkflowController::class, 'update'])->name('workflows.update');
+    Route::post('/workflows/reorder', [WorkflowController::class, 'reorder'])->name('workflows.reorder');
+    Route::delete('/workflows/{workflow}', [WorkflowController::class, 'destroy'])->name('workflows.destroy');
 });
 
 require __DIR__ . '/auth.php';
