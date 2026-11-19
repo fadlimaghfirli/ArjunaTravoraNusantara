@@ -14,99 +14,176 @@
     </div>
     @endif
 
-    <div class="grid grid-cols-1 xl:grid-cols-[400px_minmax(0,1fr)] gap-8">
+    <!-- Alpine Wrapper Utama -->
+    <div x-data="heroManager()" class="grid grid-cols-1 xl:grid-cols-[500px_minmax(0,1fr)] gap-8">
 
-        <!-- Form Tambah Hero -->
+        <!-- PANEL KIRI (Form Tambah / Edit) -->
         <div>
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sticky top-6">
-                <h3 class="text-lg font-bold text-[#102238] mb-5">Tambah Slide Baru</h3>
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sticky top-6 transition-all" :class="editMode ? 'ring-2 ring-[#F8B41C]' : ''">
 
-                <form action="{{ route('heroes.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <div class="flex justify-between items-center mb-5">
+                    <h3 class="text-lg font-bold text-[#102238]" x-text="editMode ? 'Edit Slide Hero' : 'Tambah Slide Baru'"></h3>
+                    <button type="button" x-show="editMode" @click="cancelEdit()" class="text-sm font-semibold text-red-500 hover:text-red-700 bg-red-50 px-3 py-1 rounded-lg transition-colors" x-cloak>Batal Edit</button>
+                </div>
+
+                <form :action="formAction" method="POST" enctype="multipart/form-data" class="space-y-4">
                     @csrf
+                    <template x-if="editMode"><input type="hidden" name="_method" value="PUT"></template>
 
                     <div>
                         <label class="block text-[13px] font-bold text-gray-700 mb-2">Teks Label (Label Tag)</label>
-                        <input type="text" name="label" value="{{ old('label') }}" required placeholder="Contoh: B2B Technology"
+                        <input type="text" name="label" x-model="formData.label" required placeholder="Contoh: B2B Technology"
                             class="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#113883] focus:ring-1 focus:ring-[#113883] outline-none transition-all">
                         @error('label') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
                     <div>
                         <label class="block text-[13px] font-bold text-gray-700 mb-2">Deskripsi Singkat</label>
-                        <textarea name="description" required rows="2" placeholder="Contoh: Solution & Procurement Partner."
-                            class="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#113883] focus:ring-1 focus:ring-[#113883] outline-none transition-all">{{ old('description') }}</textarea>
+                        <textarea name="description" x-model="formData.description" required rows="2" placeholder="Contoh: Solution & Procurement Partner."
+                            class="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#113883] focus:ring-1 focus:ring-[#113883] outline-none transition-all"></textarea>
                         @error('description') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
-                    <!-- Gambar Utama -->
+                    <!-- Upload Gambar Utama (Landscape) -->
                     <div>
-                        <label class="block text-[13px] font-bold text-gray-700 mb-2">Gambar Utama (Landscape)</label>
-                        <input type="file" name="main_image" required accept="image/*"
-                            class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#113883] hover:file:bg-blue-100 transition-colors cursor-pointer border border-gray-200 rounded-xl p-2">
-                        <p class="text-[11px] text-gray-500 mt-1">Rekomendasi rasio 16:9, Maks 2MB.</p>
+                        <label class="block text-[13px] font-bold text-gray-700 mb-2 mt-2">Gambar Utama (Landscape)</label>
+
+                        <div x-show="editMode && !mainFileName && existingMainImage" class="mb-3 relative rounded-xl overflow-hidden border border-gray-200 h-28 bg-gray-50 flex items-center justify-center" x-cloak>
+                            <img :src="existingMainImage" class="absolute inset-0 w-full h-full object-cover opacity-60">
+                            <span class="relative z-10 bg-white/90 text-xs font-bold px-3 py-1 rounded shadow-sm text-gray-700">Gambar Utama Saat Ini</span>
+                        </div>
+
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-xl transition-colors relative group"
+                            :class="isDraggingMain ? 'border-[#113883] bg-blue-50' : 'border-gray-200 bg-gray-50 hover:border-[#113883]'" @dragover.prevent="isDraggingMain = true" @dragleave.prevent="isDraggingMain = false"
+                            @drop.prevent="handleDrop($event, 'main')">
+
+                            <label for="main-image-upload" class="absolute inset-0 w-full h-full cursor-pointer z-20"></label>
+
+                            <div class="space-y-1 text-center pointer-events-none z-10">
+                                <svg class="mx-auto h-9 w-9 transition-colors" :class="isDraggingMain ? 'text-[#113883]' : 'text-gray-400 group-hover:text-[#113883]'" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <div class="flex text-sm text-gray-600 justify-center mt-2">
+                                    <span class="font-medium text-[#113883]" x-text="mainFileName ? mainFileName : (editMode ? 'Pilih gambar baru (opsional)' : 'Unggah gambar utama')"></span>
+                                </div>
+                                <p class="text-[11px] text-gray-500" x-show="!mainFileName">Rekomendasi rasio 16:9. Maks 2MB.</p>
+                            </div>
+                            <input id="main-image-upload" name="main_image" type="file" class="sr-only" accept="image/*" x-ref="mainInput" @change="handleFileSelect($event, 'main')" :required="!editMode">
+                        </div>
                         @error('main_image') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
-                    <!-- Gambar Samping -->
-                    <div class="pt-2">
-                        <label class="block text-[13px] font-bold text-gray-700 mb-2">Gambar Samping (Portrait)</label>
-                        <input type="file" name="side_image" required accept="image/*"
-                            class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 transition-colors cursor-pointer border border-gray-200 rounded-xl p-2">
-                        <p class="text-[11px] text-gray-500 mt-1">Rekomendasi untuk kotak di kanan. Maks 2MB.</p>
+                    <!-- Upload Gambar Samping (Portrait) -->
+                    <div>
+                        <label class="block text-[13px] font-bold text-gray-700 mb-2 mt-2">Gambar Samping (Portrait)</label>
+
+                        <div x-show="editMode && !sideFileName && existingSideImage" class="mb-3 relative rounded-xl overflow-hidden border border-gray-200 h-28 bg-gray-50 flex items-center justify-center" x-cloak>
+                            <img :src="existingSideImage" class="absolute inset-0 w-full h-full object-cover opacity-60">
+                            <span class="relative z-10 bg-white/90 text-xs font-bold px-3 py-1 rounded shadow-sm text-gray-700">Gambar Samping Saat Ini</span>
+                        </div>
+
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-xl transition-colors relative group"
+                            :class="isDraggingSide ? 'border-[#113883] bg-blue-50' : 'border-gray-200 bg-gray-50 hover:border-[#113883]'" @dragover.prevent="isDraggingSide = true" @dragleave.prevent="isDraggingSide = false"
+                            @drop.prevent="handleDrop($event, 'side')">
+
+                            <label for="side-image-upload" class="absolute inset-0 w-full h-full cursor-pointer z-20"></label>
+
+                            <div class="space-y-1 text-center pointer-events-none z-10">
+                                <svg class="mx-auto h-9 w-9 transition-colors" :class="isDraggingSide ? 'text-[#113883]' : 'text-gray-400 group-hover:text-[#113883]'" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <div class="flex text-sm text-gray-600 justify-center mt-2">
+                                    <span class="font-medium text-[#113883]" x-text="sideFileName ? sideFileName : (editMode ? 'Pilih gambar baru (opsional)' : 'Unggah gambar samping')"></span>
+                                </div>
+                                <p class="text-[11px] text-gray-500" x-show="!sideFileName">Rekomendasi untuk kotak kanan. Maks 2MB.</p>
+                            </div>
+                            <input id="side-image-upload" name="side_image" type="file" class="sr-only" accept="image/*" x-ref="sideInput" @change="handleFileSelect($event, 'side')" :required="!editMode">
+                        </div>
                         @error('side_image') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
-                    <button type="submit" class="w-full py-2.5 px-4 bg-[#113883] hover:bg-[#0c2a66] text-white text-sm font-bold rounded-xl transition-colors shadow-md mt-4">
-                        Simpan Slide Hero
+                    <button type="submit" class="w-full py-2.5 px-4 text-white text-sm font-bold rounded-xl transition-all shadow-md mt-2 flex justify-center items-center gap-2 cursor-pointer"
+                        :class="editMode ? 'bg-[#F8B41C] hover:bg-yellow-500 text-gray-900' : 'bg-[#113883] hover:bg-[#0c2a66]'">
+                        <svg x-show="editMode" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        <span x-text="editMode ? 'Perbarui Slide Hero' : 'Simpan Slide Hero'"></span>
                     </button>
                 </form>
             </div>
         </div>
 
-        <!-- Tabel Daftar Hero -->
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+        <!-- PANEL KANAN (Tabel Daftar Hero & Sortable) -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col relative">
+
+            <div x-show="showReorderAlert" style="display: none;" class="absolute top-0 left-0 right-0 bg-emerald-500 text-white text-center py-2 text-sm font-bold z-10 transition-all" x-transition.opacity>
+                Urutan Slide Hero berhasil diperbarui!
+            </div>
+
             <div class="p-6 border-b border-gray-100 flex justify-between items-center">
                 <h3 class="text-lg font-bold text-[#102238]">Daftar Slide Aktif</h3>
                 <span class="bg-blue-50 text-[#113883] text-xs font-bold px-3 py-1 rounded-full">{{ $heroes->count() }} Slide</span>
             </div>
 
-            <div class="overflow-x-auto flex-1">
+            <div class="overflow-x-auto flex-1 pb-16">
                 <table class="w-full text-sm text-left">
                     <thead class="text-xs text-gray-500 uppercase bg-gray-50/50 border-b border-gray-100">
                         <tr>
-                            <th class="px-6 py-4 font-bold">Preview (Utama & Samping)</th>
+                            <th class="px-4 py-4 font-bold text-center w-10">Urutan</th>
+                            <th class="px-4 py-4 font-bold">Preview (Utama & Samping)</th>
                             <th class="px-6 py-4 font-bold">Teks Konten</th>
                             <th class="px-6 py-4 font-bold text-right">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100">
+                    <tbody id="sortable-heroes" class="divide-y divide-gray-100">
                         @forelse($heroes as $hero)
-                        <tr class="hover:bg-gray-50/50 transition-colors">
-                            <td class="px-6 py-4">
+                        <tr class="hover:bg-gray-50/50 transition-colors bg-white group" data-id="{{ $hero->id }}">
+
+                            <td class="px-4 py-4 text-center drag-handle cursor-grab active:cursor-grabbing text-gray-300 hover:text-gray-500 transition-colors">
+                                <svg class="w-6 h-6 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M10 9a2 2 0 100-4 2 2 0 000 4zm0 7a2 2 0 100-4 2 2 0 000 4zm0 7a2 2 0 100-4 2 2 0 000 4zm4-14a2 2 0 100-4 2 2 0 000 4zm0 7a2 2 0 100-4 2 2 0 000 4zm0 7a2 2 0 100-4 2 2 0 000 4z" />
+                                </svg>
+                            </td>
+
+                            <td class="px-4 py-4">
                                 <div class="flex gap-2">
                                     <img src="{{ asset('storage/' . $hero->main_image) }}" alt="Main" class="w-20 h-12 object-cover rounded border border-gray-200">
                                     <img src="{{ asset('storage/' . $hero->side_image) }}" alt="Side" class="w-8 h-12 object-cover rounded border border-gray-200">
                                 </div>
                             </td>
+
                             <td class="px-6 py-4">
                                 <p class="font-bold text-[#102238]">{{ $hero->label }}</p>
-                                <p class="text-xs text-gray-500 mt-0.5 max-w-[200px] truncate">{{ $hero->description }}</p>
+                                <p class="text-xs text-gray-500 mt-0.5 max-w-[220px] line-clamp-2">{{ $hero->description }}</p>
                             </td>
+
                             <td class="px-6 py-4 text-right">
-                                <form action="{{ route('heroes.destroy', $hero->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus slide ini?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition-colors">
+                                <div class="flex items-center justify-end gap-2">
+                                    <button type="button" @click="setEditMode({{ json_encode($hero) }}, '{{ asset('storage/' . $hero->main_image) }}', '{{ asset('storage/' . $hero->side_image) }}')"
+                                        class="text-gray-400 hover:text-blue-600 hover:bg-blue-50 p-2 rounded-lg transition-colors" title="Edit">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                         </svg>
                                     </button>
-                                </form>
+
+                                    <form action="{{ route('heroes.destroy', $hero->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus slide ini?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-gray-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors" title="Hapus">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="3" class="px-6 py-12 text-center text-gray-400">
+                            <td colspan="4" class="px-6 py-12 text-center text-gray-400">
                                 Belum ada slide hero. Slider di landing page mungkin akan kosong.
                             </td>
                         </tr>
@@ -116,4 +193,112 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('heroManager', () => ({
+                editMode: false,
+                formAction: '{{ route("heroes.store") }}',
+                showReorderAlert: false,
+
+                formData: {
+                    label: @json(old('label', '')),
+                    description: @json(old('description', ''))
+                },
+
+                isDraggingMain: false,
+                isDraggingSide: false,
+                mainFileName: '',
+                sideFileName: '',
+                existingMainImage: '',
+                existingSideImage: '',
+
+                init() {
+                    const tbody = document.getElementById('sortable-heroes');
+                    if (tbody) {
+                        Sortable.create(tbody, {
+                            handle: '.drag-handle',
+                            animation: 150,
+                            ghostClass: 'bg-blue-50',
+                            onEnd: () => {
+                                let order = Array.from(tbody.querySelectorAll('tr')).map(row => row.dataset.id);
+                                fetch('{{ route("heroes.reorder") }}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                                    },
+                                    body: JSON.stringify({ order: order })
+                                }).then(res => res.json())
+                                  .then(data => {
+                                      if (data.success) {
+                                          this.showReorderAlert = true;
+                                          setTimeout(() => this.showReorderAlert = false, 3000);
+                                      }
+                                  });
+                            }
+                        });
+                    }
+                },
+
+                handleDrop(e, type) {
+                    const files = e.dataTransfer.files;
+                    if (type === 'main') {
+                        this.isDraggingMain = false;
+                        if (files.length > 0) {
+                            this.$refs.mainInput.files = files;
+                            this.mainFileName = files[0].name;
+                        }
+                    } else {
+                        this.isDraggingSide = false;
+                        if (files.length > 0) {
+                            this.$refs.sideInput.files = files;
+                            this.sideFileName = files[0].name;
+                        }
+                    }
+                },
+
+                handleFileSelect(e, type) {
+                    const files = e.target.files;
+                    const name = files.length > 0 ? files[0].name : '';
+                    if (type === 'main') {
+                        this.mainFileName = name;
+                    } else {
+                        this.sideFileName = name;
+                    }
+                },
+
+                setEditMode(hero, mainUrl, sideUrl) {
+                    this.editMode = true;
+                    this.formAction = `/heroes/${hero.id}`;
+                    this.formData.label = hero.label;
+                    this.formData.description = hero.description;
+
+                    this.existingMainImage = mainUrl;
+                    this.existingSideImage = sideUrl;
+                    this.mainFileName = '';
+                    this.sideFileName = '';
+                    if (this.$refs.mainInput) this.$refs.mainInput.value = '';
+                    if (this.$refs.sideInput) this.$refs.sideInput.value = '';
+
+                    document.querySelector('main')?.scrollTo({ top: 0, behavior: 'smooth' });
+                },
+
+                cancelEdit() {
+                    this.editMode = false;
+                    this.formAction = '{{ route("heroes.store") }}';
+                    this.formData.label = '';
+                    this.formData.description = '';
+
+                    this.existingMainImage = '';
+                    this.existingSideImage = '';
+                    this.mainFileName = '';
+                    this.sideFileName = '';
+                    if (this.$refs.mainInput) this.$refs.mainInput.value = '';
+                    if (this.$refs.sideInput) this.$refs.sideInput.value = '';
+                }
+            }));
+        });
+    </script>
 </x-app-layout>

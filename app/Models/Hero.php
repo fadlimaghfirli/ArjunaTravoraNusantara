@@ -14,6 +14,7 @@ class Hero extends Model
         'side_image',
         'label',
         'description',
-        'is_active'
+        'is_active',
+        'sort_order',
     ];
 }
