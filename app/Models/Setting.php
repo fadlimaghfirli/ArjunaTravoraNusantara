@@ -16,5 +16,6 @@ class Setting extends Model
         'phone',
         'email',
         'address',
+        'workflow_image',
     ];
 }
