@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Portfolio;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -86,5 +87,35 @@ class PortfolioController extends Controller
         $portfolio->delete();
 
         return back()->with('success', 'Portofolio berhasil dihapus!');
+    }
+
+    // === AREA PUBLIK ===
+
+    public function publicIndex(Request $request)
+    {
+        $query = Portfolio::orderBy('sort_order', 'asc')->orderByDesc('year');
+
+        if ($request->filled('tipe') && in_array($request->tipe, ['Project', 'Portfolio'])) {
+            $query->where('type', $request->tipe);
+        }
+
+        if ($request->filled('tahun')) {
+            $query->where('year', $request->tahun);
+        }
+
+        if ($request->filled('q')) {
+            $search = $request->q;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('category', 'like', "%{$search}%");
+            });
+        }
+
+        $portfolios = $query->paginate(9)->withQueryString();
+        $years = Portfolio::select('year')->distinct()->orderByDesc('year')->pluck('year');
+        $totalCount = Portfolio::count();
+        $setting = Setting::first() ?? new Setting();
+
+        return view('portfolio.index', compact('portfolios', 'years', 'totalCount', 'setting'));
     }
 }

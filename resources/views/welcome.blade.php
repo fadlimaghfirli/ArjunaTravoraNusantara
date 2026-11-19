@@ -487,7 +487,12 @@
         </section>
 
         {{-- PORTOFOLIO & PROJECT --}}
-        <section id="portofolio" class="bg-white py-16 sm:py-20 lg:py-24">
+        @php
+        $portfolioRawPhone = preg_replace('/[^0-9]/', '', $setting->phone ?? '082142430296');
+        $portfolioWaNumber = preg_replace('/^0/', '62', $portfolioRawPhone);
+        @endphp
+
+        <section id="portofolio" x-data="portfolioPublicModal('{{ $portfolioWaNumber }}')" @keydown.escape.window="closeModal()" class="bg-white py-16 sm:py-20 lg:py-24">
             <div class="mx-auto grid w-full max-w-[1400px] grid-cols-1 items-start gap-7 px-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[320px_minmax(0,1fr)] xl:gap-10">
                 {{-- KOLOM KIRI: INTRODUCTION --}}
                 <div class="relative flex min-h-[420px] flex-col overflow-hidden rounded-[26px] bg-[#F7F8FA] p-6 sm:min-h-[460px] sm:p-7 lg:sticky lg:top-28 lg:min-h-[440px] xl:p-8" data-aos="fade-up" data-aos-duration="800">
@@ -506,7 +511,7 @@
                     <div class="">
                         <img src="{{ asset('images/shapes/svg-white-landscape-2.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[-1px] w-48 pointer-events-none">
 
-                        <a href="#daftar-portofolio" class="group absolute bottom-5 right-5 z-20 inline-flex items-center gap-1.5 text-md font-semibold text-primary">
+                        <a href="{{ route('portfolio.public.index') }}" class="group absolute bottom-5 right-5 z-20 inline-flex items-center gap-1.5 text-md font-semibold text-primary">
                             Selengkapnya
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11 10.6429V1H1.71429M11 1L1 11" stroke-width="2" stroke-linecap="round" stroke="#113883" />
@@ -519,15 +524,20 @@
                 <div id="daftar-portofolio" class="grid min-w-0 grid-cols-1 items-start gap-5 sm:grid-cols-2 sm:gap-6">
 
                     @forelse($portfolios as $portfolio)
-                    {{-- Animasi delay bergantian: ganjil 100ms, genap 200ms --}}
-                    <a href="#kontak" class="portfolio-card group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] bg-[#F7F8FA] duration-500" data-aos="fade-up" data-aos-duration="800"
+                    <button type="button" @click="openModal({{ json_encode([
+                            'title' => $portfolio->title,
+                            'category' => $portfolio->category,
+                            'year' => $portfolio->year,
+                            'type' => $portfolio->type,
+                            'image' => asset('storage/' . $portfolio->image),
+                        ]) }})" class="portfolio-card group relative flex w-full min-w-0 flex-col text-left overflow-hidden rounded-[22px] bg-[#F7F8FA] duration-500 cursor-pointer" data-aos="fade-up" data-aos-duration="800"
                         data-aos-delay="{{ $loop->iteration % 2 == 0 ? '200' : '100' }}">
                         <div
                             class="relative h-0 w-full overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:h-[220px] group-focus-visible:h-[220px] sm:group-hover:h-[250px] sm:group-focus-visible:h-[250px]">
                             <img src="{{ asset('storage/' . $portfolio->image) }}" alt="{{ $portfolio->title }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-100">
                         </div>
-                        <div class="relative flex min-h-[174px] flex-col p-6 transition-colors duration-500">
-                            <h3 class="max-w-[300px] text-lg font-semibold leading-snug text-[#333333]">
+                        <div class="relative flex min-h-[174px] w-full flex-col p-6 transition-colors duration-500">
+                            <h3 class="max-w-[300px] text-lg font-semibold leading-snug text-[#333333] group-hover:text-primary transition-colors">
                                 {{ $portfolio->title }}
                             </h3>
                             <p class="mt-2 text-sm text-bodytext">{{ $portfolio->category }}</p>
@@ -539,11 +549,11 @@
 
                         <div class="">
                             <img src="{{ asset('images/shapes/svg-white-square.svg') }}" aria-hidden="true" class="absolute bottom-[0px] right-[-1px] w-24 pointer-events-none">
-                            <svg class="absolute bottom-[16px] right-[16px] h-8 w-8 transition-transform duration-300 text-black" viewBox="0 0 32 32" fill="none">
+                            <svg class="absolute bottom-[16px] right-[16px] h-8 w-8 transition-transform duration-300 text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" viewBox="0 0 32 32" fill="none">
                                 <path d="M8 24L24 8M10 8H24V22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </div>
-                    </a>
+                    </button>
                     @empty
                     <div class="col-span-1 sm:col-span-2 py-12 text-center text-gray-400 text-sm border-2 border-dashed border-gray-200 rounded-[22px]">
                         Belum ada project yang ditambahkan di database.
@@ -552,6 +562,43 @@
 
                 </div>
             </div>
+
+            {{-- MODAL DETAIL PORTOFOLIO (LIGHTBOX) --}}
+            <template x-teleport="body">
+                <div x-show="selected" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center bg-gray-950/70 backdrop-blur-sm p-4" @click.self="closeModal()" x-transition.opacity>
+                    <div class="bg-white rounded-[26px] shadow-2xl w-full max-w-3xl overflow-hidden" x-show="selected" x-transition>
+                        {{-- Gambar Full --}}
+                        <div class="relative aspect-[16/9] bg-slate-100">
+                            <img :src="selected?.image" :alt="selected?.title" class="w-full h-full object-cover">
+                            <button type="button" @click="closeModal()" aria-label="Tutup pratinjau"
+                                class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/95 text-gray-700 hover:bg-red-500 hover:text-white flex items-center justify-center shadow-md transition-colors cursor-pointer">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        {{-- Informasi Project --}}
+                        <div class="p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                            <div>
+                                <div class="flex items-center gap-2.5 mb-2">
+                                    <span class="px-3 py-1 rounded-full bg-blue-50 text-primary text-xs font-bold" x-text="selected?.type"></span>
+                                    <span class="text-xs font-bold text-gray-400" x-text="'Tahun ' + (selected?.year ?? '')"></span>
+                                </div>
+                                <h3 class="text-xl sm:text-2xl font-extrabold text-[#102238]" x-text="selected?.title"></h3>
+                                <p class="mt-1 text-sm text-bodytext" x-text="selected?.category"></p>
+                            </div>
+
+                            <a :href="waLink" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary hover:bg-[#0c2a66] text-white text-sm font-bold transition-colors shrink-0">
+                                Konsultasi Project Serupa
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </template>
         </section>
 
         {{-- CARA KAMI BEKERJA --}}
@@ -1121,6 +1168,26 @@
                 },
                 prev() {
                     this.scrollPosition = Math.max(this.scrollPosition - this.step, 0);
+                }
+            }
+        }
+
+        function portfolioPublicModal(waNumber) {
+            return {
+                selected: null,
+                waNumber: waNumber,
+                openModal(item) {
+                    this.selected = item;
+                    document.body.classList.add('overflow-hidden');
+                },
+                closeModal() {
+                    this.selected = null;
+                    document.body.classList.remove('overflow-hidden');
+                },
+                get waLink() {
+                    if (!this.selected) return '#';
+                    const message = `Halo Tim ATN, saya tertarik berkonsultasi mengenai project serupa dengan "${this.selected.title}" (${this.selected.category}).`;
+                    return `https://wa.me/${this.waNumber}?text=${encodeURIComponent(message)}`;
                 }
             }
         }
