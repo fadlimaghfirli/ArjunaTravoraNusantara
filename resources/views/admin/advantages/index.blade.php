@@ -19,7 +19,7 @@
 
         <!-- PANEL KIRI (Form Tambah / Edit) -->
         <div>
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sticky top-6 transition-all" :class="editMode ? 'ring-2 ring-[#F8B41C]' : ''">
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sticky transition-all" :class="editMode ? 'ring-2 ring-[#F8B41C]' : ''">
 
                 <div class="flex justify-between items-center mb-5">
                     <h3 class="text-lg font-bold text-[#102238]" x-text="editMode ? 'Edit Poin Keunggulan' : 'Tambah Keunggulan Baru'"></h3>
