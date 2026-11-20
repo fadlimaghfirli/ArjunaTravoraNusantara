@@ -96,6 +96,13 @@
                             class="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#113883] focus:ring-1 focus:ring-[#113883] outline-none transition-all">
                         @error('youtube_url') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
                     </div>
+
+                    <div>
+                        <label class="block text-[13px] font-bold text-gray-700 mb-2">TikTok URL</label>
+                        <input type="url" name="tiktok_url" value="{{ old('tiktok_url', $setting->tiktok_url) }}" placeholder="https://tiktok.com/@arjunatravora"
+                            class="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#113883] focus:ring-1 focus:ring-[#113883] outline-none transition-all">
+                        @error('tiktok_url') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
+                    </div>
                 </div>
             </div>
 

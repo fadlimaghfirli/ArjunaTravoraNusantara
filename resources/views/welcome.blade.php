@@ -325,15 +325,20 @@
                                 <img x-show="activeGallery === index" x-transition:enter="transition duration-700 ease-out" x-transition:enter-start="scale-105 opacity-0" x-transition:enter-end="scale-100 opacity-100" :src="image.src"
                                     :alt="image.alt" class="absolute inset-0 h-full w-full object-cover" x-cloak>
                             </template>
-                            {{-- Gallery thumbnails --}}
-                            <div class="absolute bottom-3 right-3 z-20 flex gap-2 sm:bottom-4 sm:right-4 sm:gap-2.5">
-                                <template x-for="(image, index) in gallery" :key="`thumb-${index}`">
-                                    <button type="button" @click="selectGallery(index)" class="relative h-[54px] w-[54px] overflow-hidden rounded-xl border-2 bg-white shadow-sm transition-all duration-300 sm:h-[60px] sm:w-[60px]"
-                                        :class="activeGallery === index ? 'border-primary' : 'border-white/80'" :aria-label="`Lihat foto ${index + 1}`">
-                                        <img :src="image.src" :alt="image.alt" class="h-full w-full object-cover">
-                                        <span x-show="activeGallery !== index" class="absolute inset-0 bg-white/10"></span>
-                                    </button>
-                                </template>
+                            {{-- Gallery thumbnails (maksimal 4 kotak terlihat, sisanya scroll horizontal) --}}
+                            <div class="absolute bottom-3 right-3 z-20 w-[240px] sm:bottom-4 sm:right-4 sm:w-[270px]">
+                                <div x-ref="thumbTrack" @wheel="handleThumbWheel($event)" @mousedown="startThumbDrag($event)" @mousemove.window="onThumbDrag($event)" @mouseup.window="stopThumbDrag()"
+                                    class="relative flex flex-nowrap gap-2 overflow-x-auto select-none sm:gap-2.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                                    :class="gallery.length > 4 ? (isDraggingThumbs ? 'cursor-grabbing' : 'cursor-grab') : 'justify-end'">
+                                    <template x-for="(image, index) in gallery" :key="`thumb-${index}`">
+                                        <button type="button" @click="selectGallery(index)"
+                                            class="relative h-[54px] w-[54px] shrink-0 overflow-hidden rounded-xl border-2 bg-white shadow-sm transition-all duration-300 sm:h-[60px] sm:w-[60px] cursor-pointer"
+                                            :class="activeGallery === index ? 'border-primary' : 'border-white/80'" :aria-label="`Lihat foto ${index + 1}`">
+                                            <img :src="image.src" :alt="image.alt" draggable="false" class="h-full w-full object-cover pointer-events-none">
+                                            <span x-show="activeGallery !== index" class="absolute inset-0 bg-white/10"></span>
+                                        </button>
+                                    </template>
+                                </div>
                             </div>
 
                             <div class="absolute bottom-[-4px] right-[100px] h-[84.5px] sm:h-[101px] max-sm:w-40 w-48 pointer-events-none overflow-hidden flex items-end justify-end">
@@ -706,7 +711,7 @@
         </section>
 
         {{-- PARTNER & KLIEN KAMI --}}
-        <section id="klien" class="bg-white py-16 sm:py-20 lg:py-24 overflow-hidden">
+        <section id="klien" class="bg-[#F9FAFB] py-16 sm:py-20 lg:py-24 overflow-hidden">
             <div class="mx-auto w-full max-w-[1400px] px-6 text-center" data-aos="fade-up" data-aos-duration="800">
                 <h2 class="text-3xl font-bold leading-tight text-[#102238] sm:text-4xl">
                     Partner & Klien Kami
@@ -820,158 +825,119 @@
         </section>
 
         {{-- FOOTER --}}
-        <footer id="kontak" class="bg-white pb-10 pt-4">
-            <div class="mx-auto w-full max-w-[1400px] px-6">
+        <footer id="kontak" class="w-full bg-[#14181F] text-white border-t border-white/10">
+            @php
+            $rawPhone = preg_replace('/[^0-9]/', '', $setting->phone ?? '082142430296');
+            $waLink = preg_replace('/^0/', '62', $rawPhone);
+            $hasAnySocial = $setting->facebook_url || $setting->instagram_url || $setting->linkedin_url || $setting->youtube_url || $setting->tiktok_url;
+            @endphp
 
-                {{-- Container Utama Footer --}}
-                <div class="relative bg-[#1A1C1F] rounded-[32px] px-8 py-10 md:px-12 md:py-14 lg:p-16 flex flex-col lg:flex-row gap-12 lg:gap-16 overflow-hidden" data-aos="fade-up" data-aos-duration="1000">
+            <div class="mx-auto w-full max-w-[1400px] px-6 pt-16 pb-10 lg:pt-20 lg:pb-12">
 
-                    {{-- CUTOUT LOGO AREA --}}
-                    <div class="absolute top-0 left-0 bg-white rounded-br-[32px] z-10 pr-8 pb-6 max-md:pr-6 max-md:pb-5">
-                        <img src="{{ asset('images/logo-atn.png') }}" alt="Arjuna Travora Nusantara" class="h-10 md:h-12 mt-6 ml-8 max-md:mt-5 max-md:ml-6">
+                {{-- GRID UTAMA FOOTER --}}
+                <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10 xl:gap-14" data-aos="fade-up" data-aos-duration="900">
 
-                        {{-- Efek Lengkungan Sudut (Inverted Border Radius) --}}
-                        <div class="absolute top-0 -right-6 w-6 h-6 bg-transparent rounded-tl-[24px] shadow-[-10px_-10px_0_0_#ffffff] pointer-events-none"></div>
-                        <div class="absolute -bottom-6 left-0 w-6 h-6 bg-transparent rounded-tl-[24px] shadow-[-10px_-10px_0_0_#ffffff] pointer-events-none"></div>
-                    </div>
+                    {{-- KOLOM 1: IDENTITAS & KONTAK (4 Kolom) --}}
+                    <div class="lg:col-span-4 flex flex-col">
+                        <a href="#beranda" class="inline-flex w-fit items-center rounded-xl bg-white px-4 py-2.5 shadow-sm">
+                            <img src="{{ asset('images/logo-atn.png') }}" alt="Arjuna Travora Nusantara" class="h-9 md:h-10 w-auto">
+                        </a>
 
-                    {{-- KOLOM 1: KONTAK & SOSIAL MEDIA --}}
-                    <div class="w-full lg:w-[380px] shrink-0 flex flex-col mt-20 lg:mt-4">
+                        <p class="mt-5 text-sm leading-relaxed text-gray-400 max-w-sm">
+                            Penyedia solusi software, hardware, infrastruktur IT, sistem keamanan, dan digital display terintegrasi untuk bisnis, instansi, serta organisasi.
+                        </p>
 
-                        {{-- Card Kontak --}}
-                        <div class="bg-[#24262A] rounded-2xl p-6 flex flex-col gap-6">
-
-                            @php
-                            $rawPhone = preg_replace('/[^0-9]/', '', $setting->phone ?? '082142430296');
-                            $waLink = preg_replace('/^0/', '62', $rawPhone);
-                            @endphp
-
+                        {{-- Kartu Kontak --}}
+                        <div class="mt-6 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-5 flex flex-col gap-4">
                             {{-- WhatsApp --}}
-                            <div class="flex items-center gap-4">
-                                <div class="w-11 h-11 shrink-0 rounded-xl bg-[#0F291E] flex items-center justify-center text-[#25D366]">
+                            <a href="https://wa.me/{{ $waLink }}" target="_blank" rel="noopener" class="group flex items-center gap-3.5">
+                                <div class="w-10 h-10 shrink-0 rounded-xl bg-[#0F291E] flex items-center justify-center text-[#25D366] transition-transform duration-300 group-hover:scale-105">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                         <path
                                             d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.553 4.17 1.604 5.986L.04 24l6.125-1.606a11.968 11.968 0 005.866 1.53h.005c6.645 0 12.03-5.385 12.03-12.03S18.676 0 12.031 0zm0 21.916a9.98 9.98 0 01-5.093-1.39l-.365-.217-3.784.992.99-3.69-.237-.378a9.96 9.96 0 01-1.523-5.334c0-5.534 4.502-10.037 10.037-10.037s10.036 4.503 10.036 10.037-4.501 10.02-10.036 10.02zm5.512-7.534c-.302-.15-1.787-.882-2.063-.983-.277-.101-.479-.151-.68.151-.202.302-.781.983-.957 1.184-.176.202-.353.227-.655.076-1.523-.761-2.617-1.428-3.606-3.136-.202-.349.198-.328.636-.882.08-.101.121-.202.161-.302.04-.101.02-.202-.02-.302-.04-.101-.68-1.64-.932-2.245-.245-.591-.495-.512-.68-.521-.176-.008-.378-.008-.579-.008s-.529.076-.806.378c-.277.302-1.058 1.033-1.058 2.518s1.083 2.921 1.234 3.123c.151.202 2.131 3.255 5.162 4.561 1.838.791 2.535.882 3.483.743.766-.113 2.368-.968 2.701-1.905.332-.937.332-1.74.232-1.905-.101-.166-.353-.267-.655-.418z" />
                                     </svg>
                                 </div>
-                                <div>
-                                    <p class="text-xs text-gray-400 mb-0.5">WhatsApp</p>
-                                    <a href="https://wa.me/{{ $waLink }}" target="_blank" class="text-sm font-semibold text-white hover:text-[#25D366] transition-colors">
+                                <div class="min-w-0">
+                                    <p class="text-[11px] font-medium uppercase tracking-wider text-gray-400">WhatsApp</p>
+                                    <p class="text-sm font-semibold text-white group-hover:text-[#25D366] transition-colors truncate">
                                         {{ $setting->phone ?? '0821-4243-0296' }}
-                                    </a>
+                                    </p>
                                 </div>
-                            </div>
+                            </a>
+
+                            <div class="h-px w-full bg-white/[0.06]"></div>
 
                             {{-- Email --}}
-                            <div class="flex items-center gap-4">
-                                <div class="w-11 h-11 shrink-0 rounded-xl bg-[#2D1A1A] flex items-center justify-center text-[#EA4335]">
+                            <a href="mailto:{{ $setting->email ?? 'info@arjunatravora.co.id' }}" class="group flex items-center gap-3.5">
+                                <div class="w-10 h-10 shrink-0 rounded-xl bg-[#2D1A1A] flex items-center justify-center text-[#EA4335] transition-transform duration-300 group-hover:scale-105">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                     </svg>
                                 </div>
-                                <div>
-                                    <p class="text-xs text-gray-400 mb-0.5">Email</p>
-                                    <a href="mailto:{{ $setting->email ?? 'info@arjunatravora.co.id' }}" class="text-sm font-semibold text-white hover:text-[#EA4335] transition-colors">
+                                <div class="min-w-0">
+                                    <p class="text-[11px] font-medium uppercase tracking-wider text-gray-400">Email</p>
+                                    <p class="text-sm font-semibold text-white group-hover:text-[#EA4335] transition-colors truncate">
                                         {{ $setting->email ?? 'info@arjunatravora.co.id' }}
-                                    </a>
+                                    </p>
                                 </div>
-                            </div>
-                        </div>
-
-                        {{-- Social Media --}}
-                        @php
-                        $hasAnySocial = $setting->facebook_url || $setting->instagram_url || $setting->linkedin_url || $setting->youtube_url;
-                        @endphp
-                        <div class="mt-8">
-                            <h4 class="text-xs font-bold text-gray-400 tracking-wider mb-4 uppercase">Connect With Us</h4>
-                            <div class="flex gap-3">
-                                @if($setting->facebook_url || !$hasAnySocial)
-                                <a href="{{ $setting->facebook_url ?? '#' }}" {{ $setting->facebook_url ? 'target=_blank rel=noopener' : '' }} aria-label="Facebook"
-                                    class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                        <path
-                                            d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
-                                    </svg>
-                                </a>
-                                @endif
-
-                                @if($setting->instagram_url || !$hasAnySocial)
-                                <a href="{{ $setting->instagram_url ?? '#' }}" {{ $setting->instagram_url ? 'target=_blank rel=noopener' : '' }} aria-label="Instagram"
-                                    class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                        <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
-                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                    </svg>
-                                </a>
-                                @endif
-
-                                @if($setting->linkedin_url || !$hasAnySocial)
-                                <a href="{{ $setting->linkedin_url ?? '#' }}" {{ $setting->linkedin_url ? 'target=_blank rel=noopener' : '' }} aria-label="LinkedIn"
-                                    class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                        <path
-                                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                                    </svg>
-                                </a>
-                                @endif
-
-                                @if($setting->youtube_url || !$hasAnySocial)
-                                <a href="{{ $setting->youtube_url ?? '#' }}" {{ $setting->youtube_url ? 'target=_blank rel=noopener' : '' }} aria-label="YouTube"
-                                    class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                        <path
-                                            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                                    </svg>
-                                </a>
-                                @endif
-                            </div>
-                        </div>
-
-                        {{-- Copyright --}}
-                        <div class="mt-8 pt-6 border-t border-gray-700 w-full">
-                            <p class="text-[13px] text-gray-400">
-                                {{ $setting->copyright_text ?? '© 2026 PT. Arjuna Travora Nusantara. All Rights Reserved.' }}
-                            </p>
+                            </a>
                         </div>
                     </div>
 
-                    {{-- KOLOM 2: NAVIGASI --}}
-                    <div class="w-full lg:w-[220px] shrink-0 lg:border-l lg:border-gray-700 lg:pl-12 flex flex-col mt-4 lg:mt-8">
-                        <h4 class="text-xs font-bold text-gray-400 tracking-wider mb-6 uppercase">Navigasi Utama</h4>
-                        <ul class="flex flex-col gap-4">
-                            <li><a href="#layanan" class="text-gray-300 hover:text-white text-[15px] transition-colors">Layanan</a></li>
-                            <li><a href="#solusi-sektor" class="text-gray-300 hover:text-white text-[15px] transition-colors">Solusi</a></li>
-                            <li><a href="#tentang-kami" class="text-gray-300 hover:text-white text-[15px] transition-colors">Tentang Kami</a></li>
-                            <li><a href="{{ route('legality.public.index') }}" class="text-gray-300 hover:text-white text-[15px] transition-colors">Legalitas</a></li>
-                            <li><a href="{{ route('portfolio.public.index') }}" class="text-gray-300 hover:text-white text-[15px] transition-colors">Portofolio</a></li>
-                            <li><a href="{{ route('blog.public.index') }}" class="text-gray-300 hover:text-white text-[15px] transition-colors">Blog</a></li>
+                    {{-- KOLOM 2: NAVIGASI UTAMA (3 Kolom) --}}
+                    <div class="lg:col-span-3 lg:border-l lg:border-white/10 lg:pl-10 flex flex-col">
+                        <h4 class="text-xs font-bold uppercase tracking-[0.14em] text-[#F8B41C] mb-6">
+                            Navigasi Utama
+                        </h4>
+
+                        <ul class="grid grid-cols-2 gap-x-6 gap-y-3.5 lg:grid-cols-1">
                             <li>
-                                <a href="{{ $setting->career_url ?: 'https://wa.me/' . $waLink }}" target="_blank" rel="noopener" class="text-gray-300 hover:text-white text-[15px] transition-colors">
-                                    Karir
-                                </a>
+                                <a href="#layanan" class="text-[15px] text-gray-300 hover:text-white transition-colors">Layanan</a>
                             </li>
-                            <li><a href="https://wa.me/{{ $waLink }}" target="_blank" rel="noopener" class="text-gray-300 hover:text-white text-[15px] transition-colors">Hubungi Kami</a></li>
+                            <li>
+                                <a href="#solusi-sektor" class="text-[15px] text-gray-300 hover:text-white transition-colors">Solusi Sektor</a>
+                            </li>
+                            <li>
+                                <a href="#tentang-kami" class="text-[15px] text-gray-300 hover:text-white transition-colors">Tentang Kami</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('legality.public.index') }}" class="text-[15px] text-gray-300 hover:text-white transition-colors">Legalitas</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('portfolio.public.index') }}" class="text-[15px] text-gray-300 hover:text-white transition-colors">Portofolio</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('blog.public.index') }}" class="text-[15px] text-gray-300 hover:text-white transition-colors">Blog & Berita</a>
+                            </li>
+                            <li>
+                                <a href="{{ $setting->career_url ?: 'https://wa.me/' . $waLink }}" target="_blank" rel="noopener" class="text-[15px] text-gray-300 hover:text-white transition-colors">Karir</a>
+                            </li>
+                            <li>
+                                <a href="https://wa.me/{{ $waLink }}" target="_blank" rel="noopener" class="text-[15px] text-gray-300 hover:text-white transition-colors">Hubungi Kami</a>
+                            </li>
                         </ul>
                     </div>
 
-                    {{-- KOLOM 3: KANTOR OPERASIONAL --}}
-                    <div class="w-full flex-1 flex flex-col mt-4 lg:mt-8">
-                        <div class="flex items-start gap-4 mb-5">
-                            <div class="w-10 h-10 shrink-0 rounded-full bg-[#2D1A1A] flex items-center justify-center text-[#EA4335]">
+                    {{-- KOLOM 3: KANTOR OPERASIONAL & PETA (5 Kolom) --}}
+                    <div class="lg:col-span-5 lg:border-l lg:border-white/10 lg:pl-10 flex flex-col">
+                        <h4 class="text-xs font-bold uppercase tracking-[0.14em] text-[#F8B41C] mb-5">
+                            Kantor Operasional
+                        </h4>
+
+                        <div class="flex items-start gap-3.5 mb-5">
+                            <div class="w-10 h-10 shrink-0 rounded-xl bg-[#2D1A1A] flex items-center justify-center text-[#EA4335]">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
                             </div>
-                            <div class="pt-0.5">
-                                <h4 class="text-xs font-bold text-gray-400 tracking-wider uppercase mb-1">Kantor Operasional</h4>
-                                <p class="text-white text-[15px] font-semibold">{{ $setting->address ?? 'Mojokerto, Jawa Timur, Indonesia.' }}</p>
-                            </div>
+                            <p class="text-[15px] font-medium leading-relaxed text-gray-200 pt-1">
+                                {{ $setting->address ?? 'Mojokerto, Jawa Timur, Indonesia.' }}
+                            </p>
                         </div>
 
                         {{-- Google Maps Area --}}
-                        <div class="w-full h-[200px] md:h-[220px] rounded-[20px] overflow-hidden bg-gray-800 relative group">
+                        <div class="w-full h-[220px] md:h-[235px] rounded-2xl overflow-hidden border border-white/10 bg-gray-800 relative group">
                             @if($setting->maps_embed && str_starts_with($setting->maps_embed, 'https://www.google.com/maps/embed'))
                             <iframe src="{{ $setting->maps_embed }}" class="w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Peta Lokasi Kantor Operasional"></iframe>
                             @if($setting->maps_url)
@@ -983,14 +949,77 @@
                             <img src="{{ $setting->maps_image ? asset('storage/' . $setting->maps_image) : 'https://placehold.co/800x400/24262A/667085?text=Peta+Lokasi+Mojokerto' }}" alt="Peta Lokasi" class="w-full h-full object-cover">
 
                             <a href="{{ $setting->maps_url ?? 'https://maps.google.com' }}" target="_blank" rel="noopener"
-                                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-                                <span class="bg-white text-slate-900 px-5 py-2.5 rounded-xl text-sm font-semibold">Buka di Google Maps</span>
+                                class="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
+                                <span class="bg-white text-slate-900 px-5 py-2.5 rounded-xl text-sm font-semibold shadow-lg">Buka di Google Maps</span>
                             </a>
                             @endif
                         </div>
                     </div>
 
                 </div>
+
+                {{-- BARIS BAWAH: COPYRIGHT & SOSIAL MEDIA --}}
+                <div class="mt-14 pt-8 border-t border-white/10 flex flex-col-reverse sm:flex-row items-center justify-between gap-6">
+                    <p class="text-[13px] text-gray-400 text-center sm:text-left">
+                        {{ $setting->copyright_text ?? '© 2026 PT. Arjuna Travora Nusantara. All Rights Reserved.' }}
+                    </p>
+
+                    <div class="flex items-center gap-3">
+                        <span class="hidden md:inline-block text-xs font-semibold uppercase tracking-wider text-gray-500 mr-1">Ikuti Kami</span>
+
+                        @if($setting->facebook_url || !$hasAnySocial)
+                        <a href="{{ $setting->facebook_url ?? '#' }}" @if($setting->facebook_url) target="_blank" rel="noopener" @endif aria-label="Facebook"
+                            class="w-9 h-9 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                            </svg>
+                        </a>
+                        @endif
+
+                        @if($setting->tiktok_url || !$hasAnySocial)
+                        <a href="{{ $setting->tiktok_url ?? '#' }}" @if($setting->tiktok_url) target="_blank" rel="noopener" @endif aria-label="TikTok"
+                            class="w-9 h-9 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+                            </svg>
+                        </a>
+                        @endif
+
+                        @if($setting->instagram_url || !$hasAnySocial)
+                        <a href="{{ $setting->instagram_url ?? '#' }}" @if($setting->instagram_url) target="_blank" rel="noopener" @endif aria-label="Instagram"
+                            class="w-9 h-9 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        @endif
+
+                        @if($setting->linkedin_url || !$hasAnySocial)
+                        <a href="{{ $setting->linkedin_url ?? '#' }}" @if($setting->linkedin_url) target="_blank" rel="noopener" @endif aria-label="LinkedIn"
+                            class="w-9 h-9 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg>
+                        </a>
+                        @endif
+
+                        @if($setting->youtube_url || !$hasAnySocial)
+                        <a href="{{ $setting->youtube_url ?? '#' }}" @if($setting->youtube_url) target="_blank" rel="noopener" @endif aria-label="YouTube"
+                            class="w-9 h-9 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center text-gray-300 hover:bg-[#113883] hover:border-[#113883] hover:text-white transition-all">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                        @endif
+                    </div>
+                </div>
+
             </div>
         </footer>
     </main>
@@ -1067,6 +1096,10 @@
                 slides: ['tentang', 'visi-misi'],
                 activeGallery: 0,
                 galleryTimer: null,
+                isDraggingThumbs: false,
+                hasDraggedThumbs: false,
+                dragStartX: 0,
+                dragStartScrollLeft: 0,
                 gallery: [
                     @forelse($aboutGalleries as $item)
                     {
@@ -1085,6 +1118,10 @@
                     {
                         src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=85',
                         alt: 'Infrastruktur server dan data center'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=85',
+                        alt: 'Diskusi dan implementasi solusi IT ATN'
                     }
                     @endforelse
                 ],
@@ -1097,16 +1134,66 @@
                     this.stopAutoplay();
                     this.galleryTimer = setInterval(() => {
                         this.activeGallery = (this.activeGallery + 1) % this.gallery.length;
+                        this.scrollActiveThumb();
                     }, 5000);
                 },
                 stopAutoplay() {
                     if (this.galleryTimer) clearInterval(this.galleryTimer);
                 },
                 selectGallery(index) {
+                    if (this.hasDraggedThumbs) return;
                     this.activeGallery = index;
+                    this.scrollActiveThumb();
                     if (this.gallery.length > 1) {
                         this.startAutoplay();
                     }
+                },
+                scrollActiveThumb() {
+                    this.$nextTick(() => {
+                        const track = this.$refs.thumbTrack;
+                        if (!track) return;
+                        const buttons = track.querySelectorAll('button');
+                        const activeBtn = buttons[this.activeGallery];
+                        if (!activeBtn) return;
+
+                        const trackLeft = track.scrollLeft;
+                        const trackRight = trackLeft + track.clientWidth;
+                        const btnLeft = activeBtn.offsetLeft;
+                        const btnRight = btnLeft + activeBtn.offsetWidth;
+
+                        if (btnLeft < trackLeft) {
+                            track.scrollTo({ left: btnLeft, behavior: 'smooth' });
+                        } else if (btnRight > trackRight) {
+                            track.scrollTo({ left: btnRight - track.clientWidth, behavior: 'smooth' });
+                        }
+                    });
+                },
+                handleThumbWheel(e) {
+                    if (this.gallery.length <= 4) return;
+                    const track = this.$refs.thumbTrack;
+                    if (!track) return;
+                    e.preventDefault();
+                    track.scrollLeft += (e.deltaY || e.deltaX);
+                },
+                startThumbDrag(e) {
+                    if (this.gallery.length <= 4) return;
+                    this.isDraggingThumbs = true;
+                    this.hasDraggedThumbs = false;
+                    this.dragStartX = e.pageX;
+                    this.dragStartScrollLeft = this.$refs.thumbTrack.scrollLeft;
+                },
+                onThumbDrag(e) {
+                    if (!this.isDraggingThumbs) return;
+                    const dx = e.pageX - this.dragStartX;
+                    if (Math.abs(dx) > 5) {
+                        this.hasDraggedThumbs = true;
+                        this.$refs.thumbTrack.scrollLeft = this.dragStartScrollLeft - dx;
+                    }
+                },
+                stopThumbDrag() {
+                    if (!this.isDraggingThumbs) return;
+                    this.isDraggingThumbs = false;
+                    setTimeout(() => { this.hasDraggedThumbs = false; }, 50);
                 },
                 next() {
                     if (this.activeSlide < this.slides.length - 1) {
