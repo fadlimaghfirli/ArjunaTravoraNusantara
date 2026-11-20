@@ -7,6 +7,7 @@ $initialActive = match (true) {
 request()->routeIs('portfolio.public.*') => 'portofolio',
 request()->routeIs('blog.public.*') => 'blog',
 request()->routeIs('legality.public.*') => 'legalitas',
+request()->routeIs('organization.public.*') => 'struktur',
 default => 'beranda',
 };
 
@@ -45,6 +46,11 @@ $navLinks = [
 'id' => 'legalitas',
 'label' => 'Legalitas',
 'href' => route('legality.public.index'),
+],
+[
+'id' => 'struktur',
+'label' => 'Tim Kami',
+'href' => route('organization.public.index'),
 ],
 ];
 @endphp
@@ -122,7 +128,7 @@ $navLinks = [
                 </a>
 
                 {{-- Navigation Links (Bersih tanpa kotak bertumpuk) --}}
-                <div class="flex items-center gap-8 xl:gap-10">
+                <div class="flex items-center gap-5 xl:gap-7">
                     @foreach($navLinks as $link)
                     <a href="{{ $link['href'] }}" @click="navigateTo($event, '{{ $link['id'] }}')" class="group relative py-2 text-[15px] tracking-[-0.01em] transition-colors duration-300" :class="activeSection === '{{ $link['id'] }}'
                                 ? 'font-bold text-primary'

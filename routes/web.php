@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\WorkflowController;
 use App\Models\About;
 use App\Models\AboutGallery;
@@ -68,6 +69,9 @@ Route::get('/portofolio', [PortfolioController::class, 'publicIndex'])->name('po
 
 // Halaman Publik Legalitas Perusahaan
 Route::get('/legalitas', [LegalityController::class, 'publicIndex'])->name('legality.public.index');
+
+// Halaman Publik Struktur Organisasi
+Route::get('/struktur-organisasi', [TeamMemberController::class, 'publicIndex'])->name('organization.public.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -156,6 +160,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/legalities/reorder', [LegalityController::class, 'reorder'])->name('legalities.reorder');
     Route::put('/legalities/{legality}', [LegalityController::class, 'update'])->name('legalities.update');
     Route::delete('/legalities/{legality}', [LegalityController::class, 'destroy'])->name('legalities.destroy');
+
+    // Struktur Organisasi / Tim
+    Route::get('/team-members', [TeamMemberController::class, 'index'])->name('team-members.index');
+    Route::post('/team-members', [TeamMemberController::class, 'store'])->name('team-members.store');
+    Route::post('/team-members/reorder', [TeamMemberController::class, 'reorder'])->name('team-members.reorder');
+    Route::put('/team-members/{teamMember}', [TeamMemberController::class, 'update'])->name('team-members.update');
+    Route::delete('/team-members/{teamMember}', [TeamMemberController::class, 'destroy'])->name('team-members.destroy');
 });
 
 require __DIR__ . '/auth.php';
