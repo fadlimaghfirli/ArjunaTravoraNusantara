@@ -731,21 +731,21 @@
                 @if($clients->count() > 0)
                 <!-- Marquee Track -->
                 <!-- Animasi akan dijeda saat area ini di-hover berkat group-hover:[animation-play-state:paused] -->
-                <div class="animate-marquee flex w-max items-center gap-6 py-1 pr-6 group-hover:[animation-play-state:paused]">
+                <div class="grayscale hover:grayscale-0 animate-marquee flex w-max items-center gap-6 py-1 pr-6 group-hover:[animation-play-state:paused]">
 
                     <!-- Set 1 (Data Asli dari Database) -->
                     @foreach($clients as $client)
                     <div
-                        class="flex h-[110px] w-[180px] shrink-0 items-center justify-center rounded-[20px] border border-[#D8DDE7] bg-white p-4 transition-transform duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_4px_20px_-5px_rgba(6,81,237,0.15)] sm:h-[130px] sm:w-[220px]">
-                        <img src="{{ asset('storage/' . $client->logo) }}" alt="{{ $client->name }}" class="max-h-full max-w-full object-contain grayscale transition-all duration-300 hover:grayscale-0">
+                        class="grayscale hover:grayscale-0 flex h-[110px] w-[180px] shrink-0 items-center justify-center rounded-[20px] border border-[#D8DDE7] bg-white p-4 transition-transform duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_4px_20px_-5px_rgba(6,81,237,0.15)] sm:h-[130px] sm:w-[220px]">
+                        <img src="{{ asset('storage/' . $client->logo) }}" alt="{{ $client->name }}" class="max-h-full max-w-full object-contain transition-all duration-300">
                     </div>
                     @endforeach
 
                     <!-- Set 2 (Duplikat wajib untuk infinite loop animasi marquee) -->
                     @foreach($clients as $client)
                     <div
-                        class="flex h-[110px] w-[180px] shrink-0 items-center justify-center rounded-[20px] border border-[#D8DDE7] bg-white p-4 transition-transform duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_4px_20px_-5px_rgba(6,81,237,0.15)] sm:h-[130px] sm:w-[220px]">
-                        <img src="{{ asset('storage/' . $client->logo) }}" alt="{{ $client->name }}" class="max-h-full max-w-full object-contain grayscale transition-all duration-300 hover:grayscale-0">
+                        class="grayscale hover:grayscale-0 flex h-[110px] w-[180px] shrink-0 items-center justify-center rounded-[20px] border border-[#D8DDE7] bg-white p-4 transition-transform duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_4px_20px_-5px_rgba(6,81,237,0.15)] sm:h-[130px] sm:w-[220px]">
+                        <img src="{{ asset('storage/' . $client->logo) }}" alt="{{ $client->name }}" class="max-h-full max-w-full object-contain transition-all duration-300">
                     </div>
                     @endforeach
 
