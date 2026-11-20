@@ -21,6 +21,7 @@ class Setting extends Model
         'instagram_url',
         'linkedin_url',
         'youtube_url',
+        'tiktok_url',
         'copyright_text',
         'career_url',
         'maps_url',

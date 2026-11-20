@@ -118,7 +118,7 @@ $navLinks = [
 
                 {{-- Logo --}}
                 <a href="{{ $isHome ? '#beranda' : url('/') }}" @click="navigateTo($event, 'beranda')" class="flex shrink-0 items-center transition-transform duration-300 hover:scale-[1.02]">
-                    <img src="{{ asset('images/logo-atn.png') }}" alt="Arjuna Travora Nusantara" class="w-auto transition-all duration-300" :class="scrolled ? 'h-[38px]' : 'h-[42px]'">
+                    <img src="{{ asset('images/logo-atn.png') }}" alt="Arjuna Travora Nusantara" class="h-[38px] w-auto transition-all duration-300" :class="scrolled ? 'h-[38px]' : 'h-[42px]'">
                 </a>
 
                 {{-- Navigation Links (Bersih tanpa kotak bertumpuk) --}}

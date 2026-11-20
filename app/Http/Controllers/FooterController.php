@@ -33,6 +33,7 @@ class FooterController extends Controller
             'instagram_url' => 'nullable|url|max:255',
             'linkedin_url' => 'nullable|url|max:255',
             'youtube_url' => 'nullable|url|max:255',
+            'tiktok_url' => 'nullable|url|max:255',
             'maps_url' => 'nullable|url|max:500',
             'maps_embed' => 'nullable|string|max:1500',
             'maps_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
@@ -67,6 +68,7 @@ class FooterController extends Controller
             'instagram_url' => $request->instagram_url,
             'linkedin_url' => $request->linkedin_url,
             'youtube_url' => $request->youtube_url,
+            'tiktok_url' => $request->tiktok_url,
             'maps_url' => $request->maps_url,
             'maps_embed' => $mapsEmbed ?: null,
         ];
