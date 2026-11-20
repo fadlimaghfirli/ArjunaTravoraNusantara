@@ -56,6 +56,7 @@ $navLinks = [
 @endphp
 
 <nav x-data="{
+        ready: false,
         mobileOpen: false,
         scrolled: false,
         isHome: {{ $isHome ? 'true' : 'false' }},
@@ -65,6 +66,9 @@ $navLinks = [
         init() {
             this.onScroll();
             window.addEventListener('scroll', () => this.onScroll(), { passive: true });
+            requestAnimationFrame(() => {
+                this.ready = true;
+            });
         },
 
         onScroll() {
@@ -107,38 +111,56 @@ $navLinks = [
 
             this.activeSection = id;
         }
-    }" @keydown.escape.window="mobileOpen = false" class="fixed inset-x-0 top-0 z-[100] px-4 sm:px-6 lg:px-8 transition-all duration-300" :class="scrolled ? 'pt-3' : 'pt-4'">
+    }" @keydown.escape.window="mobileOpen = false" class="fixed inset-x-0 top-0 z-[100] pt-4" :class="{
+        'transition-all duration-300': ready,
+        'pt-3': scrolled,
+        'pt-4': !scrolled
+    }">
 
     {{-- Backdrop Mobile Menu --}}
-    <div x-show="mobileOpen" x-cloak x-transition.opacity @click="mobileOpen = false" class="fixed inset-0 -z-10 bg-[#102238]/25 backdrop-blur-xs lg:hidden"></div>
+    <div x-show="mobileOpen" x-cloak style="display: none;" x-transition.opacity @click="mobileOpen = false" class="fixed inset-0 -z-10 bg-[#102238]/25 backdrop-blur-xs lg:hidden"></div>
 
-    <div class="mx-auto w-full max-w-[1400px]">
-        <div class="relative rounded-[20px] border backdrop-blur-xl backdrop-saturate-150 transition-all duration-300 ring-1 ring-slate-900/[0.04]" :class="mobileOpen
-                ? 'border-white/80 bg-white/85 shadow-[0_18px_45px_rgba(16,34,56,0.14)]'
-                : (scrolled
-                    ? 'border-white/70 bg-white/60 shadow-[0_14px_40px_rgba(16,34,56,0.11)]'
-                    : 'border-white/60 bg-white/40 shadow-[0_8px_30px_rgba(17,56,131,0.06)]')">
+    <div class="mx-auto w-full max-w-[1400px] px-6">
+        <div class="relative rounded-[20px] border border-transparent bg-transparent shadow-none ring-0 backdrop-blur-none" :class="{
+                'transition-all duration-300': ready,
+                'border-transparent bg-transparent shadow-none ring-0 backdrop-blur-none': !scrolled && !mobileOpen,
+                'backdrop-blur-xl backdrop-saturate-150 ring-1 ring-slate-900/[0.04]': scrolled || mobileOpen,
+                'border-white/70 bg-white/60 shadow-[0_14px_40px_rgba(16,34,56,0.11)]': scrolled && !mobileOpen,
+                'border-white/80 bg-white/90 shadow-[0_18px_45px_rgba(16,34,56,0.14)]': mobileOpen
+            }">
 
             {{-- ================= DESKTOP ================= --}}
-            <div class="hidden items-center justify-between px-8 xl:px-11 lg:flex transition-all duration-300" :class="scrolled ? 'h-[80px]' : 'h-[90px]'">
+            <div class="hidden h-[90px] items-center justify-between px-0 lg:flex" :class="{
+                    'transition-all duration-300': ready,
+                    'h-[80px] px-7 xl:px-9': scrolled,
+                    'h-[90px] px-0': !scrolled
+                }">
 
                 {{-- Logo --}}
                 <a href="{{ $isHome ? '#beranda' : url('/') }}" @click="navigateTo($event, 'beranda')" class="flex shrink-0 items-center transition-transform duration-300 hover:scale-[1.02]">
-                    <img src="{{ asset('images/logo-atn.png') }}" alt="Arjuna Travora Nusantara" class="h-[38px] w-auto transition-all duration-300" :class="scrolled ? 'h-[38px]' : 'h-[42px]'">
+                    <img src="{{ asset('images/logo-atn.png') }}" alt="Arjuna Travora Nusantara" class="h-[42px] w-auto" :class="{
+                            'transition-all duration-300': ready,
+                            'h-[38px]': scrolled,
+                            'h-[42px]': !scrolled
+                        }">
                 </a>
 
-                {{-- Navigation Links (Bersih tanpa kotak bertumpuk) --}}
+                {{-- Navigation Links --}}
                 <div class="flex items-center gap-5 xl:gap-7">
                     @foreach($navLinks as $link)
-                    <a href="{{ $link['href'] }}" @click="navigateTo($event, '{{ $link['id'] }}')" class="group relative py-2 text-[15px] tracking-[-0.01em] transition-colors duration-300" :class="activeSection === '{{ $link['id'] }}'
-                                ? 'font-bold text-primary'
-                                : 'font-medium text-[#475467] hover:text-primary'">
+                    @php $isActive = $initialActive === $link['id']; @endphp
+                    <a href="{{ $link['href'] }}" @click="navigateTo($event, '{{ $link['id'] }}')"
+                        class="group relative py-2 text-[15px] tracking-[-0.01em] transition-colors duration-300 {{ $isActive ? 'font-bold text-primary' : 'font-medium text-[#475467] hover:text-primary' }}" :class="{
+                                'font-bold text-primary': activeSection === '{{ $link['id'] }}',
+                                'font-medium text-[#475467] hover:text-primary': activeSection !== '{{ $link['id'] }}'
+                            }">
                         {{ $link['label'] }}
 
                         {{-- Garis Indikator Aktif / Hover --}}
-                        <span class="absolute -bottom-1 left-1/2 h-[2.5px] -translate-x-1/2 rounded-full bg-primary transition-all duration-300" :class="activeSection === '{{ $link['id'] }}'
-                                    ? 'w-6 opacity-100'
-                                    : 'w-0 opacity-0 group-hover:w-5 group-hover:opacity-40'"></span>
+                        <span class="absolute -bottom-1 left-1/2 h-[2.5px] -translate-x-1/2 rounded-full bg-primary transition-all duration-300 {{ $isActive ? 'w-6 opacity-100' : 'w-0 opacity-0 group-hover:w-5 group-hover:opacity-40' }}" :class="{
+                                    'w-6 opacity-100': activeSection === '{{ $link['id'] }}',
+                                    'w-0 opacity-0 group-hover:w-5 group-hover:opacity-40': activeSection !== '{{ $link['id'] }}'
+                                }"></span>
                     </a>
                     @endforeach
                 </div>
@@ -154,7 +176,13 @@ $navLinks = [
             </div>
 
             {{-- ================= MOBILE HEADER ================= --}}
-            <div class="flex items-center justify-between px-5 sm:px-6 lg:hidden transition-all duration-300" :class="scrolled ? 'h-[68px]' : 'h-[74px]'">
+            <div class="flex h-[74px] items-center justify-between px-0 lg:hidden" :class="{
+                    'transition-all duration-300': ready,
+                    'h-[66px]': scrolled,
+                    'h-[74px]': !scrolled,
+                    'px-4 sm:px-5': scrolled || mobileOpen,
+                    'px-0': !scrolled && !mobileOpen
+                }">
 
                 <a href="{{ $isHome ? '#beranda' : url('/') }}" @click="navigateTo($event, 'beranda')" class="flex items-center">
                     <img src="{{ asset('images/logo-atn.png') }}" alt="Arjuna Travora Nusantara" class="h-[36px] sm:h-[40px] w-auto">
@@ -167,23 +195,26 @@ $navLinks = [
                         <path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
                     </svg>
 
-                    <svg x-show="mobileOpen" x-cloak class="h-6 w-6" viewBox="0 0 24 24" fill="none">
+                    <svg x-show="mobileOpen" x-cloak style="display: none;" class="h-6 w-6" viewBox="0 0 24 24" fill="none">
                         <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
                     </svg>
                 </button>
             </div>
 
             {{-- ================= MOBILE MENU DRAWER ================= --}}
-            <div x-show="mobileOpen" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+            <div x-show="mobileOpen" x-cloak style="display: none;" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="border-t border-slate-200/60 px-5 pb-6 pt-3 lg:hidden">
 
                 <div class="flex flex-col divide-y divide-slate-200/50">
                     @foreach($navLinks as $link)
-                    <a href="{{ $link['href'] }}" @click="navigateTo($event, '{{ $link['id'] }}')" class="flex items-center justify-between py-3.5 text-[15px] transition-colors" :class="activeSection === '{{ $link['id'] }}'
-                                ? 'font-bold text-primary'
-                                : 'font-medium text-[#475467] hover:text-primary'">
+                    @php $isActive = $initialActive === $link['id']; @endphp
+                    <a href="{{ $link['href'] }}" @click="navigateTo($event, '{{ $link['id'] }}')"
+                        class="flex items-center justify-between py-3.5 text-[15px] transition-colors {{ $isActive ? 'font-bold text-primary' : 'font-medium text-[#475467] hover:text-primary' }}" :class="{
+                                'font-bold text-primary': activeSection === '{{ $link['id'] }}',
+                                'font-medium text-[#475467] hover:text-primary': activeSection !== '{{ $link['id'] }}'
+                            }">
                         <span>{{ $link['label'] }}</span>
-                        <span x-show="activeSection === '{{ $link['id'] }}'" class="h-2 w-2 rounded-full bg-primary"></span>
+                        <span x-show="activeSection === '{{ $link['id'] }}'" @if(!$isActive) style="display: none;" @endif class="h-2 w-2 rounded-full bg-primary"></span>
                     </a>
                     @endforeach
                 </div>
