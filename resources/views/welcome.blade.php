@@ -904,6 +904,9 @@
                                 <a href="{{ route('legality.public.index') }}" class="text-[15px] text-gray-300 hover:text-white transition-colors">Legalitas</a>
                             </li>
                             <li>
+                                <a href="{{ route('organization.public.index') }}" class="text-[15px] text-gray-300 hover:text-white transition-colors">Tim Kami</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('portfolio.public.index') }}" class="text-[15px] text-gray-300 hover:text-white transition-colors">Portofolio</a>
                             </li>
                             <li>
